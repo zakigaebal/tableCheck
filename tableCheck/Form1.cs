@@ -14,6 +14,8 @@ namespace tableCheck
 	/// <summary>
 	/// 테이블 dawoon과 dawoon2 비교하기
 	/// dawoon 테이블2의 컬럼 갯수가 다르면 컬럼추가하기
+	/// 상태에 진행중 진행완료
+	/// 진행중 컬럼은 프로그레스바로 보여주기
 	/// </summary>
 
 
