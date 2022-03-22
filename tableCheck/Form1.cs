@@ -401,7 +401,7 @@ brush, e.RowBounds.Location.X + 35, e.RowBounds.Location.Y + 4, drawFormat);
 			dataGridView1.Columns[4].Name = "필드수";
 			dataGridView1.Columns[5].Name = "Progress";
 			dataGridView1.Columns[6].Name = "상태";
-
+			//집에서
 			// 컬럼의 폭을 지정할 수 있다.
 			dataGridView1.Columns[0].Width = 40;
 			dataGridView1.Columns[1].Width = 200;
