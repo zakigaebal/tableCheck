@@ -33,6 +33,9 @@ namespace tableCheck
 
     DataTable dt = new DataTable();
 
+    MySqlConnection conn;
+    MySqlConnection conn2;
+
     private string _HostName = "";    //서버연결방식 도메인
     private string _ServerName = "";  //서버연결방식 아이피
     private string _CONNECT = "";    //도메인인지 아이피인지 여부
@@ -57,7 +60,7 @@ namespace tableCheck
     {
       InitializeComponent();
 
-      this.FormClosed += Form_Closing;
+      FormClosed += Form_Closing;
 
 
     }
@@ -82,8 +85,8 @@ namespace tableCheck
     {
 
       button2_Click(sender, e);
-      dataGridView2.Rows.Add(1);
-      dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[0].Value = 50;
+     // dataGridView2.Rows.Add(1);
+     // dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[0].Value = 50;
 
       dt.Columns.Add("체크", typeof(bool)); // 선택 체크박스 용
 
@@ -91,7 +94,7 @@ namespace tableCheck
       //	button1_Click(sender, e);
 
       GenerateData();
-      dataGridView2.DataSource = _infoList;
+      // dataGridView2.DataSource = _infoList;
 
       //			dataGridView2.Columns.Insert(3, column);
 
@@ -99,9 +102,35 @@ namespace tableCheck
       //	dataGridView2.Rows[0].Cells[0].Value = "1";
 
       //		column.HeaderText = "Progress";
+      checkBoxColumn.HeaderText = "체크";
+      checkBoxColumn.Name = "check";
 
+      buttonColumn.HeaderText = "Button";
+      buttonColumn.Name = "button";
+
+      progressColumn.HeaderText = "진행중";
+      progressColumn.Name = "progress";
+
+      dataGridView1.Columns.Add(checkBoxColumn);
+      dataGridView1.Columns.Add("column0", "db");
+      dataGridView1.Columns.Add("column1", "테이블명");
+      dataGridView1.Columns.Add("column2", "fildCount1");
+      dataGridView1.Columns.Add("column3", "fildCount2");
+      dataGridView1.Columns.Add(progressColumn);
+      dataGridView1.Columns.Add("column4", "상태");
+      dataGridView1.Columns.Add(buttonColumn);
+      dataGridView1.AllowUserToAddRows = false;
       dgvDesign();
-    }
+
+			dataGridView1.Columns[0].Width = 50;
+			dataGridView1.Columns[1].Width = 80;
+			dataGridView1.Columns[2].Width = 200;
+			dataGridView1.Columns[3].Width = 80;
+			dataGridView1.Columns[4].Width = 80;
+			dataGridView1.Columns[5].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+			dataGridView1.Columns[6].Width = 100;
+			dataGridView1.Columns[7].Width = 50;
+		}
     // checkBox 변경 상태를 확실히 반영하기 위함.
 
     private void dataGridView1_CurrentCellDirtyStateChanged(object sender, EventArgs e)
@@ -129,24 +158,24 @@ brush, e.RowBounds.Location.X + 35, e.RowBounds.Location.Y + 4, drawFormat);
     void dgvDesign()
     {
       //컬럼 수정 못하게 하기
-      //this.dataGridView1.Columns[1].ReadOnly = true;
+      //dataGridView1.Columns[1].ReadOnly = true;
 
       //마우스로 row header width 조절 못하게 하기.
-      this.dataGridView1.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+      dataGridView1.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
 
       //마우스로 column size 조절 못하게 하기
-      //this.dataGridView1.Columns[0].Resizable = DataGridViewTriState.False;
+      //dataGridView1.Columns[0].Resizable = DataGridViewTriState.False;
 
       //dataGridView1.ReadOnly = true;
       //dataGridView1.RowHeadersVisible = false;
 
-      this.dataGridView1.AllowUserToAddRows = false;
-      //this.dataGridView1.Columns[0].Width = 20;
-      this.dataGridView1.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-      //this.dataGridView1.Columns[0].Resizable = DataGridViewTriState.False;
-      //	this.dataGridView1.Columns[1].ReadOnly = true;
-      //this.dataGridView1.Columns[2].ReadOnly = true;
-      //	this.dataGridView1.Columns[3].ReadOnly = true;
+      dataGridView1.AllowUserToAddRows = false;
+      //dataGridView1.Columns[0].Width = 20;
+      dataGridView1.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+      //dataGridView1.Columns[0].Resizable = DataGridViewTriState.False;
+      //	dataGridView1.Columns[1].ReadOnly = true;
+      //dataGridView1.Columns[2].ReadOnly = true;
+      //	dataGridView1.Columns[3].ReadOnly = true;
 
     }
 
@@ -248,7 +277,7 @@ brush, e.RowBounds.Location.X + 35, e.RowBounds.Location.Y + 4, drawFormat);
           //dataGridView1.Columns[1].Width = 280;
           dt.Columns.Add("필드수");
           dt.Columns.Add("progressbar");
-          dataGridView2.Rows.Add(1);
+       //   dataGridView2.Rows.Add(1);
 
 
 
@@ -324,117 +353,182 @@ brush, e.RowBounds.Location.X + 35, e.RowBounds.Location.Y + 4, drawFormat);
       if (textBoxIp1.Text == "")
       {
         MessageBox.Show("데이터베이스 서버를 입력해주세요.");
-        this.textBoxIp1.Focus();
+        textBoxIp1.Focus();
         return;
       }
-      if (this.textBoxPort1.Text == "")
+      if (textBoxPort1.Text == "")
       {
         MessageBox.Show("Port번호를 입력해 주십시오.");
-        this.textBoxPort1.Focus();
+        textBoxPort1.Focus();
         return;
       }
-      if (this.textBoxDb1.Text == "")
+      if (textBoxDb1.Text == "")
       {
         MessageBox.Show("Database를 입력해 주십시오.");
-        this.textBoxDb1.Focus();
+        textBoxDb1.Focus();
         return;
       }
-      if (this.textBoxUn1.Text == "")
+      if (textBoxUn1.Text == "")
       {
         MessageBox.Show("ID를 입력해 주십시오.");
-        this.textBoxUn1.Focus();
+        textBoxUn1.Focus();
         return;
       }
-      if (this.textBoxPw1.Text == "")
+      if (textBoxPw1.Text == "")
       {
         MessageBox.Show("Password를 입력해 주십시오.");
-        this.textBoxPw1.Focus();
+        textBoxPw1.Focus();
         return;
       }
       btn_TEST_Click(sender, e);
 
     }
+    class ListInfo
+		{
+      public string tableName;
+      public int fieldCount;
+		}
+    
+    class ListInfoAll
+    {
+      public string db;
+      public string tableName;
+      public int fieldCount1;
+      public int fieldCount2;
+    }
+    class Columns
+		{
+      string TABLE_SCHEMA; //데이터베이스
+      string TABLE_NAME; //테이블명
 
+      string COLUMN_NAME; //컬럼명
+      string COLUMN_TYPE; //길이설정
+      //부호없음
+      bool IS_NULLABLE; //NULL 허용      
+      string COLUMN_DEFAULT; //기본값
+      string COLUMN_COMMENT; //코멘트
+
+    
+    }
 
     //연결테스트 버튼 클릭
     private void btn_TEST_Click(object sender, EventArgs e)
     {
 
-      _HostName = this.textBoxIp1.Text;
-      _PORT = this.textBoxPort1.Text;
-      _DATABASE = this.textBoxDb1.Text;
-      _ID = this.textBoxUn1.Text;
-      _PWD = this.textBoxPw1.Text;
+      _HostName = textBoxIp1.Text;
+      _PORT = textBoxPort1.Text;
+      _DATABASE = textBoxDb1.Text;
+      _ID = textBoxUn1.Text;
+      _PWD = textBoxPw1.Text;
 
-      _HostName2 = this.textBoxIp2.Text;
-      _PORT2 = this.textBoxPort2.Text;
-      _DATABASE2 = this.textBoxDb2.Text;
-      _ID2 = this.textBoxUn2.Text;
-      _PWD2 = this.textBoxPw2.Text;
+      _HostName2 = textBoxIp2.Text;
+      _PORT2 = textBoxPort2.Text;
+      _DATABASE2 = textBoxDb2.Text;
+      _ID2 = textBoxUn2.Text;
+      _PWD2 = textBoxPw2.Text;
+      MySqlDataReader rdr =   DBConnectTest(conn,_HostName, _PORT, _DATABASE, _ID, _PWD);
+      List<ListInfo> listTable1 = new List<ListInfo>();
+      List<ListInfo> listTable2 = new List<ListInfo>();
+      List<ListInfoAll> listTableAll = new List<ListInfoAll>();
+      while (rdr.Read())
+			{
+        ListInfo listInfo = new ListInfo() { tableName = rdr["tbl"].ToString(), fieldCount = Convert.ToInt32(rdr["cnt"].ToString()) };
+        listTable1.Add(listInfo);
 
-      this.DBConnectTest(_HostName, _PORT, _DATABASE, _ID, _PWD);
-     // this.DBConnectTest(_HostName2, _PORT2, _DATABASE2, _ID2, _PWD2);
+				// dataGridView1.Rows[i].Cells[1].Value = rdr["cnt"].ToString();
+			}
+
+			MySqlDataReader rdr2 = DBConnectTest(conn2, _HostName2, _PORT2, _DATABASE2, _ID2, _PWD2);
+      while (rdr2.Read())
+      {
+        ListInfo listInfo = new ListInfo() { tableName = rdr2["tbl"].ToString(), fieldCount = Convert.ToInt32(rdr2["cnt"].ToString()) };
+        listTable2.Add(listInfo);
+      }
+
+
+			for (int i = 0; i < listTable1.Count; i++)
+			{
+        listTableAll.Add(new ListInfoAll() { db = "A", tableName = listTable1[i].tableName, fieldCount1 = listTable1[i].fieldCount, fieldCount2 = 0});
+      }
+      for (int i = 0; i < listTable2.Count; i++)
+      {
+        bool found = false;
+				for (int j = 0; j < listTableAll.Count; j++)
+				{
+          if (listTable2[i].tableName == listTableAll[j].tableName)
+					{
+            listTableAll[j].fieldCount2 = listTable2[i].fieldCount;
+            found = true;
+            listTableAll[j].db = "A+B";
+            break;
+          }
+				
+				}
+        //listTableAll.Add(new ListInfoAll() { db = "A", tableName = listTable1[i].tableName, fieldCount1 = listTable1[i].fieldCount, fieldCount2 = 0 });
+        if (found == false)
+        {
+          listTableAll.Add(new ListInfoAll() { db = "B", tableName = listTable2[i].tableName, fieldCount1 = 0, fieldCount2 = listTable2[i].fieldCount });
+        }
+       
+      }
+      dataGridView1.Rows.Clear();
+			for (int i = 0; i < listTableAll.Count; i++)
+			{
+        dataGridView1.Rows.Add(1);
+        dataGridView1.Rows[dataGridView1.Rows.Count -1].Cells[0].Value = true;
+        if (listTableAll[i].db == "B")
+				{
+        dataGridView1.Rows[dataGridView1.Rows.Count -1].Cells[0].Value = false;
+
+				}
+        dataGridView1.Rows[dataGridView1.Rows.Count -1].Cells[1].Value = listTableAll[i].db;
+        dataGridView1.Rows[dataGridView1.Rows.Count -1].Cells[2].Value = listTableAll[i].tableName;
+        dataGridView1.Rows[dataGridView1.Rows.Count -1].Cells[3].Value = listTableAll[i].fieldCount1;
+        dataGridView1.Rows[dataGridView1.Rows.Count -1].Cells[4].Value = listTableAll[i].fieldCount2;
+      }
     }
 
-    //DBConnectTest 메소드
-    private void DBConnectTest(string hostname, string port, string database, string id, string pwd)
-    {
-      //_HostName = hostname;
-      _DATABASE = database;
-      _PORT = port;
-      _ID = id;
-      _PWD = pwd;
 
+
+		//DBConnectTest 메소드
+		private MySqlDataReader DBConnectTest(MySqlConnection con,string hostname, string port, string database, string id, string pwd)
+    {
       StringBuilder _strArg = new StringBuilder("");
+        MySqlDataReader rdr;
       _strArg.Append("Server = ");           // SQL
-      _strArg.Append(_ServerName);        // 서버
+      _strArg.Append(hostname);        // 서버
       _strArg.Append(";Port = ");
-      _strArg.Append(_PORT);                 // 포트
+      _strArg.Append(port);                 // 포트
       _strArg.Append(";Database = ");
-      _strArg.Append(_DATABASE);          // 데이터베이스
+      _strArg.Append(database);          // 데이터베이스
       _strArg.Append(";username = ");
-      _strArg.Append(_ID);                     // ID
+      _strArg.Append(id);                     // ID
       _strArg.Append(";password = ");
-      _strArg.Append(_PWD);                 // PWD
+      _strArg.Append(pwd);                 // PWD
       _strArg.Append(";");
 
-      MySqlConnection conn = new MySqlConnection(_strArg.ToString());
-
+      con = new MySqlConnection(_strArg.ToString());
       try
       {
-        conn.Open();
-        string sql = "select a.Table_NAME as 'table', count(b.table_name) as 'cnt'  from INFORMATION_SCHEMA.tables a left outer join information_schema.columns b on a.Table_NAME = b.table_name where a.table_schema='dawoon' group by b.table_name order by '테이블명' desc;";
-        MySqlCommand cmd = new MySqlCommand(sql, conn);
-        MySqlDataReader rdr = cmd.ExecuteReader();
-        while (rdr.Read())
-        {
-          // 첫번째 방법
-          //string[] row01 = {false,"","","","" };
-          //row0[0] = rdr["cr_no"].ToString();
-          //row0[1] = rdr["cr_fnumber"].ToString();
-          //row0[2] = rdr["cr_number"].ToString();
-          //row0[3] = rdr["cr_tongs"].ToString();
-          // row0[4] = rdr["cr_date"].ToString();
-          // 두번째 방법
-          string row0 = rdr["table"].ToString();
-          string row1 = rdr["cnt"].ToString();
-
-          // dataGridView1.Rows[i].Cells[1].Value = rdr["cnt"].ToString();
-          dataGridView1.Rows.Add(false, row0, row1, "", "");
-        }
-        rdr.Close();
-        conn.Close();
+        con.Open();
+        string sql = "SELECT information_schema.columns.TABLE_NAME tbl, COUNT(*) cnt FROM information_schema.columns WHERE table_schema = '" + database + "' group by TABLE_NAME ORDER BY TABLE_NAME asc;";
+       
+        MySqlCommand cmd = new MySqlCommand(sql, con);
+        //adp = cmd.Exec
+        rdr = cmd.ExecuteReader();
+        return rdr;
       }
       catch (Exception Ex)
       {
-        conn.Close();
+        return null;
+        con.Close();
         MessageBox.Show(Ex.ToString());
         //MessageBox.Show("DB 접속이 불가능합니다.");
         //isTested = false;
       }
       finally
       {
-        conn.Close();
+       // con.Close();
       }
     }
 
@@ -451,44 +545,20 @@ brush, e.RowBounds.Location.X + 35, e.RowBounds.Location.Y + 4, drawFormat);
 
     private void button2_Click(object sender, EventArgs e)
     {
-      checkBoxColumn.HeaderText = "체크";
-      checkBoxColumn.Name = "check";
+      
 
-      buttonColumn.HeaderText = "Button";
-      buttonColumn.Name = "button";
+     
 
-      progressColumn.HeaderText = "진행중";
-      progressColumn.Name = "progress";
+      //dataGridView1.Rows.Add();
 
-      dataGridView1.Columns.Add(checkBoxColumn);
-      dataGridView1.Columns.Add("column0", "DB1");
-      dataGridView1.Columns.Add("column1", "필드수");
-      dataGridView1.Columns.Add("column2", "DB2");
-      dataGridView1.Columns.Add("column3", "필드수");
-      dataGridView1.Columns.Add(progressColumn);
-      dataGridView1.Columns.Add("column4", "상태");
-      dataGridView1.Columns.Add(buttonColumn);
-
-      dataGridView1.Columns[0].Width = 50;
-      dataGridView1.Columns[1].Width = 200;
-      dataGridView1.Columns[2].Width = 80;
-      dataGridView1.Columns[3].Width = 80;
-      dataGridView1.Columns[4].Width = 200;
-      dataGridView1.Columns[5].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-      dataGridView1.Columns[6].Width = 100;
-      dataGridView1.Columns[7].Width = 50;
-
-      dataGridView1.AllowUserToAddRows = false;
-      dataGridView1.Rows.Add();
-
-      dataGridView1[0, 0].Value = false;
-      dataGridView1[1, 0].Value = "수정";
-      dataGridView1[2, 0].Value = "수정";
-      dataGridView1[3, 0].Value = "수정";
-      dataGridView1[4, 0].Value = "수정";
-      dataGridView1[5, 0].Value = 50;
-      dataGridView1[6, 0].Value = "비교하기";
-      dataGridView1[7, 0].Value = "수정";
+      //dataGridView1[0, 0].Value = false;
+      //dataGridView1[1, 0].Value = "수정";
+      //dataGridView1[2, 0].Value = "수정";
+      //dataGridView1[3, 0].Value = "수정";
+      //dataGridView1[4, 0].Value = "수정";
+      //dataGridView1[5, 0].Value = 50;
+      //dataGridView1[6, 0].Value = "비교하기";
+      //dataGridView1[7, 0].Value = "수정";
 
 
     }
@@ -509,31 +579,31 @@ brush, e.RowBounds.Location.X + 35, e.RowBounds.Location.Y + 4, drawFormat);
         if (textBoxIp2.Text == "")
         {
           MessageBox.Show("데이터베이스 서버를 입력해주세요.");
-          this.textBoxIp2.Focus();
+          textBoxIp2.Focus();
           return;
         }
-        if (this.textBoxPort2.Text == "")
+        if (textBoxPort2.Text == "")
         {
           MessageBox.Show("Port번호를 입력해 주십시오.");
-          this.textBoxPort2.Focus();
+          textBoxPort2.Focus();
           return;
         }
-        if (this.textBoxDb2.Text == "")
+        if (textBoxDb2.Text == "")
         {
           MessageBox.Show("Database를 입력해 주십시오.");
-          this.textBoxDb2.Focus();
+          textBoxDb2.Focus();
           return;
         }
-        if (this.textBoxUn2.Text == "")
+        if (textBoxUn2.Text == "")
         {
           MessageBox.Show("ID를 입력해 주십시오.");
-          this.textBoxUn2.Focus();
+          textBoxUn2.Focus();
           return;
         }
-        if (this.textBoxPw1.Text == "")
+        if (textBoxPw1.Text == "")
         {
           MessageBox.Show("Password를 입력해 주십시오.");
-          this.textBoxPw2.Focus();
+          textBoxPw2.Focus();
           return;
         }
         btn_TEST_Click(sender, e);
@@ -556,7 +626,22 @@ brush, e.RowBounds.Location.X + 35, e.RowBounds.Location.Y + 4, drawFormat);
 
       MessageBox.Show(str_result);
     }
-  }
+
+		private void label3_Click(object sender, EventArgs e)
+		{
+
+		}
+
+		private void groupBox1_Enter(object sender, EventArgs e)
+		{
+
+		}
+
+		private void label8_Click(object sender, EventArgs e)
+		{
+
+		}
+	}
 }
 /*
  * 
@@ -583,7 +668,7 @@ brush, e.RowBounds.Location.X + 35, e.RowBounds.Location.Y + 4, drawFormat);
 			new Data() { Progress = 92 },
 };
 
-			this.dataGridView1.DataSource = data;
+			dataGridView1.DataSource = data;
 
 	//private void connect(string selectQuery, string account)
 		//{
