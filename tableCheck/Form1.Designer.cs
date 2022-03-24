@@ -232,7 +232,7 @@
 			// label8
 			// 
 			this.label8.AutoSize = true;
-			this.label8.Location = new System.Drawing.Point(474, 7);
+			this.label8.Location = new System.Drawing.Point(468, 7);
 			this.label8.Name = "label8";
 			this.label8.Size = new System.Drawing.Size(72, 12);
 			this.label8.TabIndex = 6;
@@ -381,7 +381,7 @@
 			// CheckBox_All
 			// 
 			this.CheckBox_All.AutoSize = true;
-			this.CheckBox_All.Location = new System.Drawing.Point(709, 34);
+			this.CheckBox_All.Location = new System.Drawing.Point(709, 29);
 			this.CheckBox_All.Name = "CheckBox_All";
 			this.CheckBox_All.Size = new System.Drawing.Size(72, 16);
 			this.CheckBox_All.TabIndex = 9;
@@ -392,7 +392,7 @@
 			// checkBox2
 			// 
 			this.checkBox2.AutoSize = true;
-			this.checkBox2.Location = new System.Drawing.Point(787, 34);
+			this.checkBox2.Location = new System.Drawing.Point(787, 30);
 			this.checkBox2.Name = "checkBox2";
 			this.checkBox2.Size = new System.Drawing.Size(72, 16);
 			this.checkBox2.TabIndex = 9;
@@ -403,7 +403,7 @@
 			// checkBoxCancel
 			// 
 			this.checkBoxCancel.AutoSize = true;
-			this.checkBoxCancel.Location = new System.Drawing.Point(865, 34);
+			this.checkBoxCancel.Location = new System.Drawing.Point(865, 31);
 			this.checkBoxCancel.Name = "checkBoxCancel";
 			this.checkBoxCancel.Size = new System.Drawing.Size(72, 16);
 			this.checkBoxCancel.TabIndex = 9;
