@@ -115,6 +115,7 @@
 			this.dataGridView2.RowTemplate.Height = 23;
 			this.dataGridView2.Size = new System.Drawing.Size(986, 210);
 			this.dataGridView2.TabIndex = 15;
+			this.dataGridView2.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridView2_CellFormatting);
 			this.dataGridView2.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dataGridView2_RowPostPaint);
 			// 
 			// splitter3

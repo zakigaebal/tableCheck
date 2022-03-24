@@ -755,9 +755,16 @@ private void CheckBox_All_CheckedChanged(object sender, EventArgs e)
     void runFields(string tableName)
 		{
       //실행버튼 이벤트 실행
-      string query5 = "";
+      string query5 = "SELECT EXISTS (SELECT 1 FROM Information_schema.tables WHERE table_schema = 'dawoon' AND table_name = '" + tableName +"')" + " AS exist";
       MySqlDataReader rdr = DBConnectTest(conn, _HostName, _PORT, _DATABASE, _ID, _PWD, query5);
 
+      while (rdr.Read())
+      {
+				if (rdr["exist"].ToString() == "0")
+				{
+          MessageBox.Show("없다");
+				}
+      }
 
 
     }
@@ -785,5 +792,15 @@ private void CheckBox_All_CheckedChanged(object sender, EventArgs e)
       if (tbl == null) return;
       showFields(tbl);
     }
-	}
+
+		private void dataGridView2_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+		{
+			for (int i = 5; i < 10; i++)
+			{
+        dataGridView2.Columns[i].DefaultCellStyle.BackColor = Color.Aqua;
+
+      }
+
+    }
+  }
 }
