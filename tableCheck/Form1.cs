@@ -7,12 +7,12 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.UI.WebControls;
 using System.Windows.Forms;
 using DataGridView_component;
 using MySql.Data.MySqlClient;
 using tableCheck.Models;
-
-
+using Ubiety.Dns.Core;
 
 namespace tableCheck
 {
@@ -66,10 +66,7 @@ namespace tableCheck
     public Form1()
     {
       InitializeComponent();
-
       FormClosed += Form_Closing;
-
-
     }
 
     private void Form_Closing(object sender, FormClosedEventArgs e)
@@ -143,15 +140,10 @@ namespace tableCheck
         dataGridView2.Columns.Add("column0", "이름");
         dataGridView2.Columns.Add("column1", "데이터 유형");
         dataGridView2.Columns.Add("column2", "길이/설정");
-        dataGridView2.Columns.Add("column3", "부호 없음");
-        dataGridView2.Columns.Add("column4", "NULL 허용");
-        dataGridView2.Columns.Add("column5", "0으로 채움");
         dataGridView2.Columns.Add("column6", "기본값");
         dataGridView2.Columns.Add("column7", "코멘트");
-        dataGridView2.Columns.Add("column8", "조합");
-        dataGridView2.Columns.Add("column9", "N표현식");
-        dataGridView2.Columns.Add("column10", "가상");
       }
+
       //dgvDesign();
       dataGridView2.AllowUserToAddRows = false;
       dataGridView2.Rows.Add(1);
@@ -356,84 +348,13 @@ namespace tableCheck
         return;
       }
       btn_TEST_Click(sender, e);
-      btn_TEST_Click2(sender, e);
+      //btn_TEST_Click2(sender, e);
 
     }
 
 		private void btn_TEST_Click2(object sender, EventArgs e)
 		{
-      _HostName = textBoxIp1.Text;
-      _PORT = textBoxPort1.Text;
-      _DATABASE = textBoxDb1.Text;
-      _ID = textBoxUn1.Text;
-      _PWD = textBoxPw1.Text;
-
-      _HostName2 = textBoxIp2.Text;
-      _PORT2 = textBoxPort2.Text;
-      _DATABASE2 = textBoxDb2.Text;
-      _ID2 = textBoxUn2.Text;
-      _PWD2 = textBoxPw2.Text;
-
-      MySqlDataReader rdr = DBConnectTest2(conn, _HostName, _PORT, _DATABASE, _ID, _PWD);
-      List<Columns> listTable1 = new List<Columns>();
-      List<Columns> listTable2 = new List<Columns>();
-      List<ColumnsAll> listTableAll = new List<ColumnsAll>();
-      while (rdr.Read())
-      {
-        Columns listInfo = new Columns() { TABLE_NAME = rdr["tbl"].ToString(), COLUMN_NAME = rdr["cnt"].ToString()};
-        listTable1.Add(listInfo);
-      }
-
-      MySqlDataReader rdr2 = DBConnectTest2(conn2, _HostName2, _PORT2, _DATABASE2, _ID2, _PWD2);
-      while (rdr2.Read())
-      {
-        Columns listInfo = new Columns() { TABLE_NAME = rdr2["tbl"].ToString(), COLUMN_NAME = rdr2["cnt"].ToString()};
-        listTable2.Add(listInfo);
-      }
-
-
-      for (int i = 0; i < listTable1.Count; i++)
-      {
-        listTableAll.Add(new ColumnsAll() { TABLE_SCHEMA = "A", TABLE_NAME = listTable1[i].TABLE_NAME, COLUMN_NAME1 = listTable1[i].COLUMN_NAME, COLUMN_NAME2 = "" });
-      }
-      for (int i = 0; i < listTable2.Count; i++)
-      {
-        bool found = false;
-        for (int j = 0; j < listTableAll.Count; j++)
-        {
-          if (listTable2[i].TABLE_NAME == listTableAll[j].TABLE_NAME)
-          {
-            listTableAll[j].COLUMN_NAME2 = listTable2[i].COLUMN_NAME;
-            found = true;
-            listTableAll[j].TABLE_SCHEMA = "A+B";
-            break;
-          }
-
-        }
-        //listTableAll.Add(new ListInfoAll() { db = "A", tableName = listTable1[i].tableName, fieldCount1 = listTable1[i].fieldCount, fieldCount2 = 0 });
-        if (found == false)
-        {
-          listTableAll.Add(new ColumnsAll() { TABLE_SCHEMA = "B", TABLE_NAME = listTable2[i].TABLE_NAME, COLUMN_NAME1 = "", COLUMN_NAME2 = listTable2[i].COLUMN_NAME });
-        }
-
-      }
-
-
-      dataGridView2.Rows.Clear();
-      for (int i = 0; i < listTableAll.Count; i++)
-      {
-        dataGridView2.Rows.Add(1);
-        dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[0].Value = listTableAll[i].TABLE_SCHEMA;
-        if (listTableAll[i].TABLE_SCHEMA == "B")
-        {
-          dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[0].Value = false;
-
-        }
-        dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[1].Value = listTableAll[i].TABLE_NAME;
-        dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[2].Value = listTableAll[i].COLUMN_NAME1;
-        dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[3].Value = listTableAll[i].COLUMN_NAME2;
-        dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[4].Value = listTableAll[i].COLUMN_DEFAULT;
-      }
+      
     }
 
 		class ListInfo
@@ -451,13 +372,9 @@ namespace tableCheck
     }
     class Columns
 		{
-      public string TABLE_SCHEMA; //데이터베이스
-      public string TABLE_NAME; //테이블명
-
       public string COLUMN_NAME; //컬럼명
-      public string COLUMN_TYPE; //길이설정
-      //부호없음
-      bool IS_NULLABLE; //NULL 허용      
+      public string DATA_TYPE; //데이터 타입
+      public string CHARACTER_MAXIMUM_LENGTH; //길이설정 
       public string COLUMN_DEFAULT; //기본값
       public string COLUMN_COMMENT; //코멘트
     }
@@ -468,12 +385,18 @@ namespace tableCheck
       public string TABLE_NAME; //테이블명
 
       public string COLUMN_NAME1; //컬럼명
-      public string COLUMN_NAME2; //컬럼명
-      public string COLUMN_TYPE; //길이설정
-      //부호없음
-      bool IS_NULLABLE; //NULL 허용      
-      public string COLUMN_DEFAULT; //기본값
-      public string COLUMN_COMMENT; //코멘트
+      public string COLUMN_NAME2; //컬럼명    
+
+      public string DATA_TYPE1; //데이터 타입1
+      public string DATA_TYPE2; //데이터 타입2
+
+      public string CHARACTER_MAXIMUM_LENGTH1; //길이설정1
+      public string CHARACTER_MAXIMUM_LENGTH2; //길이설정2
+                                               
+      public string COLUMN_DEFAULT1; //기본값1
+      public string COLUMN_DEFAULT2; //기본값2
+      public string COLUMN_COMMENT1; //코멘트1
+      public string COLUMN_COMMENT2; //코멘트2
     }
 
 
@@ -493,7 +416,11 @@ namespace tableCheck
       _DATABASE2 = textBoxDb2.Text;
       _ID2 = textBoxUn2.Text;
       _PWD2 = textBoxPw2.Text;
-      MySqlDataReader rdr =  DBConnectTest(conn,_HostName, _PORT, _DATABASE, _ID, _PWD);
+      string query1 = "SELECT information_schema.columns.TABLE_NAME tbl, COUNT(*) cnt FROM information_schema.columns WHERE table_schema = '" + _DATABASE + "' group by TABLE_NAME ORDER BY TABLE_NAME asc;";
+      string query2 = "SELECT information_schema.columns.TABLE_NAME tbl, COUNT(*) cnt FROM information_schema.columns WHERE table_schema = '" + _DATABASE2 + "' group by TABLE_NAME ORDER BY TABLE_NAME asc;";
+
+
+      MySqlDataReader rdr =  DBConnectTest(conn,_HostName, _PORT, _DATABASE, _ID, _PWD, query1);
       List<ListInfo> listTable1 = new List<ListInfo>();
       List<ListInfo> listTable2 = new List<ListInfo>();
       List<ListInfoAll> listTableAll = new List<ListInfoAll>();
@@ -505,7 +432,7 @@ namespace tableCheck
 				// dataGridView1.Rows[i].Cells[1].Value = rdr["cnt"].ToString();
 			}
 
-			MySqlDataReader rdr2 = DBConnectTest(conn2, _HostName2, _PORT2, _DATABASE2, _ID2, _PWD2);
+			MySqlDataReader rdr2 = DBConnectTest(conn2, _HostName2, _PORT2, _DATABASE2, _ID2, _PWD2, query2);
       while (rdr2.Read())
       {
         ListInfo listInfo = new ListInfo() { tableName = rdr2["tbl"].ToString(), fieldCount = Convert.ToInt32(rdr2["cnt"].ToString()) };
@@ -560,8 +487,8 @@ namespace tableCheck
 
 
 
-		//DBConnectTest 메소드
-		private MySqlDataReader DBConnectTest(MySqlConnection con,string hostname, string port, string database, string id, string pwd)
+    //DBConnectTest 메소드
+    private MySqlDataReader DBConnectTest(MySqlConnection con,string hostname, string port, string database, string id, string pwd, string query)
     {
       StringBuilder _strArg = new StringBuilder("");
         MySqlDataReader rdr;
@@ -582,8 +509,10 @@ namespace tableCheck
       try
       {
         con.Open();
-        string sql = "SELECT information_schema.columns.TABLE_NAME tbl, COUNT(*) cnt FROM information_schema.columns WHERE table_schema = '" + database + "' group by TABLE_NAME ORDER BY TABLE_NAME asc;";
-       // string sql2 = "SELECT TABLE_NAME tbl,COLUMN_NAME cnt,COLUMN_TYPE,IS_NULLABLE,COLUMN_DEFAULT,COLUMN_COMMENT FROM information_schema.columns WHERE table_schema = 'dawoon' and TABLE_NAME = 'dc_account' group by tbl,column_NAME ORDER BY TABLE_NAME asc";
+        //string sql = "SELECT information_schema.columns.TABLE_NAME tbl, COUNT(*) cnt FROM information_schema.columns WHERE table_schema = '" + database + "' group by TABLE_NAME ORDER BY TABLE_NAME asc;";
+        // string sql2 = "SELECT TABLE_NAME tbl,COLUMN_NAME cnt,COLUMN_TYPE,IS_NULLABLE,COLUMN_DEFAULT,COLUMN_COMMENT FROM information_schema.columns WHERE table_schema = 'dawoon' and TABLE_NAME = 'dc_account' group by tbl,column_NAME ORDER BY TABLE_NAME asc";
+
+        string sql = query;
 
         MySqlCommand cmd = new MySqlCommand(sql, con);
         rdr = cmd.ExecuteReader();
@@ -609,7 +538,7 @@ namespace tableCheck
 
 
     //DBConnectTest 메소드
-    private MySqlDataReader DBConnectTest2(MySqlConnection con, string hostname, string port, string database, string id, string pwd)
+    private MySqlDataReader DBConnectTest2(MySqlConnection con, string hostname, string port, string database, string id, string pwd, string tableName)
     {
       StringBuilder _strArg = new StringBuilder("");
       MySqlDataReader rdr;
@@ -630,8 +559,7 @@ namespace tableCheck
       try
       {
         con.Open();
-        string sql2 = "SELECT TABLE_NAME tbl,COLUMN_NAME cnt,COLUMN_TYPE,IS_NULLABLE,COLUMN_DEFAULT,COLUMN_COMMENT FROM information_schema.columns WHERE table_schema = 'dawoon' and TABLE_NAME = 'dc_account' group by tbl,column_NAME ORDER BY TABLE_NAME asc";
-
+        string sql2 = "SELECT COLUMN_NAME fieldName, DATA_TYPE dataType, CHARACTER_MAXIMUM_LENGTH length, COLUMN_DEFAULT default1, COLUMN_COMMENT comment FROM information_schema.columns WHERE table_schema= '" + database + "' and TABLE_NAME = '" + tableName + "' ORDER BY TABLE_NAME asc";
         MySqlCommand cmd = new MySqlCommand(sql2, con);
         rdr = cmd.ExecuteReader();
         return rdr;
@@ -672,5 +600,190 @@ namespace tableCheck
 		{
 
 		}
+
+		private void buttonClear_Click(object sender, EventArgs e)
+		{
+      dataGridView1.Rows.Clear();
+      dataGridView2.Rows.Clear();
+
+    }
+    public void checkall()
+    {
+    
+
+}
+    
+
+
+
+private void CheckBox_All_CheckedChanged(object sender, EventArgs e)
+		{
+      try
+      {
+				for (int i = 0; i < dataGridView1.Rows.Count; i++)
+				{
+          dataGridView1.Rows[i].Cells[0].Value = true;
+				}
+
+      }
+      catch (Exception ex)
+      {
+
+        //Response.Write(e);
+      }
+    }
+
+		private void checkBox2_CheckedChanged(object sender, EventArgs e)
+		{
+      try
+      {
+        for (int i = 0; i < dataGridView1.Rows.Count; i++)
+        {
+
+          dataGridView1.Rows[i].Cells[0].Value = !Convert.ToBoolean(dataGridView1.Rows[i].Cells[0].Value);
+        }
+
+      }
+      catch (Exception ex)
+      {
+
+        //Response.Write(e);
+      }
+    }
+
+		private void checkBoxCancel_CheckedChanged(object sender, EventArgs e)
+		{
+      try
+      {
+        for (int i = 0; i < dataGridView1.Rows.Count; i++)
+        {
+
+          dataGridView1.Rows[i].Cells[0].Value = false;
+        }
+
+      }
+      catch (Exception ex)
+      {
+
+        //Response.Write(e);
+      }
+    }
+
+		private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+		{
+      if (e.RowIndex < 0) return;
+      string tbl = dataGridView1.Rows[e.RowIndex].Cells[2].Value.ToString();
+			if (tbl == null) return;
+      showFields(tbl);
+		}
+    void showFields(string tableName)
+		{
+      // 테이블명의 필드를 가져와서 데이터그리드뷰2에 보여준다
+      //MessageBox.Show(tableName);
+
+      MySqlDataReader rdr = DBConnectTest2(conn, _HostName, _PORT, _DATABASE, _ID, _PWD, tableName);
+      List<Columns> listTable1 = new List<Columns>();
+      List<Columns> listTable2 = new List<Columns>();
+      List<ColumnsAll> listTableAll = new List<ColumnsAll>();
+      while (rdr.Read())
+      {
+        Columns listInfo = new Columns() { COLUMN_NAME = rdr["fieldName"].ToString(), DATA_TYPE = rdr["dataType"].ToString(), CHARACTER_MAXIMUM_LENGTH = rdr["length"].ToString(), COLUMN_DEFAULT = rdr["default1"].ToString(), COLUMN_COMMENT = rdr["comment"].ToString() };
+        listTable1.Add(listInfo);
+      }
+
+			MySqlDataReader rdr2 = DBConnectTest2(conn2, _HostName2, _PORT2, _DATABASE2, _ID2, _PWD2, tableName);
+
+
+			while (rdr2.Read())
+			{
+				Columns listInfo = new Columns()  {COLUMN_NAME = rdr2["fieldName"].ToString(), DATA_TYPE = rdr2["dataType"].ToString(), CHARACTER_MAXIMUM_LENGTH = rdr2["length"].ToString(), COLUMN_DEFAULT = rdr2["default1"].ToString(), COLUMN_COMMENT = rdr2["comment"].ToString() };
+				listTable2.Add(listInfo);
+			}
+
+			for (int i = 0; i < listTable1.Count; i++)
+      {
+        listTableAll.Add(new ColumnsAll() 
+        { COLUMN_NAME1 = listTable1[i].COLUMN_NAME, 
+          DATA_TYPE1 = listTable1[i].DATA_TYPE, 
+          CHARACTER_MAXIMUM_LENGTH1 = listTable1[i].CHARACTER_MAXIMUM_LENGTH,
+          COLUMN_DEFAULT1 = listTable1[i].COLUMN_DEFAULT,
+          COLUMN_COMMENT1 = listTable1[i].COLUMN_COMMENT
+        });
+
+      }
+      for (int i = 0; i < listTable2.Count; i++)
+      {
+        listTableAll.Add(new ColumnsAll()
+        {
+          COLUMN_NAME2 = listTable2[i].COLUMN_NAME,
+          DATA_TYPE2 = listTable2[i].DATA_TYPE,
+          CHARACTER_MAXIMUM_LENGTH2 = listTable2[i].CHARACTER_MAXIMUM_LENGTH,
+          COLUMN_DEFAULT2 = listTable2[i].COLUMN_DEFAULT,
+          COLUMN_COMMENT2 = listTable2[i].COLUMN_COMMENT
+        });
+    
+      }
+
+
+
+
+
+
+      dataGridView2.Rows.Clear();
+      for (int i = 0; i < listTableAll.Count; i++)
+      {
+        dataGridView2.Rows.Add(1);
+        dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[0].Value = listTableAll[i].COLUMN_NAME1;
+        dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[1].Value = listTableAll[i].DATA_TYPE1;
+        dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[2].Value = listTableAll[i].CHARACTER_MAXIMUM_LENGTH1;
+        dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[3].Value = listTableAll[i].COLUMN_DEFAULT1;
+        dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[4].Value = listTableAll[i].COLUMN_COMMENT1;
+
+        dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[5].Value = listTableAll[i].COLUMN_NAME2;
+        dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[6].Value = listTableAll[i].DATA_TYPE2;
+        dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[7].Value = listTableAll[i].CHARACTER_MAXIMUM_LENGTH2;
+        dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[8].Value = listTableAll[i].COLUMN_DEFAULT2;
+        dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[9].Value = listTableAll[i].COLUMN_COMMENT2;
+        //dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[4].Value = listTableAll[i].COLUMN_DEFAULT;
+      }
+
+
+
+
+
+    }
+    void runFields(string tableName)
+		{
+      //실행버튼 이벤트 실행
+      string query5 = "";
+      MySqlDataReader rdr = DBConnectTest(conn, _HostName, _PORT, _DATABASE, _ID, _PWD, query5);
+
+
+
+    }
+
+		private void buttonStart_Click(object sender, EventArgs e)
+		{
+			for (int i = 0; i < dataGridView1.Rows.Count; i++)
+			{
+        string tbl = dataGridView1.Rows[i].Cells[2].ToString();
+        if (tbl == null) return;
+        showFields(tbl);
+        runFields(tbl);
+      }
+		}
+
+		private void dataGridView1_SelectionChanged(object sender, EventArgs e)
+		{
+      int rowIndex = dataGridView1.CurrentCell.RowIndex;
+      if (rowIndex < 0) return;
+      if (dataGridView1.Rows[rowIndex].Cells[0].Value == null)
+      {
+        return;
+      }
+      string tbl = dataGridView1.Rows[rowIndex].Cells[2].Value.ToString();
+      if (tbl == null) return;
+      showFields(tbl);
+    }
 	}
 }
