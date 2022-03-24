@@ -403,8 +403,10 @@ namespace tableCheck
 			public string COLUMN_COMMENT1; //코멘트1
 			public string COLUMN_COMMENT2; //코멘트2
 
-			public string IS_NULLABLE; //NULL 허용
-			public string COLLATION_NAME; //조합
+			public string IS_NULLABLE1; //NULL 허용1
+			public string IS_NULLABLE2; //NULL 허용1
+			public string COLLATION_NAME1; //조합
+			public string COLLATION_NAME2; //조합
 		}
 
 
@@ -686,105 +688,114 @@ namespace tableCheck
 		}
 		void showFields(string tableName)
 		{
-			// 테이블명의 필드를 가져와서 데이터그리드뷰2에 보여준다
-			//MessageBox.Show(tableName);
 
-			MySqlDataReader rdr = DBConnectTest2(conn, _HostName, _PORT, _DATABASE, _ID, _PWD, tableName);
-			List<Columns> listTable1 = new List<Columns>();
-			List<Columns> listTable2 = new List<Columns>();
-			List<ColumnsAll> listTableAll = new List<ColumnsAll>();
-			while (rdr.Read())
+			try
 			{
-				Columns listInfo = new Columns() { COLUMN_NAME = rdr["fieldName"].ToString(), DATA_TYPE = rdr["dataType"].ToString(), CHARACTER_MAXIMUM_LENGTH = rdr["length"].ToString(), COLUMN_DEFAULT = rdr["default1"].ToString(), COLUMN_COMMENT = rdr["comment"].ToString(), IS_NULLABLE = rdr["nullable"].ToString(), COLLATION_NAME = rdr["colName"].ToString() };
-				listTable1.Add(listInfo);
-			}
+				// 테이블명의 필드를 가져와서 데이터그리드뷰2에 보여준다
+				//MessageBox.Show(tableName);
 
-			MySqlDataReader rdr2 = DBConnectTest2(conn2, _HostName2, _PORT2, _DATABASE2, _ID2, _PWD2, tableName);
-
-
-			while (rdr2.Read())
-			{
-				Columns listInfo = new Columns() { COLUMN_NAME = rdr2["fieldName"].ToString(), DATA_TYPE = rdr2["dataType"].ToString(), CHARACTER_MAXIMUM_LENGTH = rdr2["length"].ToString(), COLUMN_DEFAULT = rdr2["default1"].ToString(), COLUMN_COMMENT = rdr2["comment"].ToString(), IS_NULLABLE = rdr["nullable"].ToString(), COLLATION_NAME = rdr["colName"].ToString() };
-				listTable2.Add(listInfo);
-			}
-
-			for (int i = 0; i < listTable1.Count; i++)
-			{
-				listTableAll.Add(new ColumnsAll()
+				MySqlDataReader rdr = DBConnectTest2(conn, _HostName, _PORT, _DATABASE, _ID, _PWD, tableName);
+				List<Columns> listTable1 = new List<Columns>();
+				List<Columns> listTable2 = new List<Columns>();
+				List<ColumnsAll> listTableAll = new List<ColumnsAll>();
+				while (rdr.Read())
 				{
-					COLUMN_NAME1 = listTable1[i].COLUMN_NAME,
-					DATA_TYPE1 = listTable1[i].DATA_TYPE,
-					CHARACTER_MAXIMUM_LENGTH1 = listTable1[i].CHARACTER_MAXIMUM_LENGTH,
-					COLUMN_DEFAULT1 = listTable1[i].COLUMN_DEFAULT,
-					COLUMN_COMMENT1 = listTable1[i].COLUMN_COMMENT,
-					IS_NULLABLE = listTable1[i].IS_NULLABLE,
-					COLLATION_NAME =listTable1[i].COLLATION_NAME
-				});
-
-			}
-			for (int i = 0; i < listTable2.Count; i++)
-			{
-				bool found = false;
-				for (int j = 0; j < listTableAll.Count; j++)
-				{
-					//for (int i = 0; i < listTable2.Count; i++)
-					//{
-					//  for (int j = 0; j < listTableAll.Count; j++)
-					//  {
-					if (listTable2[i].COLUMN_NAME == listTableAll[j].COLUMN_NAME1)
-					{
-						listTableAll[j].COLUMN_NAME2 = listTable2[i].COLUMN_NAME;
-						listTableAll[j].DATA_TYPE2 = listTable2[i].DATA_TYPE;
-						listTableAll[j].CHARACTER_MAXIMUM_LENGTH2 = listTable2[i].CHARACTER_MAXIMUM_LENGTH;
-						listTableAll[j].COLUMN_DEFAULT2 = listTable2[i].COLUMN_DEFAULT;
-						listTableAll[j].COLUMN_COMMENT2 = listTable2[i].COLUMN_COMMENT;
-
-						listTableAll[j].IS_NULLABLE = listTable2[i].IS_NULLABLE;
-						listTableAll[j].COLLATION_NAME = listTable2[i].COLLATION_NAME;
-						found = true;
-						listTableAll[j].TABLE = "A+B";
-						break;
-					}
+					Columns listInfo = new Columns() { COLUMN_NAME = rdr["fieldName"].ToString(), DATA_TYPE = rdr["dataType"].ToString(), CHARACTER_MAXIMUM_LENGTH = rdr["length"].ToString(), COLUMN_DEFAULT = rdr["default1"].ToString(), COLUMN_COMMENT = rdr["comment"].ToString(), IS_NULLABLE = rdr["nullable"].ToString(), COLLATION_NAME = rdr["colName"].ToString() };
+					listTable1.Add(listInfo);
 				}
-				//listTableAll.Add(new ListInfoAll() { db = "A", tableName = listTable1[i].tableName, fieldCount1 = listTable1[i].fieldCount, fieldCount2 = 0 });
-				if (found == false)
+
+				MySqlDataReader rdr2 = DBConnectTest2(conn2, _HostName2, _PORT2, _DATABASE2, _ID2, _PWD2, tableName);
+
+
+				while (rdr2.Read())
+				{
+					Columns listInfo = new Columns() { COLUMN_NAME = rdr2["fieldName"].ToString(), DATA_TYPE = rdr2["dataType"].ToString(), CHARACTER_MAXIMUM_LENGTH = rdr2["length"].ToString(), COLUMN_DEFAULT = rdr2["default1"].ToString(), COLUMN_COMMENT = rdr2["comment"].ToString(), IS_NULLABLE = rdr2["nullable"].ToString(), COLLATION_NAME = rdr2["colName"].ToString() };
+					listTable2.Add(listInfo);
+				}
+
+				for (int i = 0; i < listTable1.Count; i++)
 				{
 					listTableAll.Add(new ColumnsAll()
 					{
-						COLUMN_NAME2 = listTable2[i].COLUMN_NAME,
-						DATA_TYPE2 = listTable2[i].DATA_TYPE,
-						CHARACTER_MAXIMUM_LENGTH2 = listTable2[i].CHARACTER_MAXIMUM_LENGTH,
-						COLUMN_DEFAULT2 = listTable2[i].COLUMN_DEFAULT,
-						COLUMN_COMMENT2 = listTable2[i].COLUMN_COMMENT,
-
-						IS_NULLABLE = listTable2[i].IS_NULLABLE,
-						COLLATION_NAME = listTable2[i].COLLATION_NAME
+						COLUMN_NAME1 = listTable1[i].COLUMN_NAME,
+						DATA_TYPE1 = listTable1[i].DATA_TYPE,
+						CHARACTER_MAXIMUM_LENGTH1 = listTable1[i].CHARACTER_MAXIMUM_LENGTH,
+						COLUMN_DEFAULT1 = listTable1[i].COLUMN_DEFAULT,
+						COLUMN_COMMENT1 = listTable1[i].COLUMN_COMMENT,
+						IS_NULLABLE1 = listTable1[i].IS_NULLABLE,
+						COLLATION_NAME1 = listTable1[i].COLLATION_NAME
 					});
+
+				}
+				for (int i = 0; i < listTable2.Count; i++)
+				{
+					bool found = false;
+					for (int j = 0; j < listTableAll.Count; j++)
+					{
+						//for (int i = 0; i < listTable2.Count; i++)
+						//{
+						//  for (int j = 0; j < listTableAll.Count; j++)
+						//  {
+						if (listTable2[i].COLUMN_NAME == listTableAll[j].COLUMN_NAME1)
+						{
+							listTableAll[j].COLUMN_NAME2 = listTable2[i].COLUMN_NAME;
+							listTableAll[j].DATA_TYPE2 = listTable2[i].DATA_TYPE;
+							listTableAll[j].CHARACTER_MAXIMUM_LENGTH2 = listTable2[i].CHARACTER_MAXIMUM_LENGTH;
+							listTableAll[j].COLUMN_DEFAULT2 = listTable2[i].COLUMN_DEFAULT;
+							listTableAll[j].COLUMN_COMMENT2 = listTable2[i].COLUMN_COMMENT;
+
+							listTableAll[j].IS_NULLABLE2 = listTable2[i].IS_NULLABLE;
+							listTableAll[j].COLLATION_NAME2 = listTable2[i].COLLATION_NAME;
+							found = true;
+							listTableAll[j].TABLE = "A+B";
+							break;
+						}
+					}
+					//listTableAll.Add(new ListInfoAll() { db = "A", tableName = listTable1[i].tableName, fieldCount1 = listTable1[i].fieldCount, fieldCount2 = 0 });
+					if (found == false)
+					{
+						listTableAll.Add(new ColumnsAll()
+						{
+							COLUMN_NAME2 = listTable2[i].COLUMN_NAME,
+							DATA_TYPE2 = listTable2[i].DATA_TYPE,
+							CHARACTER_MAXIMUM_LENGTH2 = listTable2[i].CHARACTER_MAXIMUM_LENGTH,
+							COLUMN_DEFAULT2 = listTable2[i].COLUMN_DEFAULT,
+							COLUMN_COMMENT2 = listTable2[i].COLUMN_COMMENT,
+
+							IS_NULLABLE2 = listTable2[i].IS_NULLABLE,
+							COLLATION_NAME2 = listTable2[i].COLLATION_NAME
+						});
+					}
+				}
+
+
+				dataGridView2.Rows.Clear();
+				for (int i = 0; i < listTableAll.Count; i++)
+				{
+					dataGridView2.Rows.Add(1);
+					dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[0].Value = listTableAll[i].COLUMN_NAME1;
+					dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[1].Value = listTableAll[i].DATA_TYPE1;
+					dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[2].Value = listTableAll[i].CHARACTER_MAXIMUM_LENGTH1;
+					dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[3].Value = listTableAll[i].COLUMN_DEFAULT1;
+					dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[4].Value = listTableAll[i].COLUMN_COMMENT1;
+					dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[5].Value = listTableAll[i].IS_NULLABLE1;
+					dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[6].Value = listTableAll[i].COLLATION_NAME1;
+
+					dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[7].Value = listTableAll[i].COLUMN_NAME2;
+					dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[8].Value = listTableAll[i].DATA_TYPE2;
+					dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[9].Value = listTableAll[i].CHARACTER_MAXIMUM_LENGTH2;
+					dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[10].Value = listTableAll[i].COLUMN_DEFAULT2;
+					dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[11].Value = listTableAll[i].COLUMN_COMMENT2;
+					dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[12].Value = listTableAll[i].IS_NULLABLE2;
+					dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[13].Value = listTableAll[i].COLLATION_NAME2;
 				}
 			}
-
-
-			dataGridView2.Rows.Clear();
-			for (int i = 0; i < listTableAll.Count; i++)
+			catch (Exception ex)
 			{
-				dataGridView2.Rows.Add(1);
-				dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[0].Value = listTableAll[i].COLUMN_NAME1;
-				dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[1].Value = listTableAll[i].DATA_TYPE1;
-				dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[2].Value = listTableAll[i].CHARACTER_MAXIMUM_LENGTH1;
-				dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[3].Value = listTableAll[i].COLUMN_DEFAULT1;
-				dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[4].Value = listTableAll[i].COLUMN_COMMENT1;
-				dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[5].Value = listTableAll[i].IS_NULLABLE;
-				dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[6].Value = listTableAll[i].COLLATION_NAME;
-
-				dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[7].Value = listTableAll[i].COLUMN_NAME2;
-				dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[8].Value = listTableAll[i].DATA_TYPE2;
-				dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[7].Value = listTableAll[i].CHARACTER_MAXIMUM_LENGTH2;
-				dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[8].Value = listTableAll[i].COLUMN_DEFAULT2;
-				dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[9].Value = listTableAll[i].COLUMN_COMMENT2;
-				dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[10].Value = listTableAll[i].IS_NULLABLE;
-				dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[11].Value = listTableAll[i].COLLATION_NAME;
-				//dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[4].Value = listTableAll[i].COLUMN_DEFAULT;
+				MessageBox.Show(ex.Message);
+				LogMgr.ExceptionLog(ex);
 			}
+		
 
 		}
 		void runFields(string tableName)
