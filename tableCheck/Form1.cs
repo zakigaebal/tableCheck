@@ -878,7 +878,7 @@ namespace tableCheck
 
 					fields = fields + "`" + fieldName + "` " + columnType + " " + nullable + def +  columnComment + " charset utf8,\n";  
 			}
-
+			///
 			string queryCreate = "SET NAMES utf8; CREATE TABLE `" + tbl
 				+ "` \n(" + fields + " PRIMARY KEY (`" + primarykey + "`) USING BTREE\n"
 				+ ")\n ENGINE = InnoDB DEFAULT CHARSET=utf8";
