@@ -65,6 +65,8 @@
 			this.textBoxUn1 = new System.Windows.Forms.TextBox();
 			this.label5 = new System.Windows.Forms.Label();
 			this.button1 = new System.Windows.Forms.Button();
+			this.buttonDelete = new System.Windows.Forms.Button();
+			this.button2 = new System.Windows.Forms.Button();
 			this.panel1.SuspendLayout();
 			this.panel5.SuspendLayout();
 			this.panel7.SuspendLayout();
@@ -82,7 +84,7 @@
 			this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panel1.Location = new System.Drawing.Point(0, 0);
 			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size(851, 590);
+			this.panel1.Size = new System.Drawing.Size(1020, 590);
 			this.panel1.TabIndex = 0;
 			// 
 			// panel5
@@ -91,30 +93,29 @@
 			this.panel5.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panel5.Location = new System.Drawing.Point(0, 50);
 			this.panel5.Name = "panel5";
-			this.panel5.Size = new System.Drawing.Size(851, 540);
+			this.panel5.Size = new System.Drawing.Size(1020, 540);
 			this.panel5.TabIndex = 17;
 			// 
 			// panel7
 			// 
-			this.panel7.Controls.Add(this.dataGridView2);
-			this.panel7.Controls.Add(this.splitter3);
 			this.panel7.Controls.Add(this.dataGridView1);
+			this.panel7.Controls.Add(this.splitter3);
+			this.panel7.Controls.Add(this.dataGridView2);
 			this.panel7.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panel7.Location = new System.Drawing.Point(0, 0);
 			this.panel7.Name = "panel7";
-			this.panel7.Size = new System.Drawing.Size(851, 540);
+			this.panel7.Size = new System.Drawing.Size(1020, 540);
 			this.panel7.TabIndex = 0;
 			// 
 			// dataGridView2
 			// 
 			this.dataGridView2.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
 			this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			this.dataGridView2.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.dataGridView2.Dock = System.Windows.Forms.DockStyle.Bottom;
 			this.dataGridView2.Location = new System.Drawing.Point(0, 197);
 			this.dataGridView2.Name = "dataGridView2";
-			this.dataGridView2.ReadOnly = true;
 			this.dataGridView2.RowTemplate.Height = 23;
-			this.dataGridView2.Size = new System.Drawing.Size(851, 343);
+			this.dataGridView2.Size = new System.Drawing.Size(1020, 343);
 			this.dataGridView2.TabIndex = 15;
 			this.dataGridView2.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridView2_CellFormatting);
 			this.dataGridView2.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dataGridView2_RowPostPaint);
@@ -123,22 +124,21 @@
 			// 
 			this.splitter3.BackColor = System.Drawing.Color.MistyRose;
 			this.splitter3.Cursor = System.Windows.Forms.Cursors.HSplit;
-			this.splitter3.Dock = System.Windows.Forms.DockStyle.Top;
+			this.splitter3.Dock = System.Windows.Forms.DockStyle.Bottom;
 			this.splitter3.Location = new System.Drawing.Point(0, 190);
 			this.splitter3.Name = "splitter3";
-			this.splitter3.Size = new System.Drawing.Size(851, 7);
+			this.splitter3.Size = new System.Drawing.Size(1020, 7);
 			this.splitter3.TabIndex = 0;
 			this.splitter3.TabStop = false;
 			// 
 			// dataGridView1
 			// 
 			this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Top;
+			this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.dataGridView1.Location = new System.Drawing.Point(0, 0);
 			this.dataGridView1.Name = "dataGridView1";
-			this.dataGridView1.ReadOnly = true;
 			this.dataGridView1.RowTemplate.Height = 23;
-			this.dataGridView1.Size = new System.Drawing.Size(851, 190);
+			this.dataGridView1.Size = new System.Drawing.Size(1020, 190);
 			this.dataGridView1.TabIndex = 4;
 			this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
 			this.dataGridView1.CurrentCellDirtyStateChanged += new System.EventHandler(this.dataGridView1_CurrentCellDirtyStateChanged);
@@ -152,12 +152,12 @@
 			this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
 			this.panel2.Location = new System.Drawing.Point(0, 0);
 			this.panel2.Name = "panel2";
-			this.panel2.Size = new System.Drawing.Size(851, 50);
+			this.panel2.Size = new System.Drawing.Size(1020, 50);
 			this.panel2.TabIndex = 10;
 			// 
 			// panel4
 			// 
-			this.panel4.Controls.Add(this.button1);
+			this.panel4.Controls.Add(this.buttonDelete);
 			this.panel4.Controls.Add(this.label2);
 			this.panel4.Controls.Add(this.textBoxDb2);
 			this.panel4.Controls.Add(this.label6);
@@ -174,7 +174,7 @@
 			this.panel4.Dock = System.Windows.Forms.DockStyle.Top;
 			this.panel4.Location = new System.Drawing.Point(0, 23);
 			this.panel4.Name = "panel4";
-			this.panel4.Size = new System.Drawing.Size(851, 22);
+			this.panel4.Size = new System.Drawing.Size(1020, 22);
 			this.panel4.TabIndex = 16;
 			this.panel4.Paint += new System.Windows.Forms.PaintEventHandler(this.panel4_Paint);
 			// 
@@ -294,6 +294,8 @@
 			// 
 			// panel3
 			// 
+			this.panel3.Controls.Add(this.button2);
+			this.panel3.Controls.Add(this.button1);
 			this.panel3.Controls.Add(this.buttonClear);
 			this.panel3.Controls.Add(this.buttonStart);
 			this.panel3.Controls.Add(this.buttonOnes);
@@ -311,7 +313,7 @@
 			this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
 			this.panel3.Location = new System.Drawing.Point(0, 0);
 			this.panel3.Name = "panel3";
-			this.panel3.Size = new System.Drawing.Size(851, 23);
+			this.panel3.Size = new System.Drawing.Size(1020, 23);
 			this.panel3.TabIndex = 15;
 			// 
 			// buttonClear
@@ -437,18 +439,39 @@
 			// 
 			// button1
 			// 
-			this.button1.Location = new System.Drawing.Point(830, 6);
+			this.button1.Location = new System.Drawing.Point(938, -1);
 			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(17, 23);
+			this.button1.Size = new System.Drawing.Size(79, 25);
 			this.button1.TabIndex = 10;
-			this.button1.Text = "button1";
+			this.button1.Text = "삭제후 생성";
 			this.button1.UseVisualStyleBackColor = true;
+			this.button1.Click += new System.EventHandler(this.button1_Click);
+			// 
+			// buttonDelete
+			// 
+			this.buttonDelete.Location = new System.Drawing.Point(974, 0);
+			this.buttonDelete.Name = "buttonDelete";
+			this.buttonDelete.Size = new System.Drawing.Size(46, 25);
+			this.buttonDelete.TabIndex = 10;
+			this.buttonDelete.Text = "삭제";
+			this.buttonDelete.UseVisualStyleBackColor = true;
+			this.buttonDelete.Click += new System.EventHandler(this.buttonDelete_Click);
+			// 
+			// button2
+			// 
+			this.button2.Location = new System.Drawing.Point(857, 0);
+			this.button2.Name = "button2";
+			this.button2.Size = new System.Drawing.Size(75, 23);
+			this.button2.TabIndex = 19;
+			this.button2.Text = "alter";
+			this.button2.UseVisualStyleBackColor = true;
+			this.button2.Click += new System.EventHandler(this.button2_Click);
 			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(851, 590);
+			this.ClientSize = new System.Drawing.Size(1020, 590);
 			this.Controls.Add(this.panel1);
 			this.Name = "Form1";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -507,6 +530,8 @@
 		private System.Windows.Forms.Button buttonStart;
 		private System.Windows.Forms.Button buttonOnes;
 		private System.Windows.Forms.Button button1;
+		private System.Windows.Forms.Button buttonDelete;
+		private System.Windows.Forms.Button button2;
 	}
 }
 

@@ -147,6 +147,7 @@ namespace DataGridView_component
             }
         }
         
+
         public override object Clone()
         {
             DataGridViewProgressCell dataGridViewCell = base.Clone() as DataGridViewProgressCell;

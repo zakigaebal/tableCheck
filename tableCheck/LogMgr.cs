@@ -16,6 +16,12 @@ namespace tableCheck
 		{
 			try
 			{
+				//폴더 있는지 확인하고 생성하기
+				if (!Directory.Exists("Log"))
+				{
+					System.IO.Directory.CreateDirectory("Log");
+				}
+
 				string currentPath = System.IO.Directory.GetCurrentDirectory();
 				string logName = @"" + currentPath + "\\Log\\" + "Error-MQTT-" + DateTime.Now.ToString("yyyy-MM-dd") + ".log";
 				string logFileName = DateTime.Now.ToString("yyyy-MM-dd") + ".log";
