@@ -125,8 +125,11 @@ namespace tableCheck
 				dataGridView2.Columns.Add("column7", "코멘트");
 				dataGridView2.Columns.Add("column7", "NULL 허용");
 				dataGridView2.Columns.Add("column7", "조합");
+				dataGridView2.Columns.Add("column7", "EXTRA");
 			}
 			dataGridView2.AllowUserToAddRows = false;
+
+
 		}
 		private void dataGridView1_CurrentCellDirtyStateChanged(object sender, EventArgs e)
 		{
@@ -278,7 +281,7 @@ namespace tableCheck
 			}
 			btn_TEST_Click(sender, e);
 			//btn_TEST_Click2(sender, e);
-
+			compare();
 		}
 
 		private void btn_TEST_Click2(object sender, EventArgs e)
@@ -291,6 +294,9 @@ namespace tableCheck
 			public string tableName;
 			public int fieldCount;
 			public string tableCmt;
+
+			public string SHOWTABLE;
+			public string CREATETABLE;
 		}
 
 		class ListInfoAll
@@ -301,6 +307,10 @@ namespace tableCheck
 			public int fieldCount2;
 
 			public string tableCmt;
+
+			public string SHOWTABLE;
+			public string CREATETABLE1;
+			public string CREATETABLE2;
 		}
 		class Columns
 		{
@@ -312,6 +322,10 @@ namespace tableCheck
 
 			public string IS_NULLABLE; //NULL 허용
 			public string COLLATION_NAME; //조합
+			public string INCREMENT;
+
+			public string SHOWTABLE;
+			public string CREATETABLE;
 		}
 
 		class ColumnsAll
@@ -337,6 +351,13 @@ namespace tableCheck
 			public string IS_NULLABLE2; //NULL 허용1
 			public string COLLATION_NAME1; //조합
 			public string COLLATION_NAME2; //조합
+			public string INCREMENT1; //
+			public string INCREMENT2; //조합
+
+			public string SHOWTABLE1;
+			public string SHOWTABLE2;
+			public string CREATETABLE1;
+			public string CREATETABLE2;
 		}
 
 
@@ -344,7 +365,6 @@ namespace tableCheck
 		//연결테스트 버튼 클릭
 		private void btn_TEST_Click(object sender, EventArgs e)
 		{
-
 			_HostName = textBoxIp1.Text;
 			_PORT = textBoxPort1.Text;
 			_DATABASE = textBoxDb1.Text;
@@ -356,17 +376,22 @@ namespace tableCheck
 			_DATABASE2 = textBoxDb2.Text;
 			_ID2 = textBoxUn2.Text;
 			_PWD2 = textBoxPw2.Text;
-			string query1 = "SELECT b.table_name tbl, a.table_comment cmt, COUNT(*) cnt  FROM information_schema.tables a left JOIN information_schema.columns b ON a.TABLE_NAME=b.table_name WHERE a.table_schema = '" + _DATABASE + "' AND b.table_schema = '" + _DATABASE + "' group BY b.TABLE_NAME ORDER BY b.TABLE_NAME asc;";
-			string query2 = "SELECT b.table_name tbl, a.table_comment cmt, COUNT(*) cnt  FROM information_schema.tables a left JOIN information_schema.columns b ON a.TABLE_NAME=b.table_name WHERE a.table_schema = '" + _DATABASE2 + "' AND b.table_schema = '" + _DATABASE2 + "' group BY b.TABLE_NAME ORDER BY b.TABLE_NAME asc;";
+			
+			
+			string query1 = "SELECT b.table_name tbl, a.table_comment cmt, COUNT(*) cnt, b.EXTRA ex  FROM information_schema.tables a left JOIN information_schema.columns b ON a.TABLE_NAME=b.table_name WHERE a.table_schema = '" + _DATABASE + "' AND b.table_schema = '" + _DATABASE + "'  AND a.table_type='BASE TABLE' group BY b.TABLE_NAME ORDER BY b.TABLE_NAME asc;";
+			string query2 = "SELECT b.table_name tbl, a.table_comment cmt, COUNT(*) cnt, b.EXTRA ex  FROM information_schema.tables a left JOIN information_schema.columns b ON a.TABLE_NAME=b.table_name WHERE a.table_schema = '" + _DATABASE2 + "' AND b.table_schema = '" + _DATABASE2 + "' AND a.table_type='BASE TABLE'  group BY b.TABLE_NAME ORDER BY b.TABLE_NAME asc;";
 
 
+		//	MySqlDataAdapter adp = DBAdapter(conn, _HostName, _PORT, _DATABASE, _ID, _PWD, query1);
 			MySqlDataReader rdr = DBConnectTest(conn, _HostName, _PORT, _DATABASE, _ID, _PWD, query1);
 			List<ListInfo> listTable1 = new List<ListInfo>();
 			List<ListInfo> listTable2 = new List<ListInfo>();
 			List<ListInfoAll> listTableAll = new List<ListInfoAll>();
+
+
 			while (rdr.Read())
 			{
-				ListInfo listInfo = new ListInfo() { tableName = rdr["tbl"].ToString(), fieldCount = Convert.ToInt32(rdr["cnt"].ToString()), tableCmt = rdr["cmt"].ToString() };
+				ListInfo listInfo = new ListInfo() { tableName = rdr["tbl"].ToString(), fieldCount = Convert.ToInt32(rdr["cnt"].ToString()), tableCmt = rdr["cmt"].ToString()};
 				listTable1.Add(listInfo);
 
 				// dataGridView1.Rows[i].Cells[1].Value = rdr["cnt"].ToString();
@@ -421,10 +446,9 @@ namespace tableCheck
 				dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[4].Value = listTableAll[i].fieldCount1;
 				dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[5].Value = listTableAll[i].fieldCount2;
 			}
-
-
-
 		}
+	
+
 
 		//DBConnectTest 메소드
 		private MySqlDataReader DBConnectTest(MySqlConnection con, string hostname, string port, string database, string id, string pwd, string query)
@@ -464,7 +488,7 @@ namespace tableCheck
 		}
 
 
-		//DBConnectTest 메소드
+		//DBConnectTest2 메소드
 		//데이터베이스와 테이블인자를 받아서 컬럼테이블에 나타내기
 		private MySqlDataReader DBConnectTest2(MySqlConnection con, string hostname, string port, string database, string id, string pwd, string tableName)
 		{
@@ -487,8 +511,9 @@ namespace tableCheck
 			con = new MySqlConnection(_strArg.ToString());
 			try
 			{
+
 				con.Open();
-				string sql2 = "SELECT COLUMN_NAME fieldName, COLUMN_TYPE dataType, CHARACTER_MAXIMUM_LENGTH length, COLUMN_DEFAULT default1, COLUMN_COMMENT comment, IS_NULLABLE nullable, COLLATION_NAME colName FROM information_schema.columns WHERE table_schema= '" + database + "' and TABLE_NAME = '" + tableName + "' ORDER BY TABLE_NAME asc";
+				string sql2 = "SELECT COLUMN_NAME fieldName, COLUMN_TYPE dataType, CHARACTER_MAXIMUM_LENGTH length, COLUMN_DEFAULT default1, COLUMN_COMMENT comment, IS_NULLABLE nullable, COLLATION_NAME colName, EXTRA EX FROM information_schema.columns WHERE table_schema= '" + database + "' and TABLE_NAME = '" + tableName + "' ORDER BY TABLE_NAME asc";
 				MySqlCommand cmd = new MySqlCommand(sql2, con);
 				rdr = cmd.ExecuteReader();
 				return rdr;
@@ -574,16 +599,15 @@ namespace tableCheck
 				List<ColumnsAll> listTableAll = new List<ColumnsAll>();
 				while (rdr.Read())
 				{
-					Columns listInfo = new Columns() { COLUMN_NAME = rdr["fieldName"].ToString(), DATA_TYPE = rdr["dataType"].ToString(), CHARACTER_MAXIMUM_LENGTH = rdr["length"].ToString(), COLUMN_DEFAULT = rdr["default1"].ToString(), COLUMN_COMMENT = rdr["comment"].ToString(), IS_NULLABLE = rdr["nullable"].ToString(), COLLATION_NAME = rdr["colName"].ToString() };
+					Columns listInfo = new Columns() { COLUMN_NAME = rdr["fieldName"].ToString(), DATA_TYPE = rdr["dataType"].ToString(), CHARACTER_MAXIMUM_LENGTH = rdr["length"].ToString(), COLUMN_DEFAULT = rdr["default1"].ToString(), COLUMN_COMMENT = rdr["comment"].ToString(), IS_NULLABLE = rdr["nullable"].ToString(), COLLATION_NAME = rdr["colName"].ToString(), INCREMENT = rdr["EX"].ToString() };
 					listTable1.Add(listInfo);
 				}
 
 				MySqlDataReader rdr2 = DBConnectTest2(conn2, _HostName2, _PORT2, _DATABASE2, _ID2, _PWD2, tableName);
 
-
 				while (rdr2.Read())
 				{
-					Columns listInfo = new Columns() { COLUMN_NAME = rdr2["fieldName"].ToString(), DATA_TYPE = rdr2["dataType"].ToString(), CHARACTER_MAXIMUM_LENGTH = rdr2["length"].ToString(), COLUMN_DEFAULT = rdr2["default1"].ToString(), COLUMN_COMMENT = rdr2["comment"].ToString(), IS_NULLABLE = rdr2["nullable"].ToString(), COLLATION_NAME = rdr2["colName"].ToString() };
+					Columns listInfo = new Columns() { COLUMN_NAME = rdr2["fieldName"].ToString(), DATA_TYPE = rdr2["dataType"].ToString(), CHARACTER_MAXIMUM_LENGTH = rdr2["length"].ToString(), COLUMN_DEFAULT = rdr2["default1"].ToString(), COLUMN_COMMENT = rdr2["comment"].ToString(), IS_NULLABLE = rdr2["nullable"].ToString(), COLLATION_NAME = rdr2["colName"].ToString(), INCREMENT = rdr["EX"].ToString() };
 					listTable2.Add(listInfo);
 				}
 
@@ -597,7 +621,9 @@ namespace tableCheck
 						COLUMN_DEFAULT1 = listTable1[i].COLUMN_DEFAULT,
 						COLUMN_COMMENT1 = listTable1[i].COLUMN_COMMENT,
 						IS_NULLABLE1 = listTable1[i].IS_NULLABLE,
-						COLLATION_NAME1 = listTable1[i].COLLATION_NAME
+						COLLATION_NAME1 = listTable1[i].COLLATION_NAME,
+						
+						INCREMENT1 = listTable1[i].INCREMENT,
 					});
 
 				}
@@ -620,6 +646,8 @@ namespace tableCheck
 
 							listTableAll[j].IS_NULLABLE2 = listTable2[i].IS_NULLABLE;
 							listTableAll[j].COLLATION_NAME2 = listTable2[i].COLLATION_NAME;
+							listTableAll[j].INCREMENT2 = listTable2[i].INCREMENT;
+
 							found = true;
 							listTableAll[j].TABLE = "A+B";
 							break;
@@ -637,7 +665,8 @@ namespace tableCheck
 							COLUMN_COMMENT2 = listTable2[i].COLUMN_COMMENT,
 
 							IS_NULLABLE2 = listTable2[i].IS_NULLABLE,
-							COLLATION_NAME2 = listTable2[i].COLLATION_NAME
+							COLLATION_NAME2 = listTable2[i].COLLATION_NAME,
+							INCREMENT2 = listTable2[i].INCREMENT
 						});
 					}
 				}
@@ -654,14 +683,16 @@ namespace tableCheck
 					dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[4].Value = listTableAll[i].COLUMN_COMMENT1;
 					dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[5].Value = listTableAll[i].IS_NULLABLE1;
 					dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[6].Value = listTableAll[i].COLLATION_NAME1;
+					dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[7].Value = listTableAll[i].INCREMENT1;
 
-					dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[7].Value = listTableAll[i].COLUMN_NAME2;
-					dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[8].Value = listTableAll[i].DATA_TYPE2;
-					dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[9].Value = listTableAll[i].CHARACTER_MAXIMUM_LENGTH2;
-					dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[10].Value = listTableAll[i].COLUMN_DEFAULT2;
-					dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[11].Value = listTableAll[i].COLUMN_COMMENT2;
-					dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[12].Value = listTableAll[i].IS_NULLABLE2;
-					dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[13].Value = listTableAll[i].COLLATION_NAME2;
+					dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[8].Value = listTableAll[i].COLUMN_NAME2;
+					dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[9].Value = listTableAll[i].DATA_TYPE2;
+					dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[10].Value = listTableAll[i].CHARACTER_MAXIMUM_LENGTH2;
+					dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[11].Value = listTableAll[i].COLUMN_DEFAULT2;
+					dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[12].Value = listTableAll[i].COLUMN_COMMENT2;
+					dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[13].Value = listTableAll[i].IS_NULLABLE2;
+					dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[14].Value = listTableAll[i].COLLATION_NAME2;
+					dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[15].Value = listTableAll[i].INCREMENT2;
 				}
 			}
 			catch (Exception ex)
@@ -690,83 +721,30 @@ namespace tableCheck
 			}
 		}
 
-		private void buttonStart_Click(object sender, EventArgs e)
+		void allStrart()
 		{
-			for (int i = 0; i < dataGridView2.Rows.Count; i++)
+			for (int i = 0; i < dataGridView1.Rows.Count; i++)
 			{
-				//	string tbl = dataGridView1.Rows[i].Cells[2].ToString();
-				//	if (tbl == null) return;
-				//	showFields(tbl);
-
-				int rowIndex = dataGridView1.CurrentCell.RowIndex;
-				if (rowIndex < 0) return;
-				if (dataGridView1.Rows[rowIndex].Cells[0].Value == null)
-				{
-					return;
-				}
-				string tbl = dataGridView1.Rows[rowIndex].Cells[2].Value.ToString();
+				string tbl = dataGridView1.Rows[i].Cells[2].Value.ToString();
 				if (tbl == null) return;
-				//
 
-				string tableComment = dataGridView1.Rows[i].Cells[3].Value.ToString();
-				if (tableComment == null) return;
-				//
-				string fdl = dataGridView2.Rows[i].Cells[0].Value.ToString();
-				if (fdl == null) return;
+				string queryCreate = "SHOW CREATE TABLE " + tbl;
+				ShowCreateTable(queryCreate);
 
-				string columnType = dataGridView2.Rows[i].Cells[1].Value.ToString();
-				if (columnType == null) return;
-
-
-				string columnComment = dataGridView2.Rows[i].Cells[3].Value.ToString();
-				if (columnComment == null) return;
-
-				string utf8 = dataGridView2.Rows[i].Cells[6].Value.ToString();
-				if (utf8 == null) return;
-
-				string def = dataGridView2.Rows[i].Cells[3].Value.ToString();
-				if (def == null) return;
-
-				string nullable = dataGridView2.Rows[i].Cells[5].Value.ToString();
-				if (nullable == null) return;
-				if (nullable == "NO") nullable = "NOT NULL";
-				else if (nullable == "YES") nullable = " NULL";
-
-
-
-
-				string queryCreate = "CREATE TABLE `" + tbl
-					+ "` (`" + fdl + "` " + columnType + " " + nullable
-					+ ")"
-					+ " COMMENT = '" + tableComment + "'" + " ENGINE = InnoDB;";
-				Create(queryCreate);
 			}
 		}
+		private void buttonStart_Click(object sender, EventArgs e)
+		{
 
-		//string ftype = dataGridView2.Rows[i].Cells[1].ToString();
-		//string nullable = dataGridView2.Rows[i].Cells[5].ToString();
-		//string comment = dataGridView2.Rows[i].Cells[4].ToString();
-		//string tableComment = dataGridView1.Rows[i].Cells[3].ToString();
-		//string COLLATE = dataGridView2.Rows[i].Cells[6].ToString();
-		//if (nullable == "NO")
-		//{
-		//	nullable = "NOT NULL " + comment + " ";
-		//}
-		//else if (nullable == "YES") nullable = " NULL";
-		//if (fdl == null) return;
-		//if (ftype == null) return;
-		//if (nullable == null) return;
-		//if (comment == null) return;
-		//if (tableComment == null) return;
-		//if (COLLATE == null) return;
-		//runFields(tbl, fdl, ftype, nullable, tableComment, COLLATE);
+			allStrart();
+		}
 
 		private void Create(string queryCreate)
 		{
 			try
 			{
 				MySqlDataReader rdr = DBConnectTest(conn, _HostName, _PORT, _DATABASE2, _ID, _PWD, queryCreate);
-
+				//Delay(1000);
 			}
 
 			catch (Exception e) { MessageBox.Show(e.ToString()); }
@@ -807,6 +785,7 @@ namespace tableCheck
 
 		}
 
+
 		private void buttonOnes_Click(object sender, EventArgs e)
 		{
 			int rowIndex = dataGridView1.CurrentCell.RowIndex;
@@ -817,20 +796,87 @@ namespace tableCheck
 			}
 			string tbl = dataGridView1.Rows[rowIndex].Cells[2].Value.ToString();
 			if (tbl == null) return;
-				string tableComment = dataGridView1.Rows[rowIndex].Cells[3].Value.ToString();
-				if (tableComment == null) return;
+
+				string queryCreate = "SHOW CREATE TABLE " + tbl;
+				ShowCreateTable(queryCreate);
+		}
+
+		private static DateTime Delay(int MS)
+		{
+			DateTime ThisMoment = DateTime.Now;
+			TimeSpan duration = new TimeSpan(0, 0, 0, 0, MS);
+			DateTime AfterWards = ThisMoment.Add(duration);
+			while (AfterWards >= ThisMoment)
+			{
+				System.Windows.Forms.Application.DoEvents();
+				ThisMoment = DateTime.Now;
+			}
+			return DateTime.Now;
+		}
+
+		private void ShowCreateTable(string queryCreate)
+		{
+			try
+			{
+				MySqlDataReader rdr = DBConnectTest(conn, _HostName, _PORT, _DATABASE, _ID, _PWD, queryCreate);
+				List<Columns> listTable1 = new List<Columns>();
+				List<Columns> listTable2 = new List<Columns>();
+				List<ColumnsAll> listTableAll = new List<ColumnsAll>();
+
+				while (rdr.Read())
+				{
+					Columns listInfo = new Columns() { CREATETABLE = rdr["Create Table"].ToString() };
+					listTable1.Add(listInfo);
+				}
+				string createQuery = listTable1[0].CREATETABLE;
+				Create(createQuery);
+
+				//DataSet ds = DBAdapter(conn, _HostName, _PORT, _DATABASE, _ID, _PWD, queryCreate);
+				//List<Columns> listTable1 = new List<Columns>();
+				//List<Columns> listTable2 = new List<Columns>();
+				//List<ColumnsAll> listTableAll = new List<ColumnsAll>();
+
+				//Columns listInfo = new Columns() { CREATETABLE = ds.Tables[1].ToString() };
+				//		//("Create Table").ToString() };
+				//	listTable1.Add(listInfo);
+
+				//string createQuery = listTable1[0].CREATETABLE;
+				//Create(createQuery);
+
+			}
+
+
+
+			catch (Exception e) 
+			{
+				LogMgr.ExceptionLog(e);
+				MessageBox.Show(e.ToString()); 
+			}
+		}
+
+		//데이터그리드뷰에 있는 셀 조합해서 선택된셀 create문 만들기함수-안씀
+		void cellCreateSql()
+		{
+			int rowIndex = dataGridView1.CurrentCell.RowIndex;
+			if (rowIndex < 0) return;
+			if (dataGridView1.Rows[rowIndex].Cells[0].Value == null)
+			{
+				return;
+			}
+			string tbl = dataGridView1.Rows[rowIndex].Cells[2].Value.ToString();
+			if (tbl == null) return;
+			string tableComment = dataGridView1.Rows[rowIndex].Cells[3].Value.ToString();
+			if (tableComment == null) return;
 			string fields = "";
 
 			string primarykey = "";
 
 			for (int i = 0; i < dataGridView2.Rows.Count; i++)
 			{
-	
-				//
 				string fieldName = dataGridView2.Rows[i].Cells[0].Value.ToString();
-				if (fieldName == null) return ;
+				if (fieldName == null) return;
 
-				if (i ==0)
+				if (i == 0)
 				{
 					primarykey = fieldName;
 				}
@@ -882,34 +928,35 @@ namespace tableCheck
 				}
 				else def = " DEFAULT '" + def + "'";
 
-
-		
-
-					//fields = fields + "`" + fieldName + "` " + columnType + " " + nullable + " DEFAULT '" + def + "' COMMENT '" + columnComment + "' ,";
-
-				//	fields = fields + "`" + fieldName + "` " + columnType + " " + nullable + def +  columnComment + " charset utf8,\n";
-				fields = fields + "`" + fieldName + "` " + columnType + " " + nullable + def +  columnComment + ",";  
+				fields = fields + "`" + fieldName + "` " + columnType + " " + nullable + def + columnComment + ",";
 			}
-			///
-			//string queryCreate = "SET NAMES utf8;
-			//CREATE TABLE `" + tbl
-			//	+ "` \n(" + fields + " PRIMARY KEY (`" + primarykey + "`) USING BTREE\n"
-			//	+ ")\n ENGINE = InnoDB DEFAULT CHARSET=utf8";
 
-			//+ " COMMENT = '" + tableComment + "'" + " \nENGINE = InnoDB;";
 
 			string alter = "ALTER DATABASE dawoon2 DEFAULT CHARACTER SET utf8";
 			Create(alter);
 
 			string queryCreate = "CREATE TABLE `" + tbl
-				+ "` (" + fields + "PRIMARY KEY (`" + primarykey + "`) USING BTREE) COMMENT='" + tableComment +"'" + "DEFAULT CHARACTER SET utf8 COLLATE=" + "'utf8_general_ci'" + "ENGINE=InnoDB;"
+				+ "` (" + fields + "PRIMARY KEY (`" + primarykey + "`) USING BTREE) COMMENT='" + tableComment + "'" + "DEFAULT CHARACTER SET utf8 COLLATE=" + "'utf8_general_ci'" + "ENGINE=InnoDB;"
 				;
-
 			Create(queryCreate);
-
-			//string alterTable = "ALTER TABLE `" + tbl + "` convert to character set utf8";
-			//Create(alterTable);
 		}
 
+		/// <summary>
+		/// compare 함수 
+		/// 비교해서 필드수같음 나타냄
+		/// </summary>
+		void compare()
+		{
+			for (int i = 0; i < dataGridView1.Rows.Count; i++)
+			{
+				if (dataGridView1.Rows[i].Cells[4].Value.ToString().Trim() == dataGridView1.Rows[i].Cells[5].Value.ToString().Trim())
+				{
+					dataGridView1.Rows[i].Cells[7].Value = "필드수 같음";
+				}
+				else dataGridView1.Rows[i].Cells[7].Value = "다름";
+			}
+		
+
+		}
 	}
 }

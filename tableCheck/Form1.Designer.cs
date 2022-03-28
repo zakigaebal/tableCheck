@@ -64,6 +64,7 @@
 			this.textBoxPort1 = new System.Windows.Forms.TextBox();
 			this.textBoxUn1 = new System.Windows.Forms.TextBox();
 			this.label5 = new System.Windows.Forms.Label();
+			this.button1 = new System.Windows.Forms.Button();
 			this.panel1.SuspendLayout();
 			this.panel5.SuspendLayout();
 			this.panel7.SuspendLayout();
@@ -81,7 +82,7 @@
 			this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panel1.Location = new System.Drawing.Point(0, 0);
 			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size(851, 484);
+			this.panel1.Size = new System.Drawing.Size(851, 590);
 			this.panel1.TabIndex = 0;
 			// 
 			// panel5
@@ -90,7 +91,7 @@
 			this.panel5.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panel5.Location = new System.Drawing.Point(0, 50);
 			this.panel5.Name = "panel5";
-			this.panel5.Size = new System.Drawing.Size(851, 434);
+			this.panel5.Size = new System.Drawing.Size(851, 540);
 			this.panel5.TabIndex = 17;
 			// 
 			// panel7
@@ -101,7 +102,7 @@
 			this.panel7.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panel7.Location = new System.Drawing.Point(0, 0);
 			this.panel7.Name = "panel7";
-			this.panel7.Size = new System.Drawing.Size(851, 434);
+			this.panel7.Size = new System.Drawing.Size(851, 540);
 			this.panel7.TabIndex = 0;
 			// 
 			// dataGridView2
@@ -113,7 +114,7 @@
 			this.dataGridView2.Name = "dataGridView2";
 			this.dataGridView2.ReadOnly = true;
 			this.dataGridView2.RowTemplate.Height = 23;
-			this.dataGridView2.Size = new System.Drawing.Size(851, 237);
+			this.dataGridView2.Size = new System.Drawing.Size(851, 343);
 			this.dataGridView2.TabIndex = 15;
 			this.dataGridView2.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridView2_CellFormatting);
 			this.dataGridView2.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dataGridView2_RowPostPaint);
@@ -156,6 +157,7 @@
 			// 
 			// panel4
 			// 
+			this.panel4.Controls.Add(this.button1);
 			this.panel4.Controls.Add(this.label2);
 			this.panel4.Controls.Add(this.textBoxDb2);
 			this.panel4.Controls.Add(this.label6);
@@ -433,11 +435,20 @@
 			this.label5.TabIndex = 6;
 			this.label5.Text = "USERNAME";
 			// 
+			// button1
+			// 
+			this.button1.Location = new System.Drawing.Point(830, 6);
+			this.button1.Name = "button1";
+			this.button1.Size = new System.Drawing.Size(17, 23);
+			this.button1.TabIndex = 10;
+			this.button1.Text = "button1";
+			this.button1.UseVisualStyleBackColor = true;
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(851, 484);
+			this.ClientSize = new System.Drawing.Size(851, 590);
 			this.Controls.Add(this.panel1);
 			this.Name = "Form1";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -495,6 +506,7 @@
 		private System.Windows.Forms.Button buttonClear;
 		private System.Windows.Forms.Button buttonStart;
 		private System.Windows.Forms.Button buttonOnes;
+		private System.Windows.Forms.Button button1;
 	}
 }
 
