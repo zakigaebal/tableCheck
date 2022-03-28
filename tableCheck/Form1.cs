@@ -443,6 +443,7 @@ namespace tableCheck
 			_strArg.Append(";password = ");
 			_strArg.Append(pwd);                 // PWD
 			_strArg.Append(";");
+			_strArg.Append("Charset=utf8;");
 
 			con = new MySqlConnection(_strArg.ToString());
 			try
@@ -481,6 +482,7 @@ namespace tableCheck
 			_strArg.Append(";password = ");
 			_strArg.Append(pwd);                 // PWD
 			_strArg.Append(";");
+			_strArg.Append("Charset=utf8;");
 
 			con = new MySqlConnection(_strArg.ToString());
 			try
@@ -839,7 +841,15 @@ namespace tableCheck
 				{
 					columnType = " DATETIME ";
 				}
-				
+
+				string nullable = dataGridView2.Rows[i].Cells[5].Value.ToString();
+				if (nullable == null) return;
+				if (nullable == "NO") nullable = " NOT NULL";
+				else if (nullable == "YES") nullable = " NULL";
+				if (columnType.ToUpper().Contains("DATETIME"))
+				{
+					nullable = "";
+				}
 
 				string columnComment = dataGridView2.Rows[i].Cells[4].Value.ToString();
 				if (columnComment == null) columnComment = "";
@@ -852,11 +862,19 @@ namespace tableCheck
 
 				string def = dataGridView2.Rows[i].Cells[3].Value.ToString();
 				if (def == null) def = "";
-				if (columnType.ToUpper().Contains("INT") || columnType.ToUpper().Contains("DECIMAL"))
+				if (columnType.ToUpper().Contains("INT"))
 				{
 					def = " DEFAULT 0 ";
-
 				}
+				if (columnType.ToUpper().Contains("SMALLINT") || columnType.ToUpper().Contains("DECIMAL"))
+				{
+					def = "0";
+				}
+				if (nullable.ToUpper().Contains(" NOT NULL"))
+				{
+					def = "";
+				}
+
 				else if (columnType.ToUpper().Contains("DATETIME"))
 				{
 					def = " DEFAULT NULL ";
@@ -865,25 +883,32 @@ namespace tableCheck
 				else def = " DEFAULT '" + def + "'";
 
 
-				string nullable = dataGridView2.Rows[i].Cells[5].Value.ToString();
-				if (nullable == null) return;
-				if (nullable == "NO") nullable = " NOT NULL";
-				else if (nullable == "YES") nullable = " NULL";
-				if (columnType.ToUpper().Contains("DATETIME"))
-				{
-					nullable = "";
-				}
+		
 
 					//fields = fields + "`" + fieldName + "` " + columnType + " " + nullable + " DEFAULT '" + def + "' COMMENT '" + columnComment + "' ,";
 
-					fields = fields + "`" + fieldName + "` " + columnType + " " + nullable + def +  columnComment + " charset utf8,\n";  
+				//	fields = fields + "`" + fieldName + "` " + columnType + " " + nullable + def +  columnComment + " charset utf8,\n";
+				fields = fields + "`" + fieldName + "` " + columnType + " " + nullable + def +  columnComment + ",";  
 			}
 			///
-			string queryCreate = "SET NAMES utf8; CREATE TABLE `" + tbl
-				+ "` \n(" + fields + " PRIMARY KEY (`" + primarykey + "`) USING BTREE\n"
-				+ ")\n ENGINE = InnoDB DEFAULT CHARSET=utf8";
-				//+ " COMMENT = '" + tableComment + "'" + " \nENGINE = InnoDB;";
+			//string queryCreate = "SET NAMES utf8;
+			//CREATE TABLE `" + tbl
+			//	+ "` \n(" + fields + " PRIMARY KEY (`" + primarykey + "`) USING BTREE\n"
+			//	+ ")\n ENGINE = InnoDB DEFAULT CHARSET=utf8";
+
+			//+ " COMMENT = '" + tableComment + "'" + " \nENGINE = InnoDB;";
+
+			string alter = "ALTER DATABASE dawoon2 DEFAULT CHARACTER SET utf8";
+			Create(alter);
+
+			string queryCreate = "CREATE TABLE `" + tbl
+				+ "` (" + fields + "PRIMARY KEY (`" + primarykey + "`) USING BTREE) COMMENT='" + tableComment +"'" + "DEFAULT CHARACTER SET utf8 COLLATE=" + "'utf8_general_ci'" + "ENGINE=InnoDB;"
+				;
+
 			Create(queryCreate);
+
+			//string alterTable = "ALTER TABLE `" + tbl + "` convert to character set utf8";
+			//Create(alterTable);
 		}
 
 	}
