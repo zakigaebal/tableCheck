@@ -766,6 +766,7 @@ namespace tableCheck
 				{
 					if (dataGridView1.Rows[i].Cells[7].Value.ToString() == "필드수 다름" || dataGridView1.Rows[i].Cells[7].Value.ToString() == "없음")
 					{
+						//dataGridView1.CurrentCell = dataGridView1.Rows[i].Cells[2];
 						//dataGridView1.Rows[i].Cells[0].Value = true;
 						string tbl = dataGridView1.Rows[i].Cells[2].Value.ToString();
 						if (tbl == null) return;
@@ -774,10 +775,14 @@ namespace tableCheck
 						string queryCreate = "SHOW CREATE TABLE " + tbl;
 						ShowCreateTable(queryCreate);
 
-					
+
+						showFields(tbl);
+						alterChange();
+
+
 						dataGridView1.Rows[i].Cells[6].Value = 100;
 						dataGridView1.Rows[i].Cells[5].Value = "확인중";
-						dataGridView1.Rows[i].Cells[7].Value = "확인중";
+					//	dataGridView1.Rows[i].Cells[7].Value = "확인중";
 
 
 					}
@@ -807,30 +812,28 @@ namespace tableCheck
 		{
 			allStrart();
 
-			if (dataGridView1.Rows[0].Cells[0].Value.ToString().Contains("False").ToString() == "False")
-			{
-				for (int i = 0; i < dataGridView1.Rows.Count; i++)
-				{
-					if (dataGridView1.Rows[i].Cells[7].Value.ToString() == "필드수 다름" || dataGridView1.Rows[i].Cells[7].Value.ToString() == "없음")
-					{
-						string tbl = dataGridView1.Rows[i].Cells[2].Value.ToString();
-						if (tbl == null) return;
-						//dataGridView1.Rows[i].Cells[2].Selected = true;
-						//dataGridView1.CellClick += DataGridView1_CellClick;
-						//alterAllChange(tbl, i);
-						dataGridView1.CurrentCell = dataGridView1.Rows[i].Cells[2];
-						alterChange();
-						dataGridView1.Rows[i].Cells[6].Value = 100;
-						dataGridView1.Rows[i].Cells[5].Value = "확인중";
-						dataGridView1.Rows[i].Cells[7].Value = "확인중";
-					}
-					else continue;
-				}
-			}
+			//if (dataGridView1.Rows[0].Cells[0].Value.ToString().Contains("False").ToString() == "False")
+			//{
+			//	for (int i = 0; i < dataGridView1.Rows.Count; i++)
+			//	{
+			//		if (dataGridView1.Rows[i].Cells[7].Value.ToString() == "필드수 다름")
+			//		{
+				
 
 
 
 
+			//			//dataGridView1.Rows[i].Cells[2].Selected = true;
+			//			//dataGridView1.CurrentCell = dataGridView1.Rows[i].Cells[2];
+			//			//dataGridView1.CellClick += DataGridView1_CellClick;
+			//			//alterAllChange(tbl, i);
+				
+			//			dataGridView1.Rows[i].Cells[5].Value = "필드확인중";
+			//			dataGridView1.Rows[i].Cells[7].Value = "필드확인중";
+			//		}
+			//		else continue;
+			//	}
+			//}
 
 
 			buttonConnect_Click(sender, e);

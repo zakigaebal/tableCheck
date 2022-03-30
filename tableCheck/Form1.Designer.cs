@@ -36,6 +36,8 @@
 			this.dataGridView2 = new System.Windows.Forms.DataGridView();
 			this.panel2 = new System.Windows.Forms.Panel();
 			this.panel4 = new System.Windows.Forms.Panel();
+			this.button1 = new System.Windows.Forms.Button();
+			this.buttonDelete = new System.Windows.Forms.Button();
 			this.label2 = new System.Windows.Forms.Label();
 			this.textBoxDb2 = new System.Windows.Forms.TextBox();
 			this.label6 = new System.Windows.Forms.Label();
@@ -50,7 +52,6 @@
 			this.textBoxUn2 = new System.Windows.Forms.TextBox();
 			this.label9 = new System.Windows.Forms.Label();
 			this.panel3 = new System.Windows.Forms.Panel();
-			this.buttonDelete = new System.Windows.Forms.Button();
 			this.buttonClear = new System.Windows.Forms.Button();
 			this.buttonStart = new System.Windows.Forms.Button();
 			this.buttonOnes = new System.Windows.Forms.Button();
@@ -65,7 +66,12 @@
 			this.textBoxPort1 = new System.Windows.Forms.TextBox();
 			this.textBoxUn1 = new System.Windows.Forms.TextBox();
 			this.label5 = new System.Windows.Forms.Label();
-			this.button1 = new System.Windows.Forms.Button();
+			this.tabControl1 = new System.Windows.Forms.TabControl();
+			this.tabPage1 = new System.Windows.Forms.TabPage();
+			this.tabPage2 = new System.Windows.Forms.TabPage();
+			this.tabPage3 = new System.Windows.Forms.TabPage();
+			this.tabPage4 = new System.Windows.Forms.TabPage();
+			this.tabPage5 = new System.Windows.Forms.TabPage();
 			this.panel1.SuspendLayout();
 			this.panel5.SuspendLayout();
 			this.panel7.SuspendLayout();
@@ -74,12 +80,13 @@
 			this.panel2.SuspendLayout();
 			this.panel4.SuspendLayout();
 			this.panel3.SuspendLayout();
+			this.tabControl1.SuspendLayout();
+			this.tabPage1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// panel1
 			// 
 			this.panel1.Controls.Add(this.panel5);
-			this.panel1.Controls.Add(this.panel2);
 			this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panel1.Location = new System.Drawing.Point(0, 0);
 			this.panel1.Name = "panel1";
@@ -88,11 +95,11 @@
 			// 
 			// panel5
 			// 
-			this.panel5.Controls.Add(this.panel7);
+			this.panel5.Controls.Add(this.tabControl1);
 			this.panel5.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panel5.Location = new System.Drawing.Point(0, 50);
+			this.panel5.Location = new System.Drawing.Point(0, 0);
 			this.panel5.Name = "panel5";
-			this.panel5.Size = new System.Drawing.Size(1408, 540);
+			this.panel5.Size = new System.Drawing.Size(1408, 590);
 			this.panel5.TabIndex = 17;
 			// 
 			// panel7
@@ -101,9 +108,9 @@
 			this.panel7.Controls.Add(this.splitter3);
 			this.panel7.Controls.Add(this.dataGridView2);
 			this.panel7.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panel7.Location = new System.Drawing.Point(0, 0);
+			this.panel7.Location = new System.Drawing.Point(3, 53);
 			this.panel7.Name = "panel7";
-			this.panel7.Size = new System.Drawing.Size(1408, 540);
+			this.panel7.Size = new System.Drawing.Size(1394, 508);
 			this.panel7.TabIndex = 0;
 			// 
 			// dataGridView1
@@ -113,7 +120,7 @@
 			this.dataGridView1.Location = new System.Drawing.Point(0, 0);
 			this.dataGridView1.Name = "dataGridView1";
 			this.dataGridView1.RowTemplate.Height = 23;
-			this.dataGridView1.Size = new System.Drawing.Size(1408, 190);
+			this.dataGridView1.Size = new System.Drawing.Size(1394, 158);
 			this.dataGridView1.TabIndex = 4;
 			this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
 			this.dataGridView1.CurrentCellDirtyStateChanged += new System.EventHandler(this.dataGridView1_CurrentCellDirtyStateChanged);
@@ -125,9 +132,9 @@
 			this.splitter3.BackColor = System.Drawing.Color.MistyRose;
 			this.splitter3.Cursor = System.Windows.Forms.Cursors.HSplit;
 			this.splitter3.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.splitter3.Location = new System.Drawing.Point(0, 190);
+			this.splitter3.Location = new System.Drawing.Point(0, 158);
 			this.splitter3.Name = "splitter3";
-			this.splitter3.Size = new System.Drawing.Size(1408, 7);
+			this.splitter3.Size = new System.Drawing.Size(1394, 7);
 			this.splitter3.TabIndex = 0;
 			this.splitter3.TabStop = false;
 			// 
@@ -136,11 +143,11 @@
 			this.dataGridView2.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
 			this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.dataGridView2.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.dataGridView2.Location = new System.Drawing.Point(0, 197);
+			this.dataGridView2.Location = new System.Drawing.Point(0, 165);
 			this.dataGridView2.Name = "dataGridView2";
 			this.dataGridView2.ReadOnly = true;
 			this.dataGridView2.RowTemplate.Height = 23;
-			this.dataGridView2.Size = new System.Drawing.Size(1408, 343);
+			this.dataGridView2.Size = new System.Drawing.Size(1394, 343);
 			this.dataGridView2.TabIndex = 15;
 			this.dataGridView2.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridView2_CellFormatting);
 			this.dataGridView2.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dataGridView2_RowPostPaint);
@@ -150,15 +157,13 @@
 			this.panel2.Controls.Add(this.panel4);
 			this.panel2.Controls.Add(this.panel3);
 			this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
-			this.panel2.Location = new System.Drawing.Point(0, 0);
+			this.panel2.Location = new System.Drawing.Point(3, 3);
 			this.panel2.Name = "panel2";
-			this.panel2.Size = new System.Drawing.Size(1408, 50);
+			this.panel2.Size = new System.Drawing.Size(1394, 50);
 			this.panel2.TabIndex = 10;
 			// 
 			// panel4
 			// 
-			this.panel4.Controls.Add(this.button1);
-			this.panel4.Controls.Add(this.buttonDelete);
 			this.panel4.Controls.Add(this.label2);
 			this.panel4.Controls.Add(this.textBoxDb2);
 			this.panel4.Controls.Add(this.label6);
@@ -175,9 +180,29 @@
 			this.panel4.Dock = System.Windows.Forms.DockStyle.Top;
 			this.panel4.Location = new System.Drawing.Point(0, 23);
 			this.panel4.Name = "panel4";
-			this.panel4.Size = new System.Drawing.Size(1408, 22);
+			this.panel4.Size = new System.Drawing.Size(1394, 22);
 			this.panel4.TabIndex = 16;
 			this.panel4.Paint += new System.Windows.Forms.PaintEventHandler(this.panel4_Paint);
+			// 
+			// button1
+			// 
+			this.button1.Location = new System.Drawing.Point(878, 0);
+			this.button1.Name = "button1";
+			this.button1.Size = new System.Drawing.Size(47, 23);
+			this.button1.TabIndex = 10;
+			this.button1.Text = "수정";
+			this.button1.UseVisualStyleBackColor = true;
+			this.button1.Click += new System.EventHandler(this.button1_Click_1);
+			// 
+			// buttonDelete
+			// 
+			this.buttonDelete.Location = new System.Drawing.Point(931, -1);
+			this.buttonDelete.Name = "buttonDelete";
+			this.buttonDelete.Size = new System.Drawing.Size(46, 25);
+			this.buttonDelete.TabIndex = 10;
+			this.buttonDelete.Text = "삭제";
+			this.buttonDelete.UseVisualStyleBackColor = true;
+			this.buttonDelete.Click += new System.EventHandler(this.buttonDelete_Click);
 			// 
 			// label2
 			// 
@@ -295,6 +320,8 @@
 			// 
 			// panel3
 			// 
+			this.panel3.Controls.Add(this.button1);
+			this.panel3.Controls.Add(this.buttonDelete);
 			this.panel3.Controls.Add(this.buttonClear);
 			this.panel3.Controls.Add(this.buttonStart);
 			this.panel3.Controls.Add(this.buttonOnes);
@@ -312,18 +339,8 @@
 			this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
 			this.panel3.Location = new System.Drawing.Point(0, 0);
 			this.panel3.Name = "panel3";
-			this.panel3.Size = new System.Drawing.Size(1408, 23);
+			this.panel3.Size = new System.Drawing.Size(1394, 23);
 			this.panel3.TabIndex = 15;
-			// 
-			// buttonDelete
-			// 
-			this.buttonDelete.Location = new System.Drawing.Point(1362, 2);
-			this.buttonDelete.Name = "buttonDelete";
-			this.buttonDelete.Size = new System.Drawing.Size(46, 25);
-			this.buttonDelete.TabIndex = 10;
-			this.buttonDelete.Text = "삭제";
-			this.buttonDelete.UseVisualStyleBackColor = true;
-			this.buttonDelete.Click += new System.EventHandler(this.buttonDelete_Click);
 			// 
 			// buttonClear
 			// 
@@ -446,15 +463,71 @@
 			this.label5.TabIndex = 6;
 			this.label5.Text = "USERNAME";
 			// 
-			// button1
+			// tabControl1
 			// 
-			this.button1.Location = new System.Drawing.Point(1309, 3);
-			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(47, 23);
-			this.button1.TabIndex = 10;
-			this.button1.Text = "수정";
-			this.button1.UseVisualStyleBackColor = true;
-			this.button1.Click += new System.EventHandler(this.button1_Click_1);
+			this.tabControl1.Controls.Add(this.tabPage1);
+			this.tabControl1.Controls.Add(this.tabPage2);
+			this.tabControl1.Controls.Add(this.tabPage3);
+			this.tabControl1.Controls.Add(this.tabPage4);
+			this.tabControl1.Controls.Add(this.tabPage5);
+			this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tabControl1.Location = new System.Drawing.Point(0, 0);
+			this.tabControl1.Name = "tabControl1";
+			this.tabControl1.SelectedIndex = 0;
+			this.tabControl1.Size = new System.Drawing.Size(1408, 590);
+			this.tabControl1.TabIndex = 11;
+			// 
+			// tabPage1
+			// 
+			this.tabPage1.Controls.Add(this.panel7);
+			this.tabPage1.Controls.Add(this.panel2);
+			this.tabPage1.Location = new System.Drawing.Point(4, 22);
+			this.tabPage1.Name = "tabPage1";
+			this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPage1.Size = new System.Drawing.Size(1400, 564);
+			this.tabPage1.TabIndex = 0;
+			this.tabPage1.Text = "테이블";
+			this.tabPage1.UseVisualStyleBackColor = true;
+			// 
+			// tabPage2
+			// 
+			this.tabPage2.Location = new System.Drawing.Point(4, 22);
+			this.tabPage2.Name = "tabPage2";
+			this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPage2.Size = new System.Drawing.Size(1400, 564);
+			this.tabPage2.TabIndex = 1;
+			this.tabPage2.Text = "프로시저";
+			this.tabPage2.UseVisualStyleBackColor = true;
+			// 
+			// tabPage3
+			// 
+			this.tabPage3.Location = new System.Drawing.Point(4, 22);
+			this.tabPage3.Name = "tabPage3";
+			this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPage3.Size = new System.Drawing.Size(1400, 564);
+			this.tabPage3.TabIndex = 2;
+			this.tabPage3.Text = "이벤트";
+			this.tabPage3.UseVisualStyleBackColor = true;
+			// 
+			// tabPage4
+			// 
+			this.tabPage4.Location = new System.Drawing.Point(4, 22);
+			this.tabPage4.Name = "tabPage4";
+			this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPage4.Size = new System.Drawing.Size(1400, 564);
+			this.tabPage4.TabIndex = 3;
+			this.tabPage4.Text = "함수";
+			this.tabPage4.UseVisualStyleBackColor = true;
+			// 
+			// tabPage5
+			// 
+			this.tabPage5.Location = new System.Drawing.Point(4, 22);
+			this.tabPage5.Name = "tabPage5";
+			this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPage5.Size = new System.Drawing.Size(1400, 564);
+			this.tabPage5.TabIndex = 4;
+			this.tabPage5.Text = "뷰";
+			this.tabPage5.UseVisualStyleBackColor = true;
 			// 
 			// Form1
 			// 
@@ -464,7 +537,7 @@
 			this.Controls.Add(this.panel1);
 			this.Name = "Form1";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-			this.Text = "테이블체크";
+			this.Text = "데이터베이스체크";
 			this.Load += new System.EventHandler(this.Form1_Load);
 			this.panel1.ResumeLayout(false);
 			this.panel5.ResumeLayout(false);
@@ -476,6 +549,8 @@
 			this.panel4.PerformLayout();
 			this.panel3.ResumeLayout(false);
 			this.panel3.PerformLayout();
+			this.tabControl1.ResumeLayout(false);
+			this.tabPage1.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -520,6 +595,12 @@
 		private System.Windows.Forms.Button buttonOnes;
 		private System.Windows.Forms.Button buttonDelete;
 		private System.Windows.Forms.Button button1;
+		private System.Windows.Forms.TabControl tabControl1;
+		private System.Windows.Forms.TabPage tabPage1;
+		private System.Windows.Forms.TabPage tabPage2;
+		private System.Windows.Forms.TabPage tabPage3;
+		private System.Windows.Forms.TabPage tabPage4;
+		private System.Windows.Forms.TabPage tabPage5;
 	}
 }
 
