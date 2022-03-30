@@ -782,7 +782,7 @@ namespace tableCheck
 
 						dataGridView1.Rows[i].Cells[6].Value = 100;
 						dataGridView1.Rows[i].Cells[5].Value = "확인중";
-					//	dataGridView1.Rows[i].Cells[7].Value = "확인중";
+					//dataGridView1.Rows[i].Cells[7].Value = "확인중";
 
 
 					}

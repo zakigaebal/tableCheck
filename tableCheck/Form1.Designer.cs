@@ -72,6 +72,38 @@
 			this.tabPage3 = new System.Windows.Forms.TabPage();
 			this.tabPage4 = new System.Windows.Forms.TabPage();
 			this.tabPage5 = new System.Windows.Forms.TabPage();
+			this.panel6 = new System.Windows.Forms.Panel();
+			this.panel8 = new System.Windows.Forms.Panel();
+			this.label11 = new System.Windows.Forms.Label();
+			this.textBox1 = new System.Windows.Forms.TextBox();
+			this.label12 = new System.Windows.Forms.Label();
+			this.checkBox1 = new System.Windows.Forms.CheckBox();
+			this.checkBox3 = new System.Windows.Forms.CheckBox();
+			this.checkBox4 = new System.Windows.Forms.CheckBox();
+			this.label13 = new System.Windows.Forms.Label();
+			this.textBox2 = new System.Windows.Forms.TextBox();
+			this.textBox3 = new System.Windows.Forms.TextBox();
+			this.label14 = new System.Windows.Forms.Label();
+			this.textBox4 = new System.Windows.Forms.TextBox();
+			this.textBox5 = new System.Windows.Forms.TextBox();
+			this.label15 = new System.Windows.Forms.Label();
+			this.panel9 = new System.Windows.Forms.Panel();
+			this.button2 = new System.Windows.Forms.Button();
+			this.button3 = new System.Windows.Forms.Button();
+			this.button4 = new System.Windows.Forms.Button();
+			this.button5 = new System.Windows.Forms.Button();
+			this.button6 = new System.Windows.Forms.Button();
+			this.label16 = new System.Windows.Forms.Label();
+			this.textBox6 = new System.Windows.Forms.TextBox();
+			this.label17 = new System.Windows.Forms.Label();
+			this.label18 = new System.Windows.Forms.Label();
+			this.textBox7 = new System.Windows.Forms.TextBox();
+			this.button7 = new System.Windows.Forms.Button();
+			this.textBox8 = new System.Windows.Forms.TextBox();
+			this.label19 = new System.Windows.Forms.Label();
+			this.textBox9 = new System.Windows.Forms.TextBox();
+			this.textBox10 = new System.Windows.Forms.TextBox();
+			this.label20 = new System.Windows.Forms.Label();
 			this.panel1.SuspendLayout();
 			this.panel5.SuspendLayout();
 			this.panel7.SuspendLayout();
@@ -82,6 +114,10 @@
 			this.panel3.SuspendLayout();
 			this.tabControl1.SuspendLayout();
 			this.tabPage1.SuspendLayout();
+			this.tabPage2.SuspendLayout();
+			this.panel6.SuspendLayout();
+			this.panel8.SuspendLayout();
+			this.panel9.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// panel1
@@ -491,6 +527,7 @@
 			// 
 			// tabPage2
 			// 
+			this.tabPage2.Controls.Add(this.panel6);
 			this.tabPage2.Location = new System.Drawing.Point(4, 22);
 			this.tabPage2.Name = "tabPage2";
 			this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
@@ -529,6 +566,307 @@
 			this.tabPage5.Text = "뷰";
 			this.tabPage5.UseVisualStyleBackColor = true;
 			// 
+			// panel6
+			// 
+			this.panel6.Controls.Add(this.panel8);
+			this.panel6.Controls.Add(this.panel9);
+			this.panel6.Dock = System.Windows.Forms.DockStyle.Top;
+			this.panel6.Location = new System.Drawing.Point(3, 3);
+			this.panel6.Name = "panel6";
+			this.panel6.Size = new System.Drawing.Size(1394, 50);
+			this.panel6.TabIndex = 11;
+			// 
+			// panel8
+			// 
+			this.panel8.Controls.Add(this.label11);
+			this.panel8.Controls.Add(this.textBox1);
+			this.panel8.Controls.Add(this.label12);
+			this.panel8.Controls.Add(this.checkBox1);
+			this.panel8.Controls.Add(this.checkBox3);
+			this.panel8.Controls.Add(this.checkBox4);
+			this.panel8.Controls.Add(this.label13);
+			this.panel8.Controls.Add(this.textBox2);
+			this.panel8.Controls.Add(this.textBox3);
+			this.panel8.Controls.Add(this.label14);
+			this.panel8.Controls.Add(this.textBox4);
+			this.panel8.Controls.Add(this.textBox5);
+			this.panel8.Controls.Add(this.label15);
+			this.panel8.Dock = System.Windows.Forms.DockStyle.Top;
+			this.panel8.Location = new System.Drawing.Point(0, 23);
+			this.panel8.Name = "panel8";
+			this.panel8.Size = new System.Drawing.Size(1394, 22);
+			this.panel8.TabIndex = 16;
+			// 
+			// label11
+			// 
+			this.label11.AutoSize = true;
+			this.label11.Location = new System.Drawing.Point(6, 4);
+			this.label11.Name = "label11";
+			this.label11.Size = new System.Drawing.Size(27, 12);
+			this.label11.TabIndex = 6;
+			this.label11.Text = "DB2";
+			// 
+			// textBox1
+			// 
+			this.textBox1.Location = new System.Drawing.Point(34, 0);
+			this.textBox1.Name = "textBox1";
+			this.textBox1.Size = new System.Drawing.Size(70, 21);
+			this.textBox1.TabIndex = 7;
+			// 
+			// label12
+			// 
+			this.label12.AutoSize = true;
+			this.label12.Location = new System.Drawing.Point(110, 4);
+			this.label12.Name = "label12";
+			this.label12.Size = new System.Drawing.Size(16, 12);
+			this.label12.TabIndex = 6;
+			this.label12.Text = "IP";
+			// 
+			// checkBox1
+			// 
+			this.checkBox1.AutoSize = true;
+			this.checkBox1.Location = new System.Drawing.Point(752, 2);
+			this.checkBox1.Name = "checkBox1";
+			this.checkBox1.Size = new System.Drawing.Size(72, 16);
+			this.checkBox1.TabIndex = 9;
+			this.checkBox1.Text = "선택취소";
+			this.checkBox1.UseVisualStyleBackColor = true;
+			// 
+			// checkBox3
+			// 
+			this.checkBox3.AutoSize = true;
+			this.checkBox3.Location = new System.Drawing.Point(686, 2);
+			this.checkBox3.Name = "checkBox3";
+			this.checkBox3.Size = new System.Drawing.Size(72, 16);
+			this.checkBox3.TabIndex = 9;
+			this.checkBox3.Text = "선택반전";
+			this.checkBox3.UseVisualStyleBackColor = true;
+			// 
+			// checkBox4
+			// 
+			this.checkBox4.AutoSize = true;
+			this.checkBox4.Location = new System.Drawing.Point(619, 2);
+			this.checkBox4.Name = "checkBox4";
+			this.checkBox4.Size = new System.Drawing.Size(72, 16);
+			this.checkBox4.TabIndex = 9;
+			this.checkBox4.Text = "전체선택";
+			this.checkBox4.UseVisualStyleBackColor = true;
+			// 
+			// label13
+			// 
+			this.label13.AutoSize = true;
+			this.label13.Location = new System.Drawing.Point(206, 4);
+			this.label13.Name = "label13";
+			this.label13.Size = new System.Drawing.Size(38, 12);
+			this.label13.TabIndex = 6;
+			this.label13.Text = "PORT";
+			// 
+			// textBox2
+			// 
+			this.textBox2.Location = new System.Drawing.Point(126, 0);
+			this.textBox2.Name = "textBox2";
+			this.textBox2.Size = new System.Drawing.Size(70, 21);
+			this.textBox2.TabIndex = 7;
+			// 
+			// textBox3
+			// 
+			this.textBox3.Location = new System.Drawing.Point(546, 0);
+			this.textBox3.Name = "textBox3";
+			this.textBox3.PasswordChar = '*';
+			this.textBox3.Size = new System.Drawing.Size(70, 21);
+			this.textBox3.TabIndex = 7;
+			// 
+			// label14
+			// 
+			this.label14.AutoSize = true;
+			this.label14.Location = new System.Drawing.Point(468, 4);
+			this.label14.Name = "label14";
+			this.label14.Size = new System.Drawing.Size(72, 12);
+			this.label14.TabIndex = 6;
+			this.label14.Text = "PASSWORD";
+			// 
+			// textBox4
+			// 
+			this.textBox4.Location = new System.Drawing.Point(244, 0);
+			this.textBox4.Name = "textBox4";
+			this.textBox4.Size = new System.Drawing.Size(70, 21);
+			this.textBox4.TabIndex = 7;
+			// 
+			// textBox5
+			// 
+			this.textBox5.Location = new System.Drawing.Point(392, 0);
+			this.textBox5.Name = "textBox5";
+			this.textBox5.Size = new System.Drawing.Size(70, 21);
+			this.textBox5.TabIndex = 7;
+			// 
+			// label15
+			// 
+			this.label15.AutoSize = true;
+			this.label15.Location = new System.Drawing.Point(319, 4);
+			this.label15.Name = "label15";
+			this.label15.Size = new System.Drawing.Size(73, 12);
+			this.label15.TabIndex = 6;
+			this.label15.Text = "USERNAME";
+			// 
+			// panel9
+			// 
+			this.panel9.Controls.Add(this.button2);
+			this.panel9.Controls.Add(this.button3);
+			this.panel9.Controls.Add(this.button4);
+			this.panel9.Controls.Add(this.button5);
+			this.panel9.Controls.Add(this.button6);
+			this.panel9.Controls.Add(this.label16);
+			this.panel9.Controls.Add(this.textBox6);
+			this.panel9.Controls.Add(this.label17);
+			this.panel9.Controls.Add(this.label18);
+			this.panel9.Controls.Add(this.textBox7);
+			this.panel9.Controls.Add(this.button7);
+			this.panel9.Controls.Add(this.textBox8);
+			this.panel9.Controls.Add(this.label19);
+			this.panel9.Controls.Add(this.textBox9);
+			this.panel9.Controls.Add(this.textBox10);
+			this.panel9.Controls.Add(this.label20);
+			this.panel9.Dock = System.Windows.Forms.DockStyle.Top;
+			this.panel9.Location = new System.Drawing.Point(0, 0);
+			this.panel9.Name = "panel9";
+			this.panel9.Size = new System.Drawing.Size(1394, 23);
+			this.panel9.TabIndex = 15;
+			// 
+			// button2
+			// 
+			this.button2.Location = new System.Drawing.Point(878, 0);
+			this.button2.Name = "button2";
+			this.button2.Size = new System.Drawing.Size(47, 23);
+			this.button2.TabIndex = 10;
+			this.button2.Text = "수정";
+			this.button2.UseVisualStyleBackColor = true;
+			// 
+			// button3
+			// 
+			this.button3.Location = new System.Drawing.Point(931, -1);
+			this.button3.Name = "button3";
+			this.button3.Size = new System.Drawing.Size(46, 25);
+			this.button3.TabIndex = 10;
+			this.button3.Text = "삭제";
+			this.button3.UseVisualStyleBackColor = true;
+			// 
+			// button4
+			// 
+			this.button4.Location = new System.Drawing.Point(654, 0);
+			this.button4.Name = "button4";
+			this.button4.Size = new System.Drawing.Size(47, 23);
+			this.button4.TabIndex = 17;
+			this.button4.Text = "C";
+			this.button4.UseVisualStyleBackColor = true;
+			// 
+			// button5
+			// 
+			this.button5.Location = new System.Drawing.Point(776, 0);
+			this.button5.Name = "button5";
+			this.button5.Size = new System.Drawing.Size(75, 23);
+			this.button5.TabIndex = 18;
+			this.button5.Text = "실행";
+			this.button5.UseVisualStyleBackColor = true;
+			// 
+			// button6
+			// 
+			this.button6.Location = new System.Drawing.Point(701, 0);
+			this.button6.Name = "button6";
+			this.button6.Size = new System.Drawing.Size(75, 23);
+			this.button6.TabIndex = 18;
+			this.button6.Text = "1개 실행";
+			this.button6.UseVisualStyleBackColor = true;
+			// 
+			// label16
+			// 
+			this.label16.AutoSize = true;
+			this.label16.Location = new System.Drawing.Point(6, 5);
+			this.label16.Name = "label16";
+			this.label16.Size = new System.Drawing.Size(27, 12);
+			this.label16.TabIndex = 6;
+			this.label16.Text = "DB1";
+			// 
+			// textBox6
+			// 
+			this.textBox6.Location = new System.Drawing.Point(34, 0);
+			this.textBox6.Name = "textBox6";
+			this.textBox6.Size = new System.Drawing.Size(70, 21);
+			this.textBox6.TabIndex = 7;
+			// 
+			// label17
+			// 
+			this.label17.AutoSize = true;
+			this.label17.Location = new System.Drawing.Point(110, 5);
+			this.label17.Name = "label17";
+			this.label17.Size = new System.Drawing.Size(16, 12);
+			this.label17.TabIndex = 6;
+			this.label17.Text = "IP";
+			// 
+			// label18
+			// 
+			this.label18.AutoSize = true;
+			this.label18.Location = new System.Drawing.Point(206, 5);
+			this.label18.Name = "label18";
+			this.label18.Size = new System.Drawing.Size(38, 12);
+			this.label18.TabIndex = 6;
+			this.label18.Text = "PORT";
+			// 
+			// textBox7
+			// 
+			this.textBox7.Location = new System.Drawing.Point(126, 1);
+			this.textBox7.Name = "textBox7";
+			this.textBox7.Size = new System.Drawing.Size(70, 21);
+			this.textBox7.TabIndex = 7;
+			// 
+			// button7
+			// 
+			this.button7.Location = new System.Drawing.Point(616, 0);
+			this.button7.Name = "button7";
+			this.button7.Size = new System.Drawing.Size(39, 23);
+			this.button7.TabIndex = 11;
+			this.button7.Text = "연결";
+			this.button7.UseVisualStyleBackColor = true;
+			// 
+			// textBox8
+			// 
+			this.textBox8.Location = new System.Drawing.Point(546, 1);
+			this.textBox8.Name = "textBox8";
+			this.textBox8.PasswordChar = '*';
+			this.textBox8.Size = new System.Drawing.Size(70, 21);
+			this.textBox8.TabIndex = 7;
+			// 
+			// label19
+			// 
+			this.label19.AutoSize = true;
+			this.label19.Location = new System.Drawing.Point(468, 5);
+			this.label19.Name = "label19";
+			this.label19.Size = new System.Drawing.Size(72, 12);
+			this.label19.TabIndex = 6;
+			this.label19.Text = "PASSWORD";
+			// 
+			// textBox9
+			// 
+			this.textBox9.Location = new System.Drawing.Point(244, 1);
+			this.textBox9.Name = "textBox9";
+			this.textBox9.Size = new System.Drawing.Size(70, 21);
+			this.textBox9.TabIndex = 7;
+			// 
+			// textBox10
+			// 
+			this.textBox10.Location = new System.Drawing.Point(392, 1);
+			this.textBox10.Name = "textBox10";
+			this.textBox10.Size = new System.Drawing.Size(70, 21);
+			this.textBox10.TabIndex = 7;
+			// 
+			// label20
+			// 
+			this.label20.AutoSize = true;
+			this.label20.Location = new System.Drawing.Point(319, 5);
+			this.label20.Name = "label20";
+			this.label20.Size = new System.Drawing.Size(73, 12);
+			this.label20.TabIndex = 6;
+			this.label20.Text = "USERNAME";
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
@@ -551,6 +889,12 @@
 			this.panel3.PerformLayout();
 			this.tabControl1.ResumeLayout(false);
 			this.tabPage1.ResumeLayout(false);
+			this.tabPage2.ResumeLayout(false);
+			this.panel6.ResumeLayout(false);
+			this.panel8.ResumeLayout(false);
+			this.panel8.PerformLayout();
+			this.panel9.ResumeLayout(false);
+			this.panel9.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
@@ -601,6 +945,38 @@
 		private System.Windows.Forms.TabPage tabPage3;
 		private System.Windows.Forms.TabPage tabPage4;
 		private System.Windows.Forms.TabPage tabPage5;
+		private System.Windows.Forms.Panel panel6;
+		private System.Windows.Forms.Panel panel8;
+		private System.Windows.Forms.Label label11;
+		private System.Windows.Forms.TextBox textBox1;
+		private System.Windows.Forms.Label label12;
+		private System.Windows.Forms.CheckBox checkBox1;
+		private System.Windows.Forms.CheckBox checkBox3;
+		private System.Windows.Forms.CheckBox checkBox4;
+		private System.Windows.Forms.Label label13;
+		private System.Windows.Forms.TextBox textBox2;
+		private System.Windows.Forms.TextBox textBox3;
+		private System.Windows.Forms.Label label14;
+		private System.Windows.Forms.TextBox textBox4;
+		private System.Windows.Forms.TextBox textBox5;
+		private System.Windows.Forms.Label label15;
+		private System.Windows.Forms.Panel panel9;
+		private System.Windows.Forms.Button button2;
+		private System.Windows.Forms.Button button3;
+		private System.Windows.Forms.Button button4;
+		private System.Windows.Forms.Button button5;
+		private System.Windows.Forms.Button button6;
+		private System.Windows.Forms.Label label16;
+		private System.Windows.Forms.TextBox textBox6;
+		private System.Windows.Forms.Label label17;
+		private System.Windows.Forms.Label label18;
+		private System.Windows.Forms.TextBox textBox7;
+		private System.Windows.Forms.Button button7;
+		private System.Windows.Forms.TextBox textBox8;
+		private System.Windows.Forms.Label label19;
+		private System.Windows.Forms.TextBox textBox9;
+		private System.Windows.Forms.TextBox textBox10;
+		private System.Windows.Forms.Label label20;
 	}
 }
 
