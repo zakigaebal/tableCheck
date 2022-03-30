@@ -63,7 +63,7 @@ namespace DataGridView_component
 
             int progressVal = Convert.ToInt32(value);
 
-            float percentage = ((float)progressVal / 100.0f); // Need to convert to float before division; otherwise C# returns int which is 0 for anything but 100%.
+            float percentage = ((float)progressVal+1.0f/ 100.0f); // Need to convert to float before division; otherwise C# returns int which is 0 for anything but 100%.
             Brush backColorBrush = new SolidBrush(cellStyle.BackColor);
             Brush foreColorBrush = new SolidBrush(cellStyle.ForeColor);
 

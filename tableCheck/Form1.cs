@@ -135,6 +135,8 @@ namespace tableCheck
 			dataGridView2.Columns[i++].Width = 60;
 
 			buttonConnect_Click(sender, e);
+
+			
 		}
 		private void dataGridView1_CurrentCellDirtyStateChanged(object sender, EventArgs e)
 		{
@@ -286,6 +288,17 @@ namespace tableCheck
 			}
 			btn_TEST_Click(sender, e);
 			//btn_TEST_Click2(sender, e);
+			//dataGridView1.ReadOnly = true;
+			int i = 0;
+			dataGridView1.Columns[i++].ReadOnly = false;
+			dataGridView1.Columns[i++].ReadOnly = true;
+			dataGridView1.Columns[i++].ReadOnly = true;
+			dataGridView1.Columns[i++].ReadOnly = true;
+			dataGridView1.Columns[i++].ReadOnly = true;
+			dataGridView1.Columns[i++].ReadOnly = true;
+			dataGridView1.Columns[i++].ReadOnly = true;
+			dataGridView1.Columns[i++].ReadOnly = true;
+
 			compare();
 		}
 
@@ -448,6 +461,7 @@ namespace tableCheck
 					dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[3].Value = listTableAll[i].tableCmt;
 					dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[4].Value = listTableAll[i].fieldCount1;
 					dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[5].Value = listTableAll[i].fieldCount2;
+				
 				}
 			}
 			catch (Exception ex)
@@ -463,7 +477,6 @@ namespace tableCheck
 		{
 			StringBuilder _strArg = new StringBuilder("");
 			MySqlDataReader rdr;
-			MySqlDataReader rdr3;
 			_strArg.Append("Server = ");           // SQL
 			_strArg.Append(hostname);        // 서버
 			_strArg.Append(";Port = ");
@@ -483,7 +496,17 @@ namespace tableCheck
 				con.Open();
 				string sql = query;
 				MySqlCommand cmd = new MySqlCommand(sql, con);
+				
+				//Delay(500);
+
 				rdr = cmd.ExecuteReader();
+				//if (rdr == null)
+				//{
+				//	sql = query;
+				//	 cmd = new MySqlCommand(sql, con);
+				//	rdr = cmd.ExecuteReader();
+				//}
+
 				return rdr;
 			}
 			catch (Exception Ex)
@@ -502,7 +525,6 @@ namespace tableCheck
 		{
 			StringBuilder _strArg = new StringBuilder("");
 			MySqlDataReader rdr;
-			MySqlDataReader rdr3;
 			_strArg.Append("Server = ");           // SQL
 			_strArg.Append(hostname);        // 서버
 			_strArg.Append(";Port = ");
@@ -602,9 +624,7 @@ namespace tableCheck
 		{
 			try
 			{
-
-
-
+				//Delay(1600);
 				// 테이블명의 필드를 가져와서 데이터그리드뷰2에 보여준다
 				//MessageBox.Show(tableName);
 				MySqlDataReader rdr = DBConnectTest2(conn, _HostName, _PORT, _DATABASE, _ID, _PWD, tableName);
@@ -618,6 +638,7 @@ namespace tableCheck
 				}
 
 				MySqlDataReader rdr2 = DBConnectTest2(conn2, _HostName2, _PORT2, _DATABASE2, _ID2, _PWD2, tableName);
+				//Delay(1000);
 
 				while (rdr2.Read())
 				{
@@ -681,7 +702,6 @@ namespace tableCheck
 					}
 				}
 
-
 				dataGridView2.Rows.Clear();
 				for (int i = 0; i < listTableAll.Count; i++)
 				{
@@ -734,34 +754,48 @@ namespace tableCheck
 
 		void allStrart()
 		{
-
-			for (int i = 0; i < dataGridView1.Rows.Count; i++)
+		
+			//체크박스 벨류가 false라면
+			if (dataGridView1.Rows[0].Cells[0].Value.ToString().Contains("False").ToString() == "False")
 			{
-				dataGridView1.Rows[i].Cells[0].Value = true;
-
-
-
-
-				string tbl = dataGridView1.Rows[i].Cells[2].Value.ToString();
-				if (tbl == null) return;
-
-
-				if (dataGridView1.Rows[i].Cells[7].Value.ToString() == "다름")
+				///데이터그리드뷰1에 로우줄을 다가지고온다
+				///상태가 다름이면 해당 쇼테이블 을 가지고 온다
+				///테이블의 생성문을 만들어서
+				///함수에 넣는다
+				///
+				for (int i = 0; i < dataGridView1.Rows.Count; i++)
 				{
-					alterAll();
+					if (dataGridView1.Rows[i].Cells[7].Value.ToString() == "필드수 다름")
+					{
+						//dataGridView1.Rows[i].Cells[0].Value = true;
+						string tbl = dataGridView1.Rows[i].Cells[2].Value.ToString();
+						if (tbl == null) return;
+						string queryCreate = "SHOW CREATE TABLE " + tbl;
+						ShowCreateTable(queryCreate);
+						dataGridView1.Rows[i].Cells[6].Value = 100;
+						dataGridView1.Rows[i].Cells[5].Value = "확인중";
+						dataGridView1.Rows[i].Cells[7].Value = "확인중";
+					}
+					else continue;
 				}
-
-				string queryCreate = "SHOW CREATE TABLE " + tbl;
-				ShowCreateTable(queryCreate);
-
-
-
 			}
+
+		
+
 		}
 		private void buttonStart_Click(object sender, EventArgs e)
 		{
 
 			allStrart();
+			alterChange();
+
+			//for (int i = 0; i < dataGridView1.Rows.Count; i++)
+			//{
+			//	if (dataGridView1.Rows[i].Cells[7].Value.ToString() == "필드수 다름")
+			//	{
+			//		alterChange();
+			//	}
+			//}
 
 			buttonConnect_Click(sender, e);
 
@@ -825,14 +859,13 @@ namespace tableCheck
 			string tbl = dataGridView1.Rows[rowIndex].Cells[2].Value.ToString();
 			if (tbl == null) return;
 
-			if (dataGridView1.Rows[rowIndex].Cells[7].Value.ToString() == "다름")
-			{
-				alterOne();
-			}
+		
 
 			string queryCreate = "SHOW CREATE TABLE " + tbl;
 			ShowCreateTable(queryCreate);
 
+			alterAll();
+	
 
 			buttonConnect_Click(sender, e);
 		}
@@ -861,11 +894,14 @@ namespace tableCheck
 				List<ColumnsAll> listTableAll = new List<ColumnsAll>();
 
 
+
+				Delay(200);
 				while (rdr.Read())
 				{
 					Columns listInfo = new Columns() { CREATETABLE = rdr["Create Table"].ToString() };
 					listTable1.Add(listInfo);
 				}
+
 				string createQuery = listTable1[0].CREATETABLE;
 				Create(createQuery);
 
@@ -995,11 +1031,110 @@ namespace tableCheck
 			string tbl = dataGridView1.Rows[rowIndex].Cells[2].Value.ToString();
 			if (tbl == null) return;
 
+			string columnType = dataGridView2.Rows[rowIndex].Cells[1].Value.ToString();
+			if (columnType == null) columnType = "";
+			else if (columnType.ToUpper().Contains("DATETIME"))
+			{
+				columnType = " DATETIME ";
+			}
 
-			//string dropTable = "drop table " + tbl;
-			//Create(dropTable);
-			string queryCreate = "SHOW CREATE TABLE " + tbl;
-			ShowCreateTable(queryCreate);
+			string nullYN = dataGridView2.Rows[rowIndex].Cells[2].Value.ToString();
+			if (nullYN == null) return;
+			if (nullYN == "NO") nullYN = " NOT NULL";
+			else if (nullYN == "YES") nullYN = " NULL";
+			if (columnType.ToUpper().Contains("DATETIME"))
+			{
+				nullYN = "";
+			}
+
+			string nullable = dataGridView2.Rows[rowIndex].Cells[2].Value.ToString();
+			if (nullable == null) return;
+			if (nullable == "NO") nullable = " NOT NULL";
+			else if (nullable == "YES") nullable = " NULL";
+			if (columnType.ToUpper().Contains("DATETIME"))
+			{
+				nullable = "";
+			}
+			string def = dataGridView2.Rows[rowIndex].Cells[3].Value.ToString();
+			if (def == null) def = "";
+			if (columnType.ToUpper().Contains("INT"))
+			{
+				def = " DEFAULT 0 ";
+			}
+			if (columnType.ToUpper().Contains("SMALLINT") || columnType.ToUpper().Contains("DECIMAL"))
+			{
+				def = " 0";
+			}
+
+			else def = " DEFAULT '" + def + "'";
+
+			if (nullable.ToUpper().Contains("NULL"))
+			{
+				def = " DEFAULT NULL";
+			}
+			if (nullable.ToUpper().Contains(" NOT NULL"))
+			{
+				def = "";
+			}
+			else if (columnType.ToUpper().Contains("DATETIME"))
+			{
+				def = " DEFAULT NULL ";
+
+			}
+
+			if (dataGridView2.Rows[rowIndex].Cells[7].Value == null)
+			{
+				string alterTable = "ALTER TABLE " + tbl + " ADD `" + dataGridView2.Rows[rowIndex].Cells[0].Value.ToString() + "` " + dataGridView2.Rows[rowIndex].Cells[1].Value.ToString() + nullable + def;
+				Create(alterTable);
+			}
+			if (dataGridView2.Rows[rowIndex].Cells[1].Value.ToString().Trim() != dataGridView2.Rows[rowIndex].Cells[8].Value.ToString().Trim())
+			{
+				string alterTable = "ALTER TABLE " + tbl + " MODIFY `" + dataGridView2.Rows[rowIndex].Cells[7].Value.ToString() + "` " + dataGridView2.Rows[rowIndex].Cells[1].Value.ToString() + nullable + def;
+				Create(alterTable);
+			}
+			if (dataGridView2.Rows[rowIndex].Cells[3].Value.ToString().Trim() != dataGridView2.Rows[rowIndex].Cells[10].Value.ToString().Trim())
+			{
+				string alterTable = "ALTER TABLE " + tbl + " MODIFY COLUMN `" + dataGridView2.Rows[rowIndex].Cells[0].Value.ToString() + "` " + dataGridView2.Rows[rowIndex].Cells[1].Value.ToString() + nullYN + " DEFAULT '" + dataGridView2.Rows[rowIndex].Cells[3].Value.ToString() + "'";
+				Create(alterTable);
+			}
+			if (dataGridView2.Rows[rowIndex].Cells[2].Value.ToString().Trim() != dataGridView2.Rows[rowIndex].Cells[9].Value.ToString().Trim())
+			{
+				if (dataGridView2.Rows[rowIndex].Cells[2].Value.ToString().Trim() == "NO")
+				{
+					string alterTable = "ALTER TABLE " + tbl + " MODIFY `" + dataGridView2.Rows[rowIndex].Cells[7].Value.ToString() + "` " + dataGridView2.Rows[rowIndex].Cells[1].Value.ToString() + "NOT NULL";
+					Create(alterTable);
+				}
+				else if (dataGridView2.Rows[rowIndex].Cells[2].Value.ToString().Trim() == "YES")
+				{
+					string alterTable = "ALTER TABLE " + tbl + " MODIFY `" + dataGridView2.Rows[rowIndex].Cells[7].Value.ToString() + "` " + dataGridView2.Rows[rowIndex].Cells[1].Value.ToString();
+					Create(alterTable);
+				}
+			}
+			//CHANGE로 커멘트 변경할려면 컬럼도 동시에 바꿔져야됨 
+			//ALTER TABLE `user` CHANGE `id` `id` INT( 11 ) COMMENT 'user 테이블의 id';
+			if (dataGridView2.Rows[rowIndex].Cells[4].Value.ToString().Trim() != dataGridView2.Rows[rowIndex].Cells[11].Value.ToString().Trim())
+			{
+				string alterTable = "ALTER TABLE " + tbl + " MODIFY COLUMN `" + dataGridView2.Rows[rowIndex].Cells[0].Value.ToString() + "` " + dataGridView2.Rows[rowIndex].Cells[1].Value.ToString() + nullable + " COMMENT '" + dataGridView2.Rows[rowIndex].Cells[4].Value.ToString() + "'";
+				Create(alterTable);
+			}
+
+			//collate utf8로 전부 수정
+			//ALTER TABLE 테이블명 MODIFY COLUMN 컬럼 VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci
+			if (dataGridView2.Rows[rowIndex].Cells[5].Value.ToString().Trim() != dataGridView2.Rows[rowIndex].Cells[12].Value.ToString().Trim())
+			{
+				string alterTable = "ALTER TABLE " + tbl + " MODIFY COLUMN `" + dataGridView2.Rows[rowIndex].Cells[0].Value.ToString() + "` " + dataGridView2.Rows[rowIndex].Cells[1].Value.ToString() + " CHARACTER SET utf8 COLLATE utf8_general_ci";
+				Create(alterTable);
+			}
+
+			//autoincrement alter
+			//ALTER TABLE 적용할테이블명칭 MODIFY 컬럼 INT NOT NULL AUTO_INCREMENT;
+			if (dataGridView2.Rows[rowIndex].Cells[6].Value.ToString().Trim() != dataGridView2.Rows[rowIndex].Cells[13].Value.ToString().Trim())
+			{
+				string alterTable = "ALTER TABLE " + tbl + " MODIFY COLUMN `" + dataGridView2.Rows[rowIndex].Cells[0].Value.ToString() + "` " + dataGridView2.Rows[rowIndex].Cells[1].Value.ToString() + nullable + "AUTO_INCREMENT";
+				Create(alterTable);
+			}
+
+
 		}
 
 		void alterAll()
@@ -1027,19 +1162,17 @@ namespace tableCheck
 			{
 				if (dataGridView1.Rows[i].Cells[4].Value.ToString().Trim() == dataGridView1.Rows[i].Cells[5].Value.ToString().Trim())
 				{
-					dataGridView1.Rows[i].Cells[7].Value = "필드수 같음";
-					dataGridView1.Rows[i].Cells[6].Value = "100";
+					dataGridView1.Rows[i].Cells[7].Value = "작업완료";
+			    dataGridView1.Rows[i].Cells[6].Value = "100";
 				}
-				else dataGridView1.Rows[i].Cells[7].Value = "다름";
+				else dataGridView1.Rows[i].Cells[7].Value = "필드수 다름";
 			}
-
-
 		}
 
 		private void button1_Click(object sender, EventArgs e)
 		{
-			alterOne();
-
+		
+			alterChange();
 			buttonConnect_Click(sender, e);
 		}
 
@@ -1060,94 +1193,148 @@ namespace tableCheck
 			buttonConnect_Click(sender, e);
 		}
 
+		void alterChange()
+		{
+			for (int i = 0; i < dataGridView2.Rows.Count; i++)
+			{
+
+				int rowIndex = dataGridView1.CurrentCell.RowIndex;
+				if (rowIndex < 0) return;
+				if (dataGridView1.Rows[rowIndex].Cells[0].Value == null)
+				{
+					return;
+				}
+				string tbl = dataGridView1.Rows[rowIndex].Cells[2].Value.ToString();
+				if (tbl == null) return;
+
+				if (dataGridView2.Rows[i].Cells[1].Value == null)
+				{
+					continue;
+				}
+				string columnType = dataGridView2.Rows[i].Cells[1].Value.ToString();
+				if (columnType == null) columnType = "";
+				else if (columnType.ToUpper().Contains("DATETIME"))
+				{
+					columnType = " DATETIME ";
+				}
+
+				string nullYN = dataGridView2.Rows[i].Cells[2].Value.ToString();
+				if (nullYN == null) return;
+				if (nullYN == "NO") nullYN = " NOT NULL";
+				else if (nullYN == "YES") nullYN = " NULL";
+				if (columnType.ToUpper().Contains("DATETIME"))
+				{
+					nullYN = "";
+				}
+
+				string nullable = dataGridView2.Rows[i].Cells[2].Value.ToString();
+				if (nullable == null) return;
+				if (nullable == "NO") nullable = " NOT NULL";
+				else if (nullable == "YES") nullable = " NULL";
+				if (columnType.ToUpper().Contains("DATETIME"))
+				{
+					nullable = "";
+				}
+				string def = dataGridView2.Rows[i].Cells[3].Value.ToString();
+				if (def == null) def = "";
+				if (columnType.ToUpper().Contains("INT"))
+				{
+					def = " DEFAULT 0 ";
+				}
+				if (columnType.ToUpper().Contains("SMALLINT") || columnType.ToUpper().Contains("DECIMAL"))
+				{
+					def = " 0";
+				}
+			
+				else def = " DEFAULT '" + def + "'";
+
+				if (nullable.ToUpper().Contains("NULL"))
+				{
+					def = " DEFAULT NULL";
+				}
+				if (nullable.ToUpper().Contains(" NOT NULL"))
+				{
+					def = "";
+				}
+				else if (columnType.ToUpper().Contains("DATETIME"))
+				{
+					def = " DEFAULT NULL ";
+
+				}
+
+				if (dataGridView2.Rows[i].Cells[7].Value == null)
+				{
+					string alterTable = "ALTER TABLE " + tbl + " ADD `" + dataGridView2.Rows[i].Cells[0].Value.ToString() + "` " + dataGridView2.Rows[i].Cells[1].Value.ToString() + nullable + def;
+					Create(alterTable);
+				}
+	
+				if (dataGridView2.Rows[i].Cells[8].Value == null)
+				{
+					//string alterTable = "ALTER TABLE " + tbl + " MODIFY `" + dataGridView2.Rows[i].Cells[7].Value.ToString() + "` " + dataGridView2.Rows[i].Cells[1].Value.ToString() + nullable + def;
+					//Create(alterTable);
+					continue;
+				}
+
+				if (dataGridView2.Rows[i].Cells[1].Value.ToString().Trim() != dataGridView2.Rows[i].Cells[8].Value.ToString().Trim())
+				{
+					string alterTable = "ALTER TABLE " + tbl + " MODIFY `" + dataGridView2.Rows[i].Cells[7].Value.ToString() + "` " + dataGridView2.Rows[i].Cells[1].Value.ToString() + nullable + def;
+					Create(alterTable);
+				}
+				if (dataGridView2.Rows[i].Cells[3].Value.ToString().Trim() != dataGridView2.Rows[i].Cells[10].Value.ToString().Trim())
+				{
+					string alterTable = "ALTER TABLE " + tbl + " MODIFY COLUMN `" + dataGridView2.Rows[i].Cells[0].Value.ToString() + "` " + dataGridView2.Rows[i].Cells[1].Value.ToString()+ nullYN + " DEFAULT '" + dataGridView2.Rows[i].Cells[3].Value.ToString() + "'";
+					Create(alterTable);
+				}
+				if (dataGridView2.Rows[i].Cells[2].Value.ToString().Trim() != dataGridView2.Rows[i].Cells[9].Value.ToString().Trim())
+				{
+					if (dataGridView2.Rows[i].Cells[2].Value.ToString().Trim() == "NO")
+					{
+						string alterTable = "ALTER TABLE " + tbl + " MODIFY `" + dataGridView2.Rows[i].Cells[7].Value.ToString() + "` " + dataGridView2.Rows[i].Cells[1].Value.ToString() + "NOT NULL";
+						Create(alterTable);
+					}
+					else if (dataGridView2.Rows[i].Cells[2].Value.ToString().Trim() == "YES")
+					{
+						string alterTable = "ALTER TABLE " + tbl + " MODIFY `" + dataGridView2.Rows[i].Cells[7].Value.ToString() + "` " + dataGridView2.Rows[i].Cells[1].Value.ToString();
+						Create(alterTable);
+					}
+				}
+				//CHANGE로 커멘트 변경할려면 컬럼도 동시에 바꿔져야됨 
+				//ALTER TABLE `user` CHANGE `id` `id` INT( 11 ) COMMENT 'user 테이블의 id';
+				if (dataGridView2.Rows[i].Cells[4].Value.ToString().Trim() != dataGridView2.Rows[i].Cells[11].Value.ToString().Trim())
+				{
+					string alterTable = "ALTER TABLE " + tbl + " MODIFY COLUMN `" + dataGridView2.Rows[i].Cells[0].Value.ToString() + "` " + dataGridView2.Rows[i].Cells[1].Value.ToString() + nullable + " COMMENT '" + dataGridView2.Rows[i].Cells[4].Value.ToString()+"'";
+					Create(alterTable);
+				}
+
+				//collate utf8로 전부 수정
+				//ALTER TABLE 테이블명 MODIFY COLUMN 컬럼 VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci
+				if (dataGridView2.Rows[i].Cells[5].Value.ToString().Trim() != dataGridView2.Rows[i].Cells[12].Value.ToString().Trim())
+				{
+					string alterTable = "ALTER TABLE " + tbl + " MODIFY COLUMN `" + dataGridView2.Rows[i].Cells[0].Value.ToString() + "` " + dataGridView2.Rows[i].Cells[1].Value.ToString() + " CHARACTER SET utf8 COLLATE utf8_general_ci";
+					Create(alterTable);
+				}
+
+				//autoincrement alter
+				//ALTER TABLE 적용할테이블명칭 MODIFY 컬럼 INT NOT NULL AUTO_INCREMENT;
+				if (dataGridView2.Rows[i].Cells[6].Value.ToString().Trim() != dataGridView2.Rows[i].Cells[13].Value.ToString().Trim())
+				{
+					string alterTable = "ALTER TABLE " + tbl + " MODIFY COLUMN `" + dataGridView2.Rows[i].Cells[0].Value.ToString() + "` " + dataGridView2.Rows[i].Cells[1].Value.ToString() + nullable + "AUTO_INCREMENT";
+					Create(alterTable);
+				}
+			}
+		}
+
+
 		private void button2_Click(object sender, EventArgs e)
 		{
-			int rowIndex = dataGridView1.CurrentCell.RowIndex;
-			if (rowIndex < 0) return;
-			if (dataGridView1.Rows[rowIndex].Cells[0].Value == null)
-			{
-				return;
-			}
-			string tbl = dataGridView1.Rows[rowIndex].Cells[2].Value.ToString();
-			if (tbl == null) return;
+			alterChange();
 
-			string columnType = dataGridView2.Rows[0].Cells[1].Value.ToString();
-			if (columnType == null) columnType = "";
-			else if (columnType.ToUpper().Contains("DATETIME"))
-			{
-				columnType = " DATETIME ";
-			}
-			string nullable = dataGridView2.Rows[0].Cells[2].Value.ToString();
-			if (nullable == null) return;
-			if (nullable == "NO") nullable = " NOT NULL";
-			else if (nullable == "YES") nullable = " NULL";
-			if (columnType.ToUpper().Contains("DATETIME"))
-			{
-				nullable = "";
-			}
-			string def = dataGridView2.Rows[0].Cells[3].Value.ToString();
-			if (def == null) def = "";
-			if (columnType.ToUpper().Contains("INT"))
-			{
-				def = " DEFAULT 0 ";
-			}
-			if (columnType.ToUpper().Contains("SMALLINT") || columnType.ToUpper().Contains("DECIMAL"))
-			{
-				def = "0";
-			}
-			if (nullable.ToUpper().Contains(" NOT NULL"))
-			{
-				def = "";
-			}
-			else if (columnType.ToUpper().Contains("DATETIME"))
-			{
-				def = " DEFAULT NULL ";
+		}
 
-			}
-			else def = " DEFAULT '" + def + "'";
-
-			if (nullable.ToUpper().Contains("NULL"))
-			{
-				def = " DEFAULT NULL";
-			}
-
-			if (dataGridView2.Rows[0].Cells[7].Value == null)
-			{
-				string alterTable = "ALTER TABLE " + tbl + " ADD `" +  dataGridView2.Rows[0].Cells[0].Value.ToString() + "` " + dataGridView2.Rows[0].Cells[1].Value.ToString() + nullable + def;
-				Create(alterTable);
-			}
-			if (dataGridView2.Rows[0].Cells[1].Value.ToString().Trim() != dataGridView2.Rows[0].Cells[8].Value.ToString().Trim())
-			{
-				string alterTable = "ALTER TABLE " + tbl + " MODIFY `" + dataGridView2.Rows[0].Cells[7].Value.ToString() + "` " + dataGridView2.Rows[0].Cells[1].Value.ToString() + nullable + def;
-				Create(alterTable);
-			}
-			if (dataGridView2.Rows[0].Cells[3].Value.ToString().Trim() != dataGridView2.Rows[0].Cells[10].Value.ToString().Trim())
-			{
-				string alterTable = "ALTER TABLE " + tbl + " ALTER COLUMN `" + dataGridView2.Rows[0].Cells[0].Value.ToString() + "` SET " + def;
-				Create(alterTable);
-			}
-			if (dataGridView2.Rows[0].Cells[2].Value.ToString().Trim() != dataGridView2.Rows[0].Cells[9].Value.ToString().Trim())
-			{
-				if(dataGridView2.Rows[0].Cells[2].Value.ToString().Trim() == "NO")
-				{
-					string alterTable = "ALTER TABLE " + tbl + " MODIFY `" + dataGridView2.Rows[0].Cells[7].Value.ToString() + "` " + dataGridView2.Rows[0].Cells[1].Value.ToString() + "NOT NULL";
-					Create(alterTable);
-				}
-				else if(dataGridView2.Rows[0].Cells[2].Value.ToString().Trim() == "YES")
-				{
-					string alterTable = "ALTER TABLE " + tbl + " MODIFY `" + dataGridView2.Rows[0].Cells[7].Value.ToString() + "` " + dataGridView2.Rows[0].Cells[1].Value.ToString();
-					Create(alterTable);
-				}
-			}
-			//CHANGE로 커멘트 변경할려면 컬럼도 동시에 바꿔져야됨 
-			//ALTER TABLE `user` CHANGE `id` `id` INT( 11 ) COMMENT 'user 테이블의 id';
-			if (dataGridView2.Rows[0].Cells[4].Value.ToString().Trim() != dataGridView2.Rows[0].Cells[11].Value.ToString().Trim())
-			{
-				string alterTable = "ALTER TABLE " + tbl + " CHANGE `" + dataGridView2.Rows[0].Cells[0].Value.ToString() + "` `" + dataGridView2.Rows[0].Cells[7].Value.ToString() + "` " + dataGridView2.Rows[0].Cells[1].Value.ToString() + "COMMENT" + dataGridView2.Rows[0].Cells[4].Value.ToString();
-				Create(alterTable);
-			}
-
-
+		private void button1_Click_1(object sender, EventArgs e)
+		{
+			alterChange();
+			buttonConnect_Click(sender,e);
 		}
 	}
 }
