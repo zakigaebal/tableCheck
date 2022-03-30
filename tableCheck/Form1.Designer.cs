@@ -138,6 +138,7 @@
 			this.dataGridView2.Dock = System.Windows.Forms.DockStyle.Bottom;
 			this.dataGridView2.Location = new System.Drawing.Point(0, 197);
 			this.dataGridView2.Name = "dataGridView2";
+			this.dataGridView2.ReadOnly = true;
 			this.dataGridView2.RowTemplate.Height = 23;
 			this.dataGridView2.Size = new System.Drawing.Size(1408, 343);
 			this.dataGridView2.TabIndex = 15;
