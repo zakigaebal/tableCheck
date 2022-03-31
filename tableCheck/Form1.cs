@@ -682,7 +682,7 @@ namespace tableCheck
 				MySqlDataReader rdr2 = DBConnectTest2(conn2, _HostName2, _PORT2, _DATABASE2, _ID2, _PWD2, tableName);
 				while (rdr2.Read())
 				{
-					Columns listInfo = new Columns() { COLUMN_NAME = rdr2["fieldName"].ToString(), DATA_TYPE = rdr2["dataType"].ToString(), CHARACTER_MAXIMUM_LENGTH = rdr2["length"].ToString(), COLUMN_DEFAULT = rdr2["default1"].ToString(), COLUMN_COMMENT = rdr2["comment"].ToString(), IS_NULLABLE = rdr2["nullable"].ToString(), COLLATION_NAME = rdr2["colName"].ToString(), INCREMENT = rdr["EX"].ToString(), ORDINAL_POSITION = rdr["pos"].ToString() };
+					Columns listInfo = new Columns() { COLUMN_NAME = rdr2["fieldName"].ToString(), DATA_TYPE = rdr2["dataType"].ToString(), CHARACTER_MAXIMUM_LENGTH = rdr2["length"].ToString(), COLUMN_DEFAULT = rdr2["default1"].ToString(), COLUMN_COMMENT = rdr2["comment"].ToString(), IS_NULLABLE = rdr2["nullable"].ToString(), COLLATION_NAME = rdr2["colName"].ToString(), INCREMENT = rdr2["EX"].ToString(), ORDINAL_POSITION = rdr2["pos"].ToString() };
 					listTable2.Add(listInfo);
 				}
 				for (int i = 0; i < listTable1.Count; i++)
@@ -1129,7 +1129,7 @@ namespace tableCheck
 					//ALTER TABLE 적용할테이블명칭 MODIFY 컬럼 INT NOT NULL AUTO_INCREMENT;
 					if (dataGridView2.Rows[i].Cells[6].Value.ToString().Trim() != dataGridView2.Rows[i].Cells[13].Value.ToString().Trim())
 					{
-						string alterTable = "ALTER TABLE " + tbl + " MODIFY COLUMN `" + dataGridView2.Rows[i].Cells[0].Value.ToString() + "` " + dataGridView2.Rows[i].Cells[1].Value.ToString() + nullable + "AUTO_INCREMENT";
+						string alterTable = "ALTER TABLE " + tbl + " MODIFY COLUMN `" + dataGridView2.Rows[i].Cells[0].Value.ToString() + "` " + dataGridView2.Rows[i].Cells[1].Value.ToString() + nullable + " AUTO_INCREMENT";
 						Create(alterTable);
 					}
 				}
