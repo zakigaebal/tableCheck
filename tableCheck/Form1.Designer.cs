@@ -459,7 +459,7 @@
 			this.panel4.Location = new System.Drawing.Point(0, 23);
 			this.panel4.Name = "panel4";
 			this.panel4.Size = new System.Drawing.Size(1408, 22);
-			this.panel4.TabIndex = 16;
+			this.panel4.TabIndex = 1;
 			// 
 			// label2
 			// 
@@ -467,7 +467,7 @@
 			this.label2.Location = new System.Drawing.Point(6, 4);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(27, 12);
-			this.label2.TabIndex = 6;
+			this.label2.TabIndex = 0;
 			this.label2.Text = "DB2";
 			// 
 			// textBoxDb2
@@ -475,7 +475,7 @@
 			this.textBoxDb2.Location = new System.Drawing.Point(34, 0);
 			this.textBoxDb2.Name = "textBoxDb2";
 			this.textBoxDb2.Size = new System.Drawing.Size(70, 21);
-			this.textBoxDb2.TabIndex = 7;
+			this.textBoxDb2.TabIndex = 1;
 			// 
 			// label6
 			// 
@@ -483,7 +483,7 @@
 			this.label6.Location = new System.Drawing.Point(110, 4);
 			this.label6.Name = "label6";
 			this.label6.Size = new System.Drawing.Size(16, 12);
-			this.label6.TabIndex = 6;
+			this.label6.TabIndex = 2;
 			this.label6.Text = "IP";
 			// 
 			// checkBoxCancel
@@ -492,7 +492,7 @@
 			this.checkBoxCancel.Location = new System.Drawing.Point(752, 2);
 			this.checkBoxCancel.Name = "checkBoxCancel";
 			this.checkBoxCancel.Size = new System.Drawing.Size(72, 16);
-			this.checkBoxCancel.TabIndex = 9;
+			this.checkBoxCancel.TabIndex = 12;
 			this.checkBoxCancel.Text = "선택취소";
 			this.checkBoxCancel.UseVisualStyleBackColor = true;
 			this.checkBoxCancel.CheckedChanged += new System.EventHandler(this.checkBoxCancel_CheckedChanged);
@@ -503,7 +503,7 @@
 			this.checkBox2.Location = new System.Drawing.Point(686, 2);
 			this.checkBox2.Name = "checkBox2";
 			this.checkBox2.Size = new System.Drawing.Size(72, 16);
-			this.checkBox2.TabIndex = 9;
+			this.checkBox2.TabIndex = 11;
 			this.checkBox2.Text = "선택반전";
 			this.checkBox2.UseVisualStyleBackColor = true;
 			this.checkBox2.CheckedChanged += new System.EventHandler(this.checkBox2_CheckedChanged);
@@ -514,7 +514,7 @@
 			this.CheckBox_All.Location = new System.Drawing.Point(619, 2);
 			this.CheckBox_All.Name = "CheckBox_All";
 			this.CheckBox_All.Size = new System.Drawing.Size(72, 16);
-			this.CheckBox_All.TabIndex = 9;
+			this.CheckBox_All.TabIndex = 10;
 			this.CheckBox_All.Text = "전체선택";
 			this.CheckBox_All.UseVisualStyleBackColor = true;
 			this.CheckBox_All.CheckedChanged += new System.EventHandler(this.CheckBox_All_CheckedChanged);
@@ -525,7 +525,7 @@
 			this.label10.Location = new System.Drawing.Point(206, 4);
 			this.label10.Name = "label10";
 			this.label10.Size = new System.Drawing.Size(38, 12);
-			this.label10.TabIndex = 6;
+			this.label10.TabIndex = 4;
 			this.label10.Text = "PORT";
 			// 
 			// textBoxIp2
@@ -533,7 +533,7 @@
 			this.textBoxIp2.Location = new System.Drawing.Point(126, 0);
 			this.textBoxIp2.Name = "textBoxIp2";
 			this.textBoxIp2.Size = new System.Drawing.Size(70, 21);
-			this.textBoxIp2.TabIndex = 7;
+			this.textBoxIp2.TabIndex = 3;
 			// 
 			// textBoxPw2
 			// 
@@ -541,7 +541,7 @@
 			this.textBoxPw2.Name = "textBoxPw2";
 			this.textBoxPw2.PasswordChar = '*';
 			this.textBoxPw2.Size = new System.Drawing.Size(70, 21);
-			this.textBoxPw2.TabIndex = 7;
+			this.textBoxPw2.TabIndex = 9;
 			// 
 			// label8
 			// 
@@ -549,7 +549,7 @@
 			this.label8.Location = new System.Drawing.Point(468, 4);
 			this.label8.Name = "label8";
 			this.label8.Size = new System.Drawing.Size(72, 12);
-			this.label8.TabIndex = 6;
+			this.label8.TabIndex = 8;
 			this.label8.Text = "PASSWORD";
 			// 
 			// textBoxPort2
@@ -557,7 +557,7 @@
 			this.textBoxPort2.Location = new System.Drawing.Point(244, 0);
 			this.textBoxPort2.Name = "textBoxPort2";
 			this.textBoxPort2.Size = new System.Drawing.Size(70, 21);
-			this.textBoxPort2.TabIndex = 7;
+			this.textBoxPort2.TabIndex = 5;
 			// 
 			// textBoxUn2
 			// 
@@ -597,14 +597,14 @@
 			this.panel3.Location = new System.Drawing.Point(0, 0);
 			this.panel3.Name = "panel3";
 			this.panel3.Size = new System.Drawing.Size(1408, 23);
-			this.panel3.TabIndex = 15;
+			this.panel3.TabIndex = 0;
 			// 
 			// button1
 			// 
 			this.button1.Location = new System.Drawing.Point(857, -1);
 			this.button1.Name = "button1";
 			this.button1.Size = new System.Drawing.Size(47, 23);
-			this.button1.TabIndex = 10;
+			this.button1.TabIndex = 15;
 			this.button1.Text = "수정";
 			this.button1.UseVisualStyleBackColor = true;
 			this.button1.Click += new System.EventHandler(this.button1_Click_1);
@@ -614,7 +614,7 @@
 			this.buttonDelete.Location = new System.Drawing.Point(910, -1);
 			this.buttonDelete.Name = "buttonDelete";
 			this.buttonDelete.Size = new System.Drawing.Size(46, 25);
-			this.buttonDelete.TabIndex = 10;
+			this.buttonDelete.TabIndex = 0;
 			this.buttonDelete.Text = "삭제";
 			this.buttonDelete.UseVisualStyleBackColor = true;
 			this.buttonDelete.Click += new System.EventHandler(this.buttonDelete_Click);
@@ -624,7 +624,7 @@
 			this.buttonClear.Location = new System.Drawing.Point(654, 0);
 			this.buttonClear.Name = "buttonClear";
 			this.buttonClear.Size = new System.Drawing.Size(47, 23);
-			this.buttonClear.TabIndex = 17;
+			this.buttonClear.TabIndex = 12;
 			this.buttonClear.Text = "C";
 			this.buttonClear.UseVisualStyleBackColor = true;
 			this.buttonClear.Click += new System.EventHandler(this.buttonClear_Click);
@@ -634,7 +634,7 @@
 			this.buttonStart.Location = new System.Drawing.Point(776, 0);
 			this.buttonStart.Name = "buttonStart";
 			this.buttonStart.Size = new System.Drawing.Size(75, 23);
-			this.buttonStart.TabIndex = 18;
+			this.buttonStart.TabIndex = 14;
 			this.buttonStart.Text = "실행";
 			this.buttonStart.UseVisualStyleBackColor = true;
 			this.buttonStart.Click += new System.EventHandler(this.buttonStart_Click);
@@ -644,7 +644,7 @@
 			this.buttonOnes.Location = new System.Drawing.Point(701, 0);
 			this.buttonOnes.Name = "buttonOnes";
 			this.buttonOnes.Size = new System.Drawing.Size(75, 23);
-			this.buttonOnes.TabIndex = 18;
+			this.buttonOnes.TabIndex = 13;
 			this.buttonOnes.Text = "1개 실행";
 			this.buttonOnes.UseVisualStyleBackColor = true;
 			this.buttonOnes.Click += new System.EventHandler(this.buttonOnes_Click);
@@ -655,7 +655,7 @@
 			this.label1.Location = new System.Drawing.Point(6, 5);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(27, 12);
-			this.label1.TabIndex = 6;
+			this.label1.TabIndex = 1;
 			this.label1.Text = "DB1";
 			// 
 			// textBoxDb1
@@ -663,7 +663,7 @@
 			this.textBoxDb1.Location = new System.Drawing.Point(34, 0);
 			this.textBoxDb1.Name = "textBoxDb1";
 			this.textBoxDb1.Size = new System.Drawing.Size(70, 21);
-			this.textBoxDb1.TabIndex = 7;
+			this.textBoxDb1.TabIndex = 2;
 			// 
 			// label4
 			// 
@@ -671,7 +671,7 @@
 			this.label4.Location = new System.Drawing.Point(110, 5);
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(16, 12);
-			this.label4.TabIndex = 6;
+			this.label4.TabIndex = 3;
 			this.label4.Text = "IP";
 			// 
 			// label3
@@ -680,7 +680,7 @@
 			this.label3.Location = new System.Drawing.Point(206, 5);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(38, 12);
-			this.label3.TabIndex = 6;
+			this.label3.TabIndex = 5;
 			this.label3.Text = "PORT";
 			// 
 			// textBoxIp1
@@ -688,7 +688,7 @@
 			this.textBoxIp1.Location = new System.Drawing.Point(126, 1);
 			this.textBoxIp1.Name = "textBoxIp1";
 			this.textBoxIp1.Size = new System.Drawing.Size(70, 21);
-			this.textBoxIp1.TabIndex = 7;
+			this.textBoxIp1.TabIndex = 4;
 			// 
 			// buttonConnect
 			// 
@@ -706,7 +706,7 @@
 			this.textBoxPw1.Name = "textBoxPw1";
 			this.textBoxPw1.PasswordChar = '*';
 			this.textBoxPw1.Size = new System.Drawing.Size(70, 21);
-			this.textBoxPw1.TabIndex = 7;
+			this.textBoxPw1.TabIndex = 10;
 			// 
 			// label7
 			// 
@@ -714,7 +714,7 @@
 			this.label7.Location = new System.Drawing.Point(468, 5);
 			this.label7.Name = "label7";
 			this.label7.Size = new System.Drawing.Size(72, 12);
-			this.label7.TabIndex = 6;
+			this.label7.TabIndex = 9;
 			this.label7.Text = "PASSWORD";
 			// 
 			// textBoxPort1
@@ -722,14 +722,14 @@
 			this.textBoxPort1.Location = new System.Drawing.Point(244, 1);
 			this.textBoxPort1.Name = "textBoxPort1";
 			this.textBoxPort1.Size = new System.Drawing.Size(70, 21);
-			this.textBoxPort1.TabIndex = 7;
+			this.textBoxPort1.TabIndex = 6;
 			// 
 			// textBoxUn1
 			// 
 			this.textBoxUn1.Location = new System.Drawing.Point(392, 1);
 			this.textBoxUn1.Name = "textBoxUn1";
 			this.textBoxUn1.Size = new System.Drawing.Size(70, 21);
-			this.textBoxUn1.TabIndex = 7;
+			this.textBoxUn1.TabIndex = 8;
 			// 
 			// label5
 			// 
@@ -737,7 +737,7 @@
 			this.label5.Location = new System.Drawing.Point(319, 5);
 			this.label5.Name = "label5";
 			this.label5.Size = new System.Drawing.Size(73, 12);
-			this.label5.TabIndex = 6;
+			this.label5.TabIndex = 7;
 			this.label5.Text = "USERNAME";
 			// 
 			// Form1
