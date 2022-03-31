@@ -428,7 +428,7 @@ namespace tableCheck
 			public string CREATETABLE1;
 			public string CREATETABLE2;
 		}
-
+		//
 
 
 		//연결테스트 버튼 클릭
