@@ -114,6 +114,7 @@ namespace tableCheck
 				dataGridView2.Columns.Add("column7", "코멘트");
 				dataGridView2.Columns.Add("column7", "조합");
 				dataGridView2.Columns.Add("column7", "EXTRA");
+				dataGridView2.Columns.Add("column7", "위치");
 			}
 			dataGridView2.AllowUserToAddRows = false;
 			i = 0;
@@ -362,7 +363,9 @@ namespace tableCheck
 
 			public string IS_NULLABLE; //NULL 허용
 			public string COLLATION_NAME; //조합
-			public string INCREMENT;
+			public string INCREMENT; //ex
+
+			public string ORDINAL_POSITION;
 
 			public string SHOWTABLE;
 			public string CREATETABLE;
@@ -391,8 +394,12 @@ namespace tableCheck
 			public string IS_NULLABLE2; //NULL 허용1
 			public string COLLATION_NAME1; //조합
 			public string COLLATION_NAME2; //조합
-			public string INCREMENT1; //
-			public string INCREMENT2; //조합
+			public string INCREMENT1; // ex
+			public string INCREMENT2; // ex
+
+			public string ORDINAL_POSITION1;
+			public string ORDINAL_POSITION2;
+
 
 			public string SHOWTABLE1;
 			public string SHOWTABLE2;
@@ -529,9 +536,7 @@ namespace tableCheck
 				con.Open();
 				string sql = query;
 				MySqlCommand cmd = new MySqlCommand(sql, con);
-
 				//Delay(500);
-
 				rdr = cmd.ExecuteReader();
 				//if (rdr == null)
 				//{
@@ -539,7 +544,6 @@ namespace tableCheck
 				//	 cmd = new MySqlCommand(sql, con);
 				//	rdr = cmd.ExecuteReader();
 				//}
-
 				return rdr;
 			}
 			catch (Exception Ex)
@@ -577,16 +581,17 @@ namespace tableCheck
 			{
 
 				con.Open();
-				string sql2 = "SELECT COLUMN_NAME fieldName, COLUMN_TYPE dataType, CHARACTER_MAXIMUM_LENGTH length, COLUMN_DEFAULT default1, COLUMN_COMMENT comment, IS_NULLABLE nullable, COLLATION_NAME colName, EXTRA EX FROM information_schema.columns WHERE table_schema= '" + database + "' and TABLE_NAME = '" + tableName + "' ORDER BY TABLE_NAME asc";
+				string sql2 = "SELECT COLUMN_NAME fieldName, COLUMN_TYPE dataType, CHARACTER_MAXIMUM_LENGTH length, COLUMN_DEFAULT default1, COLUMN_COMMENT comment, IS_NULLABLE nullable, COLLATION_NAME colName, EXTRA EX, ORDINAL_POSITION pos FROM information_schema.columns WHERE table_schema= '" + database + "' and TABLE_NAME = '" + tableName + "' ORDER BY TABLE_NAME asc";
 				MySqlCommand cmd = new MySqlCommand(sql2, con);
 				rdr = cmd.ExecuteReader();
 				return rdr;
 			}
-			catch (Exception Ex)
+			catch (Exception ex)
 			{
 				return null;
 				con.Close();
-				MessageBox.Show(Ex.ToString());
+				LogMgr.ExceptionLog(ex);
+				MessageBox.Show(ex.ToString());
 				//MessageBox.Show("DB 접속이 불가능합니다.");
 				//isTested = false;
 			}
@@ -596,7 +601,6 @@ namespace tableCheck
 		{
 			dataGridView1.Rows.Clear();
 			dataGridView2.Rows.Clear();
-
 		}
 
 		private void CheckBox_All_CheckedChanged(object sender, EventArgs e)
@@ -672,13 +676,13 @@ namespace tableCheck
 				List<ColumnsAll> listTableAll = new List<ColumnsAll>();
 				while (rdr.Read())
 				{
-					Columns listInfo = new Columns() { COLUMN_NAME = rdr["fieldName"].ToString(), DATA_TYPE = rdr["dataType"].ToString(), CHARACTER_MAXIMUM_LENGTH = rdr["length"].ToString(), COLUMN_DEFAULT = rdr["default1"].ToString(), COLUMN_COMMENT = rdr["comment"].ToString(), IS_NULLABLE = rdr["nullable"].ToString(), COLLATION_NAME = rdr["colName"].ToString(), INCREMENT = rdr["EX"].ToString() };
+					Columns listInfo = new Columns() { COLUMN_NAME = rdr["fieldName"].ToString(), DATA_TYPE = rdr["dataType"].ToString(), CHARACTER_MAXIMUM_LENGTH = rdr["length"].ToString(), COLUMN_DEFAULT = rdr["default1"].ToString(), COLUMN_COMMENT = rdr["comment"].ToString(), IS_NULLABLE = rdr["nullable"].ToString(), COLLATION_NAME = rdr["colName"].ToString(), INCREMENT = rdr["EX"].ToString(), ORDINAL_POSITION =	rdr["pos"].ToString() };
 					listTable1.Add(listInfo);
 				}
 				MySqlDataReader rdr2 = DBConnectTest2(conn2, _HostName2, _PORT2, _DATABASE2, _ID2, _PWD2, tableName);
 				while (rdr2.Read())
 				{
-					Columns listInfo = new Columns() { COLUMN_NAME = rdr2["fieldName"].ToString(), DATA_TYPE = rdr2["dataType"].ToString(), CHARACTER_MAXIMUM_LENGTH = rdr2["length"].ToString(), COLUMN_DEFAULT = rdr2["default1"].ToString(), COLUMN_COMMENT = rdr2["comment"].ToString(), IS_NULLABLE = rdr2["nullable"].ToString(), COLLATION_NAME = rdr2["colName"].ToString(), INCREMENT = rdr["EX"].ToString() };
+					Columns listInfo = new Columns() { COLUMN_NAME = rdr2["fieldName"].ToString(), DATA_TYPE = rdr2["dataType"].ToString(), CHARACTER_MAXIMUM_LENGTH = rdr2["length"].ToString(), COLUMN_DEFAULT = rdr2["default1"].ToString(), COLUMN_COMMENT = rdr2["comment"].ToString(), IS_NULLABLE = rdr2["nullable"].ToString(), COLLATION_NAME = rdr2["colName"].ToString(), INCREMENT = rdr["EX"].ToString(), ORDINAL_POSITION = rdr["pos"].ToString() };
 					listTable2.Add(listInfo);
 				}
 				for (int i = 0; i < listTable1.Count; i++)
@@ -694,6 +698,7 @@ namespace tableCheck
 						COLLATION_NAME1 = listTable1[i].COLLATION_NAME,
 
 						INCREMENT1 = listTable1[i].INCREMENT,
+						ORDINAL_POSITION1 = listTable1[i].ORDINAL_POSITION
 					});
 				}
 				for (int i = 0; i < listTable2.Count; i++)
@@ -711,6 +716,8 @@ namespace tableCheck
 							listTableAll[j].IS_NULLABLE2 = listTable2[i].IS_NULLABLE;
 							listTableAll[j].COLLATION_NAME2 = listTable2[i].COLLATION_NAME;
 							listTableAll[j].INCREMENT2 = listTable2[i].INCREMENT;
+							listTableAll[j].ORDINAL_POSITION2 = listTable2[i].ORDINAL_POSITION;
+
 							found = true;
 							listTableAll[j].TABLE = "A+B";
 							break;
@@ -727,7 +734,9 @@ namespace tableCheck
 							COLUMN_COMMENT2 = listTable2[i].COLUMN_COMMENT,
 							IS_NULLABLE2 = listTable2[i].IS_NULLABLE,
 							COLLATION_NAME2 = listTable2[i].COLLATION_NAME,
-							INCREMENT2 = listTable2[i].INCREMENT
+							INCREMENT2 = listTable2[i].INCREMENT,
+							ORDINAL_POSITION2 = listTable2[i].ORDINAL_POSITION
+
 						});
 					}
 				}
@@ -744,6 +753,9 @@ namespace tableCheck
 					dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[k++].Value = listTableAll[i].COLUMN_COMMENT1;
 					dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[k++].Value = listTableAll[i].COLLATION_NAME1;
 					dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[k++].Value = listTableAll[i].INCREMENT1;
+					dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[k++].Value = listTableAll[i].ORDINAL_POSITION1;
+
+
 					dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[k++].Value = listTableAll[i].COLUMN_NAME2;
 					dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[k++].Value = listTableAll[i].DATA_TYPE2;
 					dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[k++].Value = listTableAll[i].IS_NULLABLE2;
@@ -751,6 +763,8 @@ namespace tableCheck
 					dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[k++].Value = listTableAll[i].COLUMN_COMMENT2;
 					dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[k++].Value = listTableAll[i].COLLATION_NAME2;
 					dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[k++].Value = listTableAll[i].INCREMENT2;
+					dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[k++].Value = listTableAll[i].ORDINAL_POSITION2;
+
 				}
 			}
 			catch (Exception ex)
@@ -907,7 +921,7 @@ namespace tableCheck
 				List<Columns> listTable1 = new List<Columns>();
 				List<Columns> listTable2 = new List<Columns>();
 				List<ColumnsAll> listTableAll = new List<ColumnsAll>();
-				Delay(200);
+				//Delay(200);
 				while (rdr.Read())
 				{
 					Columns listInfo = new Columns() { CREATETABLE = rdr["Create Table"].ToString() };
