@@ -412,8 +412,7 @@ namespace tableCheck
 		//연결테스트 버튼 클릭
 		private void btn_TEST_Click(object sender, EventArgs e)
 		{
-			try
-			{
+		
 				_HostName = textBoxIp1.Text;
 				_PORT = textBoxPort1.Text;
 				_DATABASE = textBoxDb1.Text;
@@ -502,13 +501,7 @@ namespace tableCheck
 					dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[5].Value = listTableAll[i].fieldCount2;
 
 				}
-			}
-			catch (Exception ex)
-			{
-				LogMgr.ExceptionLog(ex);
-			}
 		}
-
 
 
 		//DBConnectTest 메소드
@@ -921,7 +914,7 @@ namespace tableCheck
 				List<Columns> listTable1 = new List<Columns>();
 				List<Columns> listTable2 = new List<Columns>();
 				List<ColumnsAll> listTableAll = new List<ColumnsAll>();
-				//Delay(200);
+				Delay(200);
 				while (rdr.Read())
 				{
 					Columns listInfo = new Columns() { CREATETABLE = rdr["Create Table"].ToString() };
@@ -1003,12 +996,8 @@ namespace tableCheck
 		{
 			try
 			{
-
-
-
 				for (int i = 0; i < dataGridView2.Rows.Count; i++)
 				{
-
 					int rowIndex = dataGridView1.CurrentCell.RowIndex;
 					if (rowIndex < 0) return;
 					if (dataGridView1.Rows[rowIndex].Cells[0].Value == null)
@@ -1073,45 +1062,47 @@ namespace tableCheck
 
 					}
 
-					if (dataGridView2.Rows[i].Cells[7].Value == null)
+					
+
+					if (dataGridView2.Rows[i].Cells[8].Value == null)
 					{
 						string alterTable = "ALTER TABLE " + tbl + " ADD `" + dataGridView2.Rows[i].Cells[0].Value.ToString() + "` " + dataGridView2.Rows[i].Cells[1].Value.ToString() + nullable + def;
 						Create(alterTable);
 					}
 
-					if (dataGridView2.Rows[i].Cells[8].Value == null)
+					if (dataGridView2.Rows[i].Cells[9].Value == null)
 					{
 						//string alterTable = "ALTER TABLE " + tbl + " MODIFY `" + dataGridView2.Rows[i].Cells[7].Value.ToString() + "` " + dataGridView2.Rows[i].Cells[1].Value.ToString() + nullable + def;
 						//Create(alterTable);
 						continue;
 					}
 
-					if (dataGridView2.Rows[i].Cells[1].Value.ToString().Trim() != dataGridView2.Rows[i].Cells[8].Value.ToString().Trim())
+					if (dataGridView2.Rows[i].Cells[1].Value.ToString().Trim() != dataGridView2.Rows[i].Cells[9].Value.ToString().Trim())
 					{
-						string alterTable = "ALTER TABLE " + tbl + " MODIFY `" + dataGridView2.Rows[i].Cells[7].Value.ToString() + "` " + dataGridView2.Rows[i].Cells[1].Value.ToString() + nullable + def;
+						string alterTable = "ALTER TABLE " + tbl + " MODIFY COLUMN `" + dataGridView2.Rows[i].Cells[0].Value.ToString() + "` " + dataGridView2.Rows[i].Cells[1].Value.ToString() + nullable + def;
 						Create(alterTable);
 					}
-					if (dataGridView2.Rows[i].Cells[3].Value.ToString().Trim() != dataGridView2.Rows[i].Cells[10].Value.ToString().Trim())
+					if (dataGridView2.Rows[i].Cells[3].Value.ToString().Trim() != dataGridView2.Rows[i].Cells[11].Value.ToString().Trim())
 					{
 						string alterTable = "ALTER TABLE " + tbl + " MODIFY COLUMN `" + dataGridView2.Rows[i].Cells[0].Value.ToString() + "` " + dataGridView2.Rows[i].Cells[1].Value.ToString() + nullYN + " DEFAULT '" + dataGridView2.Rows[i].Cells[3].Value.ToString() + "'";
 						Create(alterTable);
 					}
-					if (dataGridView2.Rows[i].Cells[2].Value.ToString().Trim() != dataGridView2.Rows[i].Cells[9].Value.ToString().Trim())
+					if (dataGridView2.Rows[i].Cells[2].Value.ToString().Trim() != dataGridView2.Rows[i].Cells[10].Value.ToString().Trim())
 					{
 						if (dataGridView2.Rows[i].Cells[2].Value.ToString().Trim() == "NO")
 						{
-							string alterTable = "ALTER TABLE " + tbl + " MODIFY `" + dataGridView2.Rows[i].Cells[7].Value.ToString() + "` " + dataGridView2.Rows[i].Cells[1].Value.ToString() + "NOT NULL";
+							string alterTable = "ALTER TABLE " + tbl + " MODIFY `" + dataGridView2.Rows[i].Cells[8].Value.ToString() + "` " + dataGridView2.Rows[i].Cells[1].Value.ToString() + "NOT NULL";
 							Create(alterTable);
 						}
 						else if (dataGridView2.Rows[i].Cells[2].Value.ToString().Trim() == "YES")
 						{
-							string alterTable = "ALTER TABLE " + tbl + " MODIFY `" + dataGridView2.Rows[i].Cells[7].Value.ToString() + "` " + dataGridView2.Rows[i].Cells[1].Value.ToString();
+							string alterTable = "ALTER TABLE " + tbl + " MODIFY `" + dataGridView2.Rows[i].Cells[8].Value.ToString() + "` " + dataGridView2.Rows[i].Cells[1].Value.ToString();
 							Create(alterTable);
 						}
 					}
 					//CHANGE로 커멘트 변경할려면 컬럼도 동시에 바꿔져야됨 
 					//ALTER TABLE `user` CHANGE `id` `id` INT( 11 ) COMMENT 'user 테이블의 id';
-					if (dataGridView2.Rows[i].Cells[4].Value.ToString().Trim() != dataGridView2.Rows[i].Cells[11].Value.ToString().Trim())
+					if (dataGridView2.Rows[i].Cells[4].Value.ToString().Trim() != dataGridView2.Rows[i].Cells[12].Value.ToString().Trim())
 					{
 						string alterTable = "ALTER TABLE " + tbl + " MODIFY COLUMN `" + dataGridView2.Rows[i].Cells[0].Value.ToString() + "` " + dataGridView2.Rows[i].Cells[1].Value.ToString() + nullable + " COMMENT '" + dataGridView2.Rows[i].Cells[4].Value.ToString() + "'";
 						Create(alterTable);
@@ -1119,7 +1110,7 @@ namespace tableCheck
 
 					//collate utf8로 전부 수정
 					//ALTER TABLE 테이블명 MODIFY COLUMN 컬럼 VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci
-					if (dataGridView2.Rows[i].Cells[5].Value.ToString().Trim() != dataGridView2.Rows[i].Cells[12].Value.ToString().Trim())
+					if (dataGridView2.Rows[i].Cells[5].Value.ToString().Trim() != dataGridView2.Rows[i].Cells[13].Value.ToString().Trim())
 					{
 						string alterTable = "ALTER TABLE " + tbl + " MODIFY COLUMN `" + dataGridView2.Rows[i].Cells[0].Value.ToString() + "` " + dataGridView2.Rows[i].Cells[1].Value.ToString() + " CHARACTER SET utf8 COLLATE utf8_general_ci";
 						Create(alterTable);
@@ -1127,7 +1118,7 @@ namespace tableCheck
 
 					//autoincrement alter
 					//ALTER TABLE 적용할테이블명칭 MODIFY 컬럼 INT NOT NULL AUTO_INCREMENT;
-					if (dataGridView2.Rows[i].Cells[6].Value.ToString().Trim() != dataGridView2.Rows[i].Cells[13].Value.ToString().Trim())
+					if (dataGridView2.Rows[i].Cells[6].Value.ToString().Trim() != dataGridView2.Rows[i].Cells[14].Value.ToString().Trim())
 					{
 						string alterTable = "ALTER TABLE " + tbl + " MODIFY COLUMN `" + dataGridView2.Rows[i].Cells[0].Value.ToString() + "` " + dataGridView2.Rows[i].Cells[1].Value.ToString() + nullable + " AUTO_INCREMENT";
 						Create(alterTable);
