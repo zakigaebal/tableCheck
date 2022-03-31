@@ -58,34 +58,34 @@
 			this.dataGridView10 = new System.Windows.Forms.DataGridView();
 			this.panel2 = new System.Windows.Forms.Panel();
 			this.label2 = new System.Windows.Forms.Label();
-			this.textBoxDb2 = new System.Windows.Forms.TextBox();
-			this.label6 = new System.Windows.Forms.Label();
-			this.checkBoxCancel = new System.Windows.Forms.CheckBox();
-			this.checkBox2 = new System.Windows.Forms.CheckBox();
-			this.CheckBox_All = new System.Windows.Forms.CheckBox();
-			this.label10 = new System.Windows.Forms.Label();
-			this.textBoxIp2 = new System.Windows.Forms.TextBox();
-			this.textBoxPw2 = new System.Windows.Forms.TextBox();
-			this.label8 = new System.Windows.Forms.Label();
-			this.textBoxPort2 = new System.Windows.Forms.TextBox();
-			this.textBoxUn2 = new System.Windows.Forms.TextBox();
-			this.label9 = new System.Windows.Forms.Label();
 			this.button1 = new System.Windows.Forms.Button();
-			this.buttonDelete = new System.Windows.Forms.Button();
-			this.buttonClear = new System.Windows.Forms.Button();
-			this.buttonStart = new System.Windows.Forms.Button();
-			this.buttonOnes = new System.Windows.Forms.Button();
 			this.label1 = new System.Windows.Forms.Label();
+			this.textBoxDb2 = new System.Windows.Forms.TextBox();
+			this.label5 = new System.Windows.Forms.Label();
+			this.label6 = new System.Windows.Forms.Label();
+			this.textBoxUn1 = new System.Windows.Forms.TextBox();
+			this.buttonDelete = new System.Windows.Forms.Button();
+			this.textBoxPort1 = new System.Windows.Forms.TextBox();
+			this.checkBoxCancel = new System.Windows.Forms.CheckBox();
+			this.label7 = new System.Windows.Forms.Label();
+			this.buttonClear = new System.Windows.Forms.Button();
+			this.textBoxPw1 = new System.Windows.Forms.TextBox();
+			this.checkBox2 = new System.Windows.Forms.CheckBox();
+			this.label9 = new System.Windows.Forms.Label();
+			this.buttonStart = new System.Windows.Forms.Button();
+			this.buttonConnect = new System.Windows.Forms.Button();
+			this.CheckBox_All = new System.Windows.Forms.CheckBox();
+			this.textBoxUn2 = new System.Windows.Forms.TextBox();
+			this.buttonOnes = new System.Windows.Forms.Button();
+			this.textBoxIp1 = new System.Windows.Forms.TextBox();
+			this.label10 = new System.Windows.Forms.Label();
+			this.textBoxPort2 = new System.Windows.Forms.TextBox();
+			this.label3 = new System.Windows.Forms.Label();
+			this.textBoxIp2 = new System.Windows.Forms.TextBox();
+			this.label8 = new System.Windows.Forms.Label();
 			this.textBoxDb1 = new System.Windows.Forms.TextBox();
 			this.label4 = new System.Windows.Forms.Label();
-			this.label3 = new System.Windows.Forms.Label();
-			this.textBoxIp1 = new System.Windows.Forms.TextBox();
-			this.buttonConnect = new System.Windows.Forms.Button();
-			this.textBoxPw1 = new System.Windows.Forms.TextBox();
-			this.label7 = new System.Windows.Forms.Label();
-			this.textBoxPort1 = new System.Windows.Forms.TextBox();
-			this.textBoxUn1 = new System.Windows.Forms.TextBox();
-			this.label5 = new System.Windows.Forms.Label();
+			this.textBoxPw2 = new System.Windows.Forms.TextBox();
 			this.panel1.SuspendLayout();
 			this.panel5.SuspendLayout();
 			this.tabControl1.SuspendLayout();
@@ -212,7 +212,7 @@
 			this.tabPage2.Location = new System.Drawing.Point(4, 22);
 			this.tabPage2.Name = "tabPage2";
 			this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage2.Size = new System.Drawing.Size(1400, 514);
+			this.tabPage2.Size = new System.Drawing.Size(1400, 515);
 			this.tabPage2.TabIndex = 1;
 			this.tabPage2.Text = "프로시저";
 			this.tabPage2.UseVisualStyleBackColor = true;
@@ -225,7 +225,7 @@
 			this.panel6.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panel6.Location = new System.Drawing.Point(3, 3);
 			this.panel6.Name = "panel6";
-			this.panel6.Size = new System.Drawing.Size(1394, 508);
+			this.panel6.Size = new System.Drawing.Size(1394, 509);
 			this.panel6.TabIndex = 1;
 			// 
 			// dataGridView3
@@ -235,7 +235,7 @@
 			this.dataGridView3.Location = new System.Drawing.Point(0, 0);
 			this.dataGridView3.Name = "dataGridView3";
 			this.dataGridView3.RowTemplate.Height = 23;
-			this.dataGridView3.Size = new System.Drawing.Size(1394, 158);
+			this.dataGridView3.Size = new System.Drawing.Size(1394, 159);
 			this.dataGridView3.TabIndex = 4;
 			// 
 			// splitter1
@@ -243,7 +243,7 @@
 			this.splitter1.BackColor = System.Drawing.Color.MistyRose;
 			this.splitter1.Cursor = System.Windows.Forms.Cursors.HSplit;
 			this.splitter1.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.splitter1.Location = new System.Drawing.Point(0, 158);
+			this.splitter1.Location = new System.Drawing.Point(0, 159);
 			this.splitter1.Name = "splitter1";
 			this.splitter1.Size = new System.Drawing.Size(1394, 7);
 			this.splitter1.TabIndex = 0;
@@ -254,7 +254,7 @@
 			this.dataGridView4.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
 			this.dataGridView4.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.dataGridView4.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.dataGridView4.Location = new System.Drawing.Point(0, 165);
+			this.dataGridView4.Location = new System.Drawing.Point(0, 166);
 			this.dataGridView4.Name = "dataGridView4";
 			this.dataGridView4.ReadOnly = true;
 			this.dataGridView4.RowTemplate.Height = 23;
@@ -267,7 +267,7 @@
 			this.tabPage3.Location = new System.Drawing.Point(4, 22);
 			this.tabPage3.Name = "tabPage3";
 			this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage3.Size = new System.Drawing.Size(1400, 514);
+			this.tabPage3.Size = new System.Drawing.Size(1400, 515);
 			this.tabPage3.TabIndex = 2;
 			this.tabPage3.Text = "이벤트";
 			this.tabPage3.UseVisualStyleBackColor = true;
@@ -280,7 +280,7 @@
 			this.panel8.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panel8.Location = new System.Drawing.Point(3, 3);
 			this.panel8.Name = "panel8";
-			this.panel8.Size = new System.Drawing.Size(1394, 508);
+			this.panel8.Size = new System.Drawing.Size(1394, 509);
 			this.panel8.TabIndex = 1;
 			// 
 			// dataGridView5
@@ -290,7 +290,7 @@
 			this.dataGridView5.Location = new System.Drawing.Point(0, 0);
 			this.dataGridView5.Name = "dataGridView5";
 			this.dataGridView5.RowTemplate.Height = 23;
-			this.dataGridView5.Size = new System.Drawing.Size(1394, 158);
+			this.dataGridView5.Size = new System.Drawing.Size(1394, 159);
 			this.dataGridView5.TabIndex = 4;
 			// 
 			// splitter2
@@ -298,7 +298,7 @@
 			this.splitter2.BackColor = System.Drawing.Color.MistyRose;
 			this.splitter2.Cursor = System.Windows.Forms.Cursors.HSplit;
 			this.splitter2.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.splitter2.Location = new System.Drawing.Point(0, 158);
+			this.splitter2.Location = new System.Drawing.Point(0, 159);
 			this.splitter2.Name = "splitter2";
 			this.splitter2.Size = new System.Drawing.Size(1394, 7);
 			this.splitter2.TabIndex = 0;
@@ -309,7 +309,7 @@
 			this.dataGridView6.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
 			this.dataGridView6.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.dataGridView6.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.dataGridView6.Location = new System.Drawing.Point(0, 165);
+			this.dataGridView6.Location = new System.Drawing.Point(0, 166);
 			this.dataGridView6.Name = "dataGridView6";
 			this.dataGridView6.ReadOnly = true;
 			this.dataGridView6.RowTemplate.Height = 23;
@@ -322,7 +322,7 @@
 			this.tabPage4.Location = new System.Drawing.Point(4, 22);
 			this.tabPage4.Name = "tabPage4";
 			this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage4.Size = new System.Drawing.Size(1400, 514);
+			this.tabPage4.Size = new System.Drawing.Size(1400, 515);
 			this.tabPage4.TabIndex = 3;
 			this.tabPage4.Text = "함수";
 			this.tabPage4.UseVisualStyleBackColor = true;
@@ -335,7 +335,7 @@
 			this.panel9.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panel9.Location = new System.Drawing.Point(3, 3);
 			this.panel9.Name = "panel9";
-			this.panel9.Size = new System.Drawing.Size(1394, 508);
+			this.panel9.Size = new System.Drawing.Size(1394, 509);
 			this.panel9.TabIndex = 1;
 			// 
 			// dataGridView7
@@ -345,7 +345,7 @@
 			this.dataGridView7.Location = new System.Drawing.Point(0, 0);
 			this.dataGridView7.Name = "dataGridView7";
 			this.dataGridView7.RowTemplate.Height = 23;
-			this.dataGridView7.Size = new System.Drawing.Size(1394, 158);
+			this.dataGridView7.Size = new System.Drawing.Size(1394, 159);
 			this.dataGridView7.TabIndex = 4;
 			// 
 			// splitter4
@@ -353,7 +353,7 @@
 			this.splitter4.BackColor = System.Drawing.Color.MistyRose;
 			this.splitter4.Cursor = System.Windows.Forms.Cursors.HSplit;
 			this.splitter4.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.splitter4.Location = new System.Drawing.Point(0, 158);
+			this.splitter4.Location = new System.Drawing.Point(0, 159);
 			this.splitter4.Name = "splitter4";
 			this.splitter4.Size = new System.Drawing.Size(1394, 7);
 			this.splitter4.TabIndex = 0;
@@ -364,7 +364,7 @@
 			this.dataGridView8.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
 			this.dataGridView8.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.dataGridView8.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.dataGridView8.Location = new System.Drawing.Point(0, 165);
+			this.dataGridView8.Location = new System.Drawing.Point(0, 166);
 			this.dataGridView8.Name = "dataGridView8";
 			this.dataGridView8.ReadOnly = true;
 			this.dataGridView8.RowTemplate.Height = 23;
@@ -377,7 +377,7 @@
 			this.tabPage5.Location = new System.Drawing.Point(4, 22);
 			this.tabPage5.Name = "tabPage5";
 			this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage5.Size = new System.Drawing.Size(1400, 514);
+			this.tabPage5.Size = new System.Drawing.Size(1400, 515);
 			this.tabPage5.TabIndex = 4;
 			this.tabPage5.Text = "뷰";
 			this.tabPage5.UseVisualStyleBackColor = true;
@@ -390,7 +390,7 @@
 			this.panel10.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panel10.Location = new System.Drawing.Point(3, 3);
 			this.panel10.Name = "panel10";
-			this.panel10.Size = new System.Drawing.Size(1394, 508);
+			this.panel10.Size = new System.Drawing.Size(1394, 509);
 			this.panel10.TabIndex = 1;
 			// 
 			// dataGridView9
@@ -400,7 +400,7 @@
 			this.dataGridView9.Location = new System.Drawing.Point(0, 0);
 			this.dataGridView9.Name = "dataGridView9";
 			this.dataGridView9.RowTemplate.Height = 23;
-			this.dataGridView9.Size = new System.Drawing.Size(1394, 158);
+			this.dataGridView9.Size = new System.Drawing.Size(1394, 159);
 			this.dataGridView9.TabIndex = 4;
 			// 
 			// splitter5
@@ -408,7 +408,7 @@
 			this.splitter5.BackColor = System.Drawing.Color.MistyRose;
 			this.splitter5.Cursor = System.Windows.Forms.Cursors.HSplit;
 			this.splitter5.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.splitter5.Location = new System.Drawing.Point(0, 158);
+			this.splitter5.Location = new System.Drawing.Point(0, 159);
 			this.splitter5.Name = "splitter5";
 			this.splitter5.Size = new System.Drawing.Size(1394, 7);
 			this.splitter5.TabIndex = 0;
@@ -419,7 +419,7 @@
 			this.dataGridView10.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
 			this.dataGridView10.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.dataGridView10.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.dataGridView10.Location = new System.Drawing.Point(0, 165);
+			this.dataGridView10.Location = new System.Drawing.Point(0, 166);
 			this.dataGridView10.Name = "dataGridView10";
 			this.dataGridView10.ReadOnly = true;
 			this.dataGridView10.RowTemplate.Height = 23;
@@ -472,12 +472,40 @@
 			this.label2.TabIndex = 0;
 			this.label2.Text = "DB2";
 			// 
+			// button1
+			// 
+			this.button1.Location = new System.Drawing.Point(856, 2);
+			this.button1.Name = "button1";
+			this.button1.Size = new System.Drawing.Size(47, 23);
+			this.button1.TabIndex = 15;
+			this.button1.Text = "수정";
+			this.button1.UseVisualStyleBackColor = true;
+			this.button1.Click += new System.EventHandler(this.button1_Click_1);
+			// 
+			// label1
+			// 
+			this.label1.AutoSize = true;
+			this.label1.Location = new System.Drawing.Point(5, 7);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(27, 12);
+			this.label1.TabIndex = 1;
+			this.label1.Text = "DB1";
+			// 
 			// textBoxDb2
 			// 
 			this.textBoxDb2.Location = new System.Drawing.Point(33, 24);
 			this.textBoxDb2.Name = "textBoxDb2";
 			this.textBoxDb2.Size = new System.Drawing.Size(70, 21);
 			this.textBoxDb2.TabIndex = 1;
+			// 
+			// label5
+			// 
+			this.label5.AutoSize = true;
+			this.label5.Location = new System.Drawing.Point(318, 7);
+			this.label5.Name = "label5";
+			this.label5.Size = new System.Drawing.Size(73, 12);
+			this.label5.TabIndex = 7;
+			this.label5.Text = "USERNAME";
 			// 
 			// label6
 			// 
@@ -487,6 +515,30 @@
 			this.label6.Size = new System.Drawing.Size(16, 12);
 			this.label6.TabIndex = 2;
 			this.label6.Text = "IP";
+			// 
+			// textBoxUn1
+			// 
+			this.textBoxUn1.Location = new System.Drawing.Point(391, 3);
+			this.textBoxUn1.Name = "textBoxUn1";
+			this.textBoxUn1.Size = new System.Drawing.Size(70, 21);
+			this.textBoxUn1.TabIndex = 6;
+			// 
+			// buttonDelete
+			// 
+			this.buttonDelete.Location = new System.Drawing.Point(909, 1);
+			this.buttonDelete.Name = "buttonDelete";
+			this.buttonDelete.Size = new System.Drawing.Size(46, 25);
+			this.buttonDelete.TabIndex = 0;
+			this.buttonDelete.Text = "삭제";
+			this.buttonDelete.UseVisualStyleBackColor = true;
+			this.buttonDelete.Click += new System.EventHandler(this.buttonDelete_Click);
+			// 
+			// textBoxPort1
+			// 
+			this.textBoxPort1.Location = new System.Drawing.Point(243, 3);
+			this.textBoxPort1.Name = "textBoxPort1";
+			this.textBoxPort1.Size = new System.Drawing.Size(70, 21);
+			this.textBoxPort1.TabIndex = 4;
 			// 
 			// checkBoxCancel
 			// 
@@ -499,6 +551,33 @@
 			this.checkBoxCancel.UseVisualStyleBackColor = true;
 			this.checkBoxCancel.CheckedChanged += new System.EventHandler(this.checkBoxCancel_CheckedChanged);
 			// 
+			// label7
+			// 
+			this.label7.AutoSize = true;
+			this.label7.Location = new System.Drawing.Point(467, 7);
+			this.label7.Name = "label7";
+			this.label7.Size = new System.Drawing.Size(72, 12);
+			this.label7.TabIndex = 9;
+			this.label7.Text = "PASSWORD";
+			// 
+			// buttonClear
+			// 
+			this.buttonClear.Location = new System.Drawing.Point(653, 2);
+			this.buttonClear.Name = "buttonClear";
+			this.buttonClear.Size = new System.Drawing.Size(47, 23);
+			this.buttonClear.TabIndex = 12;
+			this.buttonClear.Text = "C";
+			this.buttonClear.UseVisualStyleBackColor = true;
+			this.buttonClear.Click += new System.EventHandler(this.buttonClear_Click);
+			// 
+			// textBoxPw1
+			// 
+			this.textBoxPw1.Location = new System.Drawing.Point(545, 3);
+			this.textBoxPw1.Name = "textBoxPw1";
+			this.textBoxPw1.PasswordChar = '*';
+			this.textBoxPw1.Size = new System.Drawing.Size(70, 21);
+			this.textBoxPw1.TabIndex = 8;
+			// 
 			// checkBox2
 			// 
 			this.checkBox2.AutoSize = true;
@@ -509,6 +588,35 @@
 			this.checkBox2.Text = "선택반전";
 			this.checkBox2.UseVisualStyleBackColor = true;
 			this.checkBox2.CheckedChanged += new System.EventHandler(this.checkBox2_CheckedChanged);
+			// 
+			// label9
+			// 
+			this.label9.AutoSize = true;
+			this.label9.Location = new System.Drawing.Point(318, 28);
+			this.label9.Name = "label9";
+			this.label9.Size = new System.Drawing.Size(73, 12);
+			this.label9.TabIndex = 6;
+			this.label9.Text = "USERNAME";
+			// 
+			// buttonStart
+			// 
+			this.buttonStart.Location = new System.Drawing.Point(775, 2);
+			this.buttonStart.Name = "buttonStart";
+			this.buttonStart.Size = new System.Drawing.Size(75, 23);
+			this.buttonStart.TabIndex = 14;
+			this.buttonStart.Text = "실행";
+			this.buttonStart.UseVisualStyleBackColor = true;
+			this.buttonStart.Click += new System.EventHandler(this.buttonStart_Click);
+			// 
+			// buttonConnect
+			// 
+			this.buttonConnect.Location = new System.Drawing.Point(615, 2);
+			this.buttonConnect.Name = "buttonConnect";
+			this.buttonConnect.Size = new System.Drawing.Size(39, 23);
+			this.buttonConnect.TabIndex = 10;
+			this.buttonConnect.Text = "연결";
+			this.buttonConnect.UseVisualStyleBackColor = true;
+			this.buttonConnect.Click += new System.EventHandler(this.buttonConnect_Click);
 			// 
 			// CheckBox_All
 			// 
@@ -521,101 +629,12 @@
 			this.CheckBox_All.UseVisualStyleBackColor = true;
 			this.CheckBox_All.CheckedChanged += new System.EventHandler(this.CheckBox_All_CheckedChanged);
 			// 
-			// label10
-			// 
-			this.label10.AutoSize = true;
-			this.label10.Location = new System.Drawing.Point(205, 28);
-			this.label10.Name = "label10";
-			this.label10.Size = new System.Drawing.Size(38, 12);
-			this.label10.TabIndex = 4;
-			this.label10.Text = "PORT";
-			// 
-			// textBoxIp2
-			// 
-			this.textBoxIp2.Location = new System.Drawing.Point(125, 24);
-			this.textBoxIp2.Name = "textBoxIp2";
-			this.textBoxIp2.Size = new System.Drawing.Size(70, 21);
-			this.textBoxIp2.TabIndex = 3;
-			// 
-			// textBoxPw2
-			// 
-			this.textBoxPw2.Location = new System.Drawing.Point(545, 24);
-			this.textBoxPw2.Name = "textBoxPw2";
-			this.textBoxPw2.PasswordChar = '*';
-			this.textBoxPw2.Size = new System.Drawing.Size(70, 21);
-			this.textBoxPw2.TabIndex = 9;
-			// 
-			// label8
-			// 
-			this.label8.AutoSize = true;
-			this.label8.Location = new System.Drawing.Point(467, 28);
-			this.label8.Name = "label8";
-			this.label8.Size = new System.Drawing.Size(72, 12);
-			this.label8.TabIndex = 8;
-			this.label8.Text = "PASSWORD";
-			// 
-			// textBoxPort2
-			// 
-			this.textBoxPort2.Location = new System.Drawing.Point(243, 24);
-			this.textBoxPort2.Name = "textBoxPort2";
-			this.textBoxPort2.Size = new System.Drawing.Size(70, 21);
-			this.textBoxPort2.TabIndex = 5;
-			// 
 			// textBoxUn2
 			// 
 			this.textBoxUn2.Location = new System.Drawing.Point(391, 24);
 			this.textBoxUn2.Name = "textBoxUn2";
 			this.textBoxUn2.Size = new System.Drawing.Size(70, 21);
 			this.textBoxUn2.TabIndex = 7;
-			// 
-			// label9
-			// 
-			this.label9.AutoSize = true;
-			this.label9.Location = new System.Drawing.Point(318, 28);
-			this.label9.Name = "label9";
-			this.label9.Size = new System.Drawing.Size(73, 12);
-			this.label9.TabIndex = 6;
-			this.label9.Text = "USERNAME";
-			// 
-			// button1
-			// 
-			this.button1.Location = new System.Drawing.Point(856, 1);
-			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(47, 23);
-			this.button1.TabIndex = 15;
-			this.button1.Text = "수정";
-			this.button1.UseVisualStyleBackColor = true;
-			this.button1.Click += new System.EventHandler(this.button1_Click_1);
-			// 
-			// buttonDelete
-			// 
-			this.buttonDelete.Location = new System.Drawing.Point(909, 1);
-			this.buttonDelete.Name = "buttonDelete";
-			this.buttonDelete.Size = new System.Drawing.Size(46, 25);
-			this.buttonDelete.TabIndex = 0;
-			this.buttonDelete.Text = "삭제";
-			this.buttonDelete.UseVisualStyleBackColor = true;
-			this.buttonDelete.Click += new System.EventHandler(this.buttonDelete_Click);
-			// 
-			// buttonClear
-			// 
-			this.buttonClear.Location = new System.Drawing.Point(653, 2);
-			this.buttonClear.Name = "buttonClear";
-			this.buttonClear.Size = new System.Drawing.Size(47, 23);
-			this.buttonClear.TabIndex = 12;
-			this.buttonClear.Text = "C";
-			this.buttonClear.UseVisualStyleBackColor = true;
-			this.buttonClear.Click += new System.EventHandler(this.buttonClear_Click);
-			// 
-			// buttonStart
-			// 
-			this.buttonStart.Location = new System.Drawing.Point(775, 2);
-			this.buttonStart.Name = "buttonStart";
-			this.buttonStart.Size = new System.Drawing.Size(75, 23);
-			this.buttonStart.TabIndex = 14;
-			this.buttonStart.Text = "실행";
-			this.buttonStart.UseVisualStyleBackColor = true;
-			this.buttonStart.Click += new System.EventHandler(this.buttonStart_Click);
 			// 
 			// buttonOnes
 			// 
@@ -627,14 +646,53 @@
 			this.buttonOnes.UseVisualStyleBackColor = true;
 			this.buttonOnes.Click += new System.EventHandler(this.buttonOnes_Click);
 			// 
-			// label1
+			// textBoxIp1
 			// 
-			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(5, 7);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(27, 12);
-			this.label1.TabIndex = 1;
-			this.label1.Text = "DB1";
+			this.textBoxIp1.Location = new System.Drawing.Point(125, 3);
+			this.textBoxIp1.Name = "textBoxIp1";
+			this.textBoxIp1.Size = new System.Drawing.Size(70, 21);
+			this.textBoxIp1.TabIndex = 2;
+			// 
+			// label10
+			// 
+			this.label10.AutoSize = true;
+			this.label10.Location = new System.Drawing.Point(205, 28);
+			this.label10.Name = "label10";
+			this.label10.Size = new System.Drawing.Size(38, 12);
+			this.label10.TabIndex = 4;
+			this.label10.Text = "PORT";
+			// 
+			// textBoxPort2
+			// 
+			this.textBoxPort2.Location = new System.Drawing.Point(243, 24);
+			this.textBoxPort2.Name = "textBoxPort2";
+			this.textBoxPort2.Size = new System.Drawing.Size(70, 21);
+			this.textBoxPort2.TabIndex = 5;
+			// 
+			// label3
+			// 
+			this.label3.AutoSize = true;
+			this.label3.Location = new System.Drawing.Point(205, 7);
+			this.label3.Name = "label3";
+			this.label3.Size = new System.Drawing.Size(38, 12);
+			this.label3.TabIndex = 5;
+			this.label3.Text = "PORT";
+			// 
+			// textBoxIp2
+			// 
+			this.textBoxIp2.Location = new System.Drawing.Point(125, 24);
+			this.textBoxIp2.Name = "textBoxIp2";
+			this.textBoxIp2.Size = new System.Drawing.Size(70, 21);
+			this.textBoxIp2.TabIndex = 3;
+			// 
+			// label8
+			// 
+			this.label8.AutoSize = true;
+			this.label8.Location = new System.Drawing.Point(467, 28);
+			this.label8.Name = "label8";
+			this.label8.Size = new System.Drawing.Size(72, 12);
+			this.label8.TabIndex = 8;
+			this.label8.Text = "PASSWORD";
 			// 
 			// textBoxDb1
 			// 
@@ -652,71 +710,13 @@
 			this.label4.TabIndex = 3;
 			this.label4.Text = "IP";
 			// 
-			// label3
+			// textBoxPw2
 			// 
-			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(205, 7);
-			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(38, 12);
-			this.label3.TabIndex = 5;
-			this.label3.Text = "PORT";
-			// 
-			// textBoxIp1
-			// 
-			this.textBoxIp1.Location = new System.Drawing.Point(125, 3);
-			this.textBoxIp1.Name = "textBoxIp1";
-			this.textBoxIp1.Size = new System.Drawing.Size(70, 21);
-			this.textBoxIp1.TabIndex = 2;
-			// 
-			// buttonConnect
-			// 
-			this.buttonConnect.Location = new System.Drawing.Point(615, 2);
-			this.buttonConnect.Name = "buttonConnect";
-			this.buttonConnect.Size = new System.Drawing.Size(39, 23);
-			this.buttonConnect.TabIndex = 10;
-			this.buttonConnect.Text = "연결";
-			this.buttonConnect.UseVisualStyleBackColor = true;
-			this.buttonConnect.Click += new System.EventHandler(this.buttonConnect_Click);
-			// 
-			// textBoxPw1
-			// 
-			this.textBoxPw1.Location = new System.Drawing.Point(545, 3);
-			this.textBoxPw1.Name = "textBoxPw1";
-			this.textBoxPw1.PasswordChar = '*';
-			this.textBoxPw1.Size = new System.Drawing.Size(70, 21);
-			this.textBoxPw1.TabIndex = 8;
-			// 
-			// label7
-			// 
-			this.label7.AutoSize = true;
-			this.label7.Location = new System.Drawing.Point(467, 7);
-			this.label7.Name = "label7";
-			this.label7.Size = new System.Drawing.Size(72, 12);
-			this.label7.TabIndex = 9;
-			this.label7.Text = "PASSWORD";
-			// 
-			// textBoxPort1
-			// 
-			this.textBoxPort1.Location = new System.Drawing.Point(243, 3);
-			this.textBoxPort1.Name = "textBoxPort1";
-			this.textBoxPort1.Size = new System.Drawing.Size(70, 21);
-			this.textBoxPort1.TabIndex = 4;
-			// 
-			// textBoxUn1
-			// 
-			this.textBoxUn1.Location = new System.Drawing.Point(391, 3);
-			this.textBoxUn1.Name = "textBoxUn1";
-			this.textBoxUn1.Size = new System.Drawing.Size(70, 21);
-			this.textBoxUn1.TabIndex = 6;
-			// 
-			// label5
-			// 
-			this.label5.AutoSize = true;
-			this.label5.Location = new System.Drawing.Point(318, 7);
-			this.label5.Name = "label5";
-			this.label5.Size = new System.Drawing.Size(73, 12);
-			this.label5.TabIndex = 7;
-			this.label5.Text = "USERNAME";
+			this.textBoxPw2.Location = new System.Drawing.Point(545, 24);
+			this.textBoxPw2.Name = "textBoxPw2";
+			this.textBoxPw2.PasswordChar = '*';
+			this.textBoxPw2.Size = new System.Drawing.Size(70, 21);
+			this.textBoxPw2.TabIndex = 9;
 			// 
 			// Form1
 			// 

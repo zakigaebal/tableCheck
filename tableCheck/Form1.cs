@@ -308,9 +308,31 @@ namespace tableCheck
 					textBoxPw1.Focus();
 					return;
 				}
-				btn_TEST_Click(sender, e);
-				//btn_TEST_Click2(sender, e);
-				//dataGridView1.ReadOnly = true;
+
+				_HostName = textBoxIp1.Text;
+				_PORT = textBoxPort1.Text;
+				_DATABASE = textBoxDb1.Text;
+				_ID = textBoxUn1.Text;
+				_PWD = textBoxPw1.Text;
+
+				_HostName2 = textBoxIp2.Text;
+				_PORT2 = textBoxPort2.Text;
+				_DATABASE2 = textBoxDb2.Text;
+				_ID2 = textBoxUn2.Text;
+				_PWD2 = textBoxPw2.Text;
+
+
+
+				
+					btn_TEST_Click(sender, e);
+		
+
+
+
+
+
+
+
 				int i = 0;
 				dataGridView1.Columns[i++].ReadOnly = false;
 				dataGridView1.Columns[i++].ReadOnly = true;
@@ -412,22 +434,10 @@ namespace tableCheck
 		//연결테스트 버튼 클릭
 		private void btn_TEST_Click(object sender, EventArgs e)
 		{
-		
-				_HostName = textBoxIp1.Text;
-				_PORT = textBoxPort1.Text;
-				_DATABASE = textBoxDb1.Text;
-				_ID = textBoxUn1.Text;
-				_PWD = textBoxPw1.Text;
-
-				_HostName2 = textBoxIp2.Text;
-				_PORT2 = textBoxPort2.Text;
-				_DATABASE2 = textBoxDb2.Text;
-				_ID2 = textBoxUn2.Text;
-				_PWD2 = textBoxPw2.Text;
-
+			try
+			{
 				string query1 = "SELECT b.table_name tbl, a.table_comment cmt, COUNT(*) cnt, b.EXTRA ex  FROM information_schema.tables a left JOIN information_schema.columns b ON a.TABLE_NAME=b.table_name WHERE a.table_schema = '" + _DATABASE + "' AND b.table_schema = '" + _DATABASE + "'  AND a.table_type='BASE TABLE' group BY b.TABLE_NAME ORDER BY b.TABLE_NAME asc;";
 				string query2 = "SELECT b.table_name tbl, a.table_comment cmt, COUNT(*) cnt, b.EXTRA ex  FROM information_schema.tables a left JOIN information_schema.columns b ON a.TABLE_NAME=b.table_name WHERE a.table_schema = '" + _DATABASE2 + "' AND b.table_schema = '" + _DATABASE2 + "' AND a.table_type='BASE TABLE'  group BY b.TABLE_NAME ORDER BY b.TABLE_NAME asc;";
-
 
 				//	MySqlDataAdapter adp = DBAdapter(conn, _HostName, _PORT, _DATABASE, _ID, _PWD, query1);
 				MySqlDataReader rdr = DBConnectTest(conn, _HostName, _PORT, _DATABASE, _ID, _PWD, query1);
@@ -501,6 +511,11 @@ namespace tableCheck
 					dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[5].Value = listTableAll[i].fieldCount2;
 
 				}
+			}
+			catch (Exception ex)
+			{
+				LogMgr.ExceptionLog(ex);
+			}
 		}
 
 
@@ -524,19 +539,31 @@ namespace tableCheck
 				_strArg.Append(";");
 				_strArg.Append("Charset=utf8;");
 
+
 				con = new MySqlConnection(_strArg.ToString());
 
+
+				//if (con != null && con.State == ConnectionState.Closed)
+				//{
+				//		return null;
+				//}
+				//if (con.State != ConnectionState.Open)
+				//{
+				//	con.Close();
+				//	con.Open();
+				//}
+				if (con.State == ConnectionState.Broken)
+				{
+					con.Close();
+					con.Open();
+
+				}
+				if (con.State == ConnectionState.Open) { }
+				
 				con.Open();
 				string sql = query;
 				MySqlCommand cmd = new MySqlCommand(sql, con);
-				//Delay(500);
 				rdr = cmd.ExecuteReader();
-				//if (rdr == null)
-				//{
-				//	sql = query;
-				//	 cmd = new MySqlCommand(sql, con);
-				//	rdr = cmd.ExecuteReader();
-				//}
 				return rdr;
 			}
 			catch (Exception Ex)
@@ -552,42 +579,14 @@ namespace tableCheck
 
 		//DBConnectTest2 메소드
 		//데이터베이스와 테이블인자를 받아서 컬럼테이블에 나타내기
-		private MySqlDataReader DBConnectTest2(MySqlConnection con, string hostname, string port, string database, string id, string pwd, string tableName)
+		private MySqlDataReader DBConnectTest2(MySqlConnection con, string tableName, string database)
 		{
-			StringBuilder _strArg = new StringBuilder("");
-			MySqlDataReader rdr;
-			_strArg.Append("Server = ");           // SQL
-			_strArg.Append(hostname);        // 서버
-			_strArg.Append(";Port = ");
-			_strArg.Append(port);                 // 포트
-			_strArg.Append(";Database = ");
-			_strArg.Append(database);          // 데이터베이스
-			_strArg.Append(";username = ");
-			_strArg.Append(id);                     // ID
-			_strArg.Append(";password = ");
-			_strArg.Append(pwd);                 // PWD
-			_strArg.Append(";");
-			_strArg.Append("Charset=utf8;");
+			string sql2 = "SELECT COLUMN_NAME fieldName, COLUMN_TYPE dataType, CHARACTER_MAXIMUM_LENGTH length, COLUMN_DEFAULT default1, COLUMN_COMMENT comment, IS_NULLABLE nullable, COLLATION_NAME colName, EXTRA EX, ORDINAL_POSITION pos FROM information_schema.columns WHERE table_schema= '" + database + "' and TABLE_NAME = '" + tableName + "' ORDER BY TABLE_NAME asc";
+			MySqlCommand cmd = new MySqlCommand(sql2, con);
+			MySqlDataReader rdr = cmd.ExecuteReader();
+			return rdr;
 
-			con = new MySqlConnection(_strArg.ToString());
-			try
-			{
 
-				con.Open();
-				string sql2 = "SELECT COLUMN_NAME fieldName, COLUMN_TYPE dataType, CHARACTER_MAXIMUM_LENGTH length, COLUMN_DEFAULT default1, COLUMN_COMMENT comment, IS_NULLABLE nullable, COLLATION_NAME colName, EXTRA EX, ORDINAL_POSITION pos FROM information_schema.columns WHERE table_schema= '" + database + "' and TABLE_NAME = '" + tableName + "' ORDER BY TABLE_NAME asc";
-				MySqlCommand cmd = new MySqlCommand(sql2, con);
-				rdr = cmd.ExecuteReader();
-				return rdr;
-			}
-			catch (Exception ex)
-			{
-				return null;
-				con.Close();
-				LogMgr.ExceptionLog(ex);
-				MessageBox.Show(ex.ToString());
-				//MessageBox.Show("DB 접속이 불가능합니다.");
-				//isTested = false;
-			}
 		}
 
 		private void buttonClear_Click(object sender, EventArgs e)
@@ -662,22 +661,60 @@ namespace tableCheck
 		{
 			try
 			{
+				StringBuilder _strArg = new StringBuilder("");
+				StringBuilder _strArg2 = new StringBuilder("");
+				_strArg.Append("Server = ");           // SQL
+				_strArg.Append(_HostName);        // 서버
+				_strArg.Append(";Port = ");
+				_strArg.Append(_PORT);                 // 포트
+				_strArg.Append(";Database = ");
+				_strArg.Append(_DATABASE);          // 데이터베이스
+				_strArg.Append(";username = ");
+				_strArg.Append(_ID);                     // ID
+				_strArg.Append(";password = ");
+				_strArg.Append(_PWD);                 // PWD
+				_strArg.Append(";");
+				_strArg.Append("Charset=utf8;");
+
+				_strArg2.Append("Server = ");           // SQL
+				_strArg2.Append(_HostName2);        // 서버
+				_strArg2.Append(";Port = ");
+				_strArg2.Append(_PORT2);                 // 포트
+				_strArg2.Append(";Database = ");
+				_strArg2.Append(_DATABASE2);          // 데이터베이스
+				_strArg2.Append(";username = ");
+				_strArg2.Append(_ID2);                     // ID
+				_strArg2.Append(";password = ");
+				_strArg2.Append(_PWD2);                 // PWD
+				_strArg2.Append(";");
+				_strArg2.Append("Charset=utf8;");
+
+				MySqlConnection con = new MySqlConnection(_strArg.ToString());
+				con.Open();
+				MySqlConnection con2 = new MySqlConnection(_strArg2.ToString());
+				con2.Open();
+
+
 				// 테이블명의 필드를 가져와서 데이터그리드뷰2에 보여준다
-				MySqlDataReader rdr = DBConnectTest2(conn, _HostName, _PORT, _DATABASE, _ID, _PWD, tableName);
+				MySqlDataReader rdr = DBConnectTest2(con, tableName, _DATABASE);
 				List<Columns> listTable1 = new List<Columns>();
 				List<Columns> listTable2 = new List<Columns>();
 				List<ColumnsAll> listTableAll = new List<ColumnsAll>();
 				while (rdr.Read())
 				{
-					Columns listInfo = new Columns() { COLUMN_NAME = rdr["fieldName"].ToString(), DATA_TYPE = rdr["dataType"].ToString(), CHARACTER_MAXIMUM_LENGTH = rdr["length"].ToString(), COLUMN_DEFAULT = rdr["default1"].ToString(), COLUMN_COMMENT = rdr["comment"].ToString(), IS_NULLABLE = rdr["nullable"].ToString(), COLLATION_NAME = rdr["colName"].ToString(), INCREMENT = rdr["EX"].ToString(), ORDINAL_POSITION =	rdr["pos"].ToString() };
+					Columns listInfo = new Columns() { COLUMN_NAME = rdr["fieldName"].ToString(), DATA_TYPE = rdr["dataType"].ToString(), CHARACTER_MAXIMUM_LENGTH = rdr["length"].ToString(), COLUMN_DEFAULT = rdr["default1"].ToString(), COLUMN_COMMENT = rdr["comment"].ToString(), IS_NULLABLE = rdr["nullable"].ToString(), COLLATION_NAME = rdr["colName"].ToString(), INCREMENT = rdr["EX"].ToString(), ORDINAL_POSITION = rdr["pos"].ToString() };
 					listTable1.Add(listInfo);
 				}
-				MySqlDataReader rdr2 = DBConnectTest2(conn2, _HostName2, _PORT2, _DATABASE2, _ID2, _PWD2, tableName);
+
+				MySqlDataReader rdr2 = DBConnectTest2(con2, tableName, _DATABASE2);
+
 				while (rdr2.Read())
 				{
 					Columns listInfo = new Columns() { COLUMN_NAME = rdr2["fieldName"].ToString(), DATA_TYPE = rdr2["dataType"].ToString(), CHARACTER_MAXIMUM_LENGTH = rdr2["length"].ToString(), COLUMN_DEFAULT = rdr2["default1"].ToString(), COLUMN_COMMENT = rdr2["comment"].ToString(), IS_NULLABLE = rdr2["nullable"].ToString(), COLLATION_NAME = rdr2["colName"].ToString(), INCREMENT = rdr2["EX"].ToString(), ORDINAL_POSITION = rdr2["pos"].ToString() };
 					listTable2.Add(listInfo);
 				}
+
+
 				for (int i = 0; i < listTable1.Count; i++)
 				{
 					listTableAll.Add(new ColumnsAll()
@@ -759,6 +796,8 @@ namespace tableCheck
 					dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[k++].Value = listTableAll[i].ORDINAL_POSITION2;
 
 				}
+				con.Close();
+				con2.Close();
 			}
 			catch (Exception ex)
 			{
@@ -832,10 +871,10 @@ namespace tableCheck
 			{
 				MySqlDataReader rdr = DBConnectTest(conn, _HostName, _PORT, _DATABASE2, _ID, _PWD, queryCreate);
 			}
-			catch (Exception ex) 
+			catch (Exception ex)
 			{
 				LogMgr.ExceptionLog(ex);
-				MessageBox.Show(ex.ToString()); 
+				MessageBox.Show(ex.ToString());
 			}
 		}
 
@@ -941,8 +980,8 @@ namespace tableCheck
 				MessageBox.Show(e.ToString());
 			}
 		}
-	
-	
+
+
 
 		/// <summary>
 		/// compare 함수 
@@ -1062,7 +1101,7 @@ namespace tableCheck
 
 					}
 
-					
+
 
 					if (dataGridView2.Rows[i].Cells[8].Value == null)
 					{
