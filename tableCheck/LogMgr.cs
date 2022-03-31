@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 namespace tableCheck
 {
 	public class LogMgr
-
 	{
 		static string prefixMsg = "\r\n-------------------------------------------";
 		// 일반 로그 남기기
