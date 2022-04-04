@@ -86,6 +86,7 @@
 			this.textBoxDb1 = new System.Windows.Forms.TextBox();
 			this.label4 = new System.Windows.Forms.Label();
 			this.textBoxPw2 = new System.Windows.Forms.TextBox();
+			this.btnPositionChange = new System.Windows.Forms.Button();
 			this.panel1.SuspendLayout();
 			this.panel5.SuspendLayout();
 			this.tabControl1.SuspendLayout();
@@ -428,6 +429,7 @@
 			// 
 			// panel2
 			// 
+			this.panel2.Controls.Add(this.btnPositionChange);
 			this.panel2.Controls.Add(this.label2);
 			this.panel2.Controls.Add(this.button1);
 			this.panel2.Controls.Add(this.label1);
@@ -718,6 +720,16 @@
 			this.textBoxPw2.Size = new System.Drawing.Size(70, 21);
 			this.textBoxPw2.TabIndex = 9;
 			// 
+			// btnPositionChange
+			// 
+			this.btnPositionChange.Location = new System.Drawing.Point(961, 3);
+			this.btnPositionChange.Name = "btnPositionChange";
+			this.btnPositionChange.Size = new System.Drawing.Size(40, 23);
+			this.btnPositionChange.TabIndex = 16;
+			this.btnPositionChange.Text = "순서";
+			this.btnPositionChange.UseVisualStyleBackColor = true;
+			this.btnPositionChange.Click += new System.EventHandler(this.btnPositionChange_Click);
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
@@ -817,6 +829,7 @@
 		private System.Windows.Forms.DataGridView dataGridView9;
 		private System.Windows.Forms.Splitter splitter5;
 		private System.Windows.Forms.DataGridView dataGridView10;
+		private System.Windows.Forms.Button btnPositionChange;
 	}
 }
 
