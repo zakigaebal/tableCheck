@@ -38,6 +38,7 @@
 			this.dataGridView2 = new System.Windows.Forms.DataGridView();
 			this.tabPage2 = new System.Windows.Forms.TabPage();
 			this.panel6 = new System.Windows.Forms.Panel();
+			this.dataGridView3 = new System.Windows.Forms.DataGridView();
 			this.tabPage3 = new System.Windows.Forms.TabPage();
 			this.panel8 = new System.Windows.Forms.Panel();
 			this.dataGridView5 = new System.Windows.Forms.DataGridView();
@@ -54,6 +55,11 @@
 			this.splitter5 = new System.Windows.Forms.Splitter();
 			this.dataGridView10 = new System.Windows.Forms.DataGridView();
 			this.panel2 = new System.Windows.Forms.Panel();
+			this.button5 = new System.Windows.Forms.Button();
+			this.button4 = new System.Windows.Forms.Button();
+			this.button3 = new System.Windows.Forms.Button();
+			this.button2 = new System.Windows.Forms.Button();
+			this.btnPositionChange = new System.Windows.Forms.Button();
 			this.label2 = new System.Windows.Forms.Label();
 			this.button1 = new System.Windows.Forms.Button();
 			this.label1 = new System.Windows.Forms.Label();
@@ -83,12 +89,6 @@
 			this.textBoxDb1 = new System.Windows.Forms.TextBox();
 			this.label4 = new System.Windows.Forms.Label();
 			this.textBoxPw2 = new System.Windows.Forms.TextBox();
-			this.btnPositionChange = new System.Windows.Forms.Button();
-			this.dataGridView3 = new System.Windows.Forms.DataGridView();
-			this.button2 = new System.Windows.Forms.Button();
-			this.button3 = new System.Windows.Forms.Button();
-			this.button4 = new System.Windows.Forms.Button();
-			this.button5 = new System.Windows.Forms.Button();
 			this.panel1.SuspendLayout();
 			this.panel5.SuspendLayout();
 			this.tabControl1.SuspendLayout();
@@ -98,6 +98,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
 			this.tabPage2.SuspendLayout();
 			this.panel6.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).BeginInit();
 			this.tabPage3.SuspendLayout();
 			this.panel8.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView5)).BeginInit();
@@ -111,7 +112,6 @@
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView9)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView10)).BeginInit();
 			this.panel2.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// panel1
@@ -227,6 +227,16 @@
 			this.panel6.Name = "panel6";
 			this.panel6.Size = new System.Drawing.Size(1394, 509);
 			this.panel6.TabIndex = 1;
+			// 
+			// dataGridView3
+			// 
+			this.dataGridView3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			this.dataGridView3.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.dataGridView3.Location = new System.Drawing.Point(0, 0);
+			this.dataGridView3.Name = "dataGridView3";
+			this.dataGridView3.RowTemplate.Height = 23;
+			this.dataGridView3.Size = new System.Drawing.Size(1394, 509);
+			this.dataGridView3.TabIndex = 4;
 			// 
 			// tabPage3
 			// 
@@ -434,6 +444,56 @@
 			this.panel2.Name = "panel2";
 			this.panel2.Size = new System.Drawing.Size(1408, 49);
 			this.panel2.TabIndex = 10;
+			// 
+			// button5
+			// 
+			this.button5.Location = new System.Drawing.Point(1260, 2);
+			this.button5.Name = "button5";
+			this.button5.Size = new System.Drawing.Size(75, 23);
+			this.button5.TabIndex = 18;
+			this.button5.Text = "뷰";
+			this.button5.UseVisualStyleBackColor = true;
+			this.button5.Click += new System.EventHandler(this.button5_Click);
+			// 
+			// button4
+			// 
+			this.button4.Location = new System.Drawing.Point(1179, 2);
+			this.button4.Name = "button4";
+			this.button4.Size = new System.Drawing.Size(75, 23);
+			this.button4.TabIndex = 18;
+			this.button4.Text = "함수";
+			this.button4.UseVisualStyleBackColor = true;
+			this.button4.Click += new System.EventHandler(this.button4_Click);
+			// 
+			// button3
+			// 
+			this.button3.Location = new System.Drawing.Point(1098, 2);
+			this.button3.Name = "button3";
+			this.button3.Size = new System.Drawing.Size(75, 23);
+			this.button3.TabIndex = 18;
+			this.button3.Text = "이벤트";
+			this.button3.UseVisualStyleBackColor = true;
+			this.button3.Click += new System.EventHandler(this.button3_Click);
+			// 
+			// button2
+			// 
+			this.button2.Location = new System.Drawing.Point(1017, 2);
+			this.button2.Name = "button2";
+			this.button2.Size = new System.Drawing.Size(75, 23);
+			this.button2.TabIndex = 17;
+			this.button2.Text = "프로시저";
+			this.button2.UseVisualStyleBackColor = true;
+			this.button2.Click += new System.EventHandler(this.button2_Click);
+			// 
+			// btnPositionChange
+			// 
+			this.btnPositionChange.Location = new System.Drawing.Point(961, 1);
+			this.btnPositionChange.Name = "btnPositionChange";
+			this.btnPositionChange.Size = new System.Drawing.Size(50, 25);
+			this.btnPositionChange.TabIndex = 16;
+			this.btnPositionChange.Text = "순서";
+			this.btnPositionChange.UseVisualStyleBackColor = true;
+			this.btnPositionChange.Click += new System.EventHandler(this.btnPositionChange_Click);
 			// 
 			// label2
 			// 
@@ -690,66 +750,6 @@
 			this.textBoxPw2.Size = new System.Drawing.Size(70, 21);
 			this.textBoxPw2.TabIndex = 9;
 			// 
-			// btnPositionChange
-			// 
-			this.btnPositionChange.Location = new System.Drawing.Point(961, 1);
-			this.btnPositionChange.Name = "btnPositionChange";
-			this.btnPositionChange.Size = new System.Drawing.Size(50, 25);
-			this.btnPositionChange.TabIndex = 16;
-			this.btnPositionChange.Text = "순서";
-			this.btnPositionChange.UseVisualStyleBackColor = true;
-			this.btnPositionChange.Click += new System.EventHandler(this.btnPositionChange_Click);
-			// 
-			// dataGridView3
-			// 
-			this.dataGridView3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			this.dataGridView3.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.dataGridView3.Location = new System.Drawing.Point(0, 0);
-			this.dataGridView3.Name = "dataGridView3";
-			this.dataGridView3.RowTemplate.Height = 23;
-			this.dataGridView3.Size = new System.Drawing.Size(1394, 509);
-			this.dataGridView3.TabIndex = 4;
-			// 
-			// button2
-			// 
-			this.button2.Location = new System.Drawing.Point(1017, 2);
-			this.button2.Name = "button2";
-			this.button2.Size = new System.Drawing.Size(75, 23);
-			this.button2.TabIndex = 17;
-			this.button2.Text = "프로시저";
-			this.button2.UseVisualStyleBackColor = true;
-			this.button2.Click += new System.EventHandler(this.button2_Click);
-			// 
-			// button3
-			// 
-			this.button3.Location = new System.Drawing.Point(1098, 2);
-			this.button3.Name = "button3";
-			this.button3.Size = new System.Drawing.Size(75, 23);
-			this.button3.TabIndex = 18;
-			this.button3.Text = "이벤트";
-			this.button3.UseVisualStyleBackColor = true;
-			this.button3.Click += new System.EventHandler(this.button3_Click);
-			// 
-			// button4
-			// 
-			this.button4.Location = new System.Drawing.Point(1179, 2);
-			this.button4.Name = "button4";
-			this.button4.Size = new System.Drawing.Size(75, 23);
-			this.button4.TabIndex = 18;
-			this.button4.Text = "함수";
-			this.button4.UseVisualStyleBackColor = true;
-			this.button4.Click += new System.EventHandler(this.button4_Click);
-			// 
-			// button5
-			// 
-			this.button5.Location = new System.Drawing.Point(1260, 2);
-			this.button5.Name = "button5";
-			this.button5.Size = new System.Drawing.Size(75, 23);
-			this.button5.TabIndex = 18;
-			this.button5.Text = "뷰";
-			this.button5.UseVisualStyleBackColor = true;
-			this.button5.Click += new System.EventHandler(this.button5_Click);
-			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
@@ -769,6 +769,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
 			this.tabPage2.ResumeLayout(false);
 			this.panel6.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).EndInit();
 			this.tabPage3.ResumeLayout(false);
 			this.panel8.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView5)).EndInit();
@@ -783,7 +784,6 @@
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView10)).EndInit();
 			this.panel2.ResumeLayout(false);
 			this.panel2.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).EndInit();
 			this.ResumeLayout(false);
 
 		}

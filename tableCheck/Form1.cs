@@ -18,8 +18,6 @@ namespace tableCheck
 	/// 상태에 진행중 진행완료
 	/// 진행중 컬럼은 프로그레스바로 보여주기
 	/// </summary>
-	/// 
-
 	public partial class Form1 : Form
 	{
 
@@ -65,13 +63,10 @@ namespace tableCheck
 
 		}
 
-
-
 		private void Form_Closing(object sender, FormClosedEventArgs e)
 		{
 			initCloseMethod();
 		}
-
 
 
 		#region ini 입력 메소드
@@ -118,6 +113,8 @@ namespace tableCheck
 			dataGridView1.Columns[i++].Width = 70;
 			dataGridView1.Columns[i++].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
 			dataGridView1.Columns[i++].Width = 100;
+
+
 			for (i = 0; i < 2; i++)
 			{
 				dataGridView2.Columns.Add("column0", "이름");
@@ -130,33 +127,41 @@ namespace tableCheck
 				dataGridView2.Columns.Add("column7", "위치");
 			}
 
-			dataGridView3.Columns.Add("proName", "이름");
+			dataGridView3.Columns.Add("proName", "프로시저 이름");
 			dataGridView3.Columns.Add("proCreate", "생성됨");
 			dataGridView3.Columns.Add("proUpdate", "업데이트됨");
 			dataGridView3.Columns.Add("proComment", "코멘트");
-			dataGridView3.Columns.Add("proName", "이름");
-			dataGridView3.Columns.Add("proCreate", "생성됨");
-			dataGridView3.Columns.Add("proUpdate", "업데이트됨");
-			dataGridView3.Columns.Add("proComment", "코멘트");
+			dataGridView3.Columns.Add("proQuery", "프로시저 쿼리");
+
+			dataGridView3.Columns.Add("proName2", "프로시저 이름");
+			dataGridView3.Columns.Add("proCreate2", "생성됨");
+			dataGridView3.Columns.Add("proUpdate2", "업데이트됨");
+			dataGridView3.Columns.Add("proComment2", "코멘트");
+			dataGridView3.Columns.Add("proQuery2", "프로시저 쿼리");
 
 
-			dataGridView5.Columns.Add("proName", "이름");
+			dataGridView5.Columns.Add("proName", "이벤트 이름");
 			dataGridView5.Columns.Add("proCreate", "생성됨");
 			dataGridView5.Columns.Add("proUpdate", "업데이트됨");
-			dataGridView5.Columns.Add("proName", "이름");
+			dataGridView5.Columns.Add("proName", "이벤트 이름");
 			dataGridView5.Columns.Add("proCreate", "생성됨");
 			dataGridView5.Columns.Add("proUpdate", "업데이트됨");
 
-			dataGridView7.Columns.Add("proName", "이름");
+			dataGridView7.Columns.Add("proName", "함수 이름");
 			dataGridView7.Columns.Add("proCreate", "생성됨");
 			dataGridView7.Columns.Add("proUpdate", "업데이트됨");
-			dataGridView7.Columns.Add("proName", "이름");
+			dataGridView7.Columns.Add("proName", "함수 이름");
 			dataGridView7.Columns.Add("proCreate", "생성됨");
 			dataGridView7.Columns.Add("proUpdate", "업데이트됨");
 
-			dataGridView9.Columns.Add("proName", "이름");
-			dataGridView9.Columns.Add("proName", "이름");
+			dataGridView9.Columns.Add("proName", "뷰 이름");
+			dataGridView9.Columns.Add("proName", "뷰 이름");
 
+
+			dataGridView3.Columns[0].Width = 150;
+			dataGridView3.Columns[4].Width = 150;
+			dataGridView3.Columns[5].Width = 150;
+			dataGridView3.Columns[9].Width = 150;
 
 			dataGridView2.AllowUserToAddRows = false;
 			dataGridView3.AllowUserToAddRows = false;
@@ -164,8 +169,6 @@ namespace tableCheck
 			dataGridView2.Columns[i++].Width = 60;
 			dataGridView2.Columns[i++].Width = 60;
 			dataGridView2.Columns[i++].Width = 60;
-
-
 		}
 
 
@@ -499,6 +502,32 @@ namespace tableCheck
 			public string LAST_ALTERED2;
 		}
 
+		class procedureInfo
+		{
+			public string procedureName;
+			public string procedureCreated;
+			public string procedureUpdate;
+			public string procedureComment;
+
+			public string procedureQuery;
+		}
+
+		class procedureInfoAll
+		{
+			public string procedureName1;
+			public string procedureName2;
+			public string procedureCreated1;
+			public string procedureCreated2;
+			public string procedureUpdate1;
+			public string procedureUpdate2;
+			public string procedureComment1;
+			public string procedureComment2;
+
+			public string procedureQuery1;
+			public string procedureQuery2;
+
+		}
+
 
 		class ListInfo
 		{
@@ -538,13 +567,10 @@ namespace tableCheck
 
 			public string procedureName1;
 			public string procedureName2;
-
 			public string procedureCreated1;
 			public string procedureCreated2;
-
 			public string procedureUpdate1;
 			public string procedureUpdate2;
-
 			public string procedureComment1;
 			public string procedureComment2;
 
@@ -993,7 +1019,56 @@ namespace tableCheck
 		{
 			try
 			{
-				MySqlDataReader rdr = DBConnectTest(conn, _HostName, _PORT, _DATABASE2, _ID, _PWD, queryCreate);
+				_HostName = textBoxIp1.Text;
+				_PORT = textBoxPort1.Text;
+				_DATABASE = textBoxDb1.Text;
+				_ID = textBoxUn1.Text;
+				_PWD = textBoxPw1.Text;
+
+				_HostName2 = textBoxIp2.Text;
+				_PORT2 = textBoxPort2.Text;
+				_DATABASE2 = textBoxDb2.Text;
+				_ID2 = textBoxUn2.Text;
+				_PWD2 = textBoxPw2.Text;
+
+				StringBuilder _strArg = new StringBuilder("");
+				StringBuilder _strArg2 = new StringBuilder("");
+				_strArg.Append("Server = ");           // SQL
+				_strArg.Append(_HostName);        // 서버
+				_strArg.Append(";Port = ");
+				_strArg.Append(_PORT);                 // 포트
+				_strArg.Append(";Database = ");
+				_strArg.Append(_DATABASE);          // 데이터베이스
+				_strArg.Append(";username = ");
+				_strArg.Append(_ID);                     // ID
+				_strArg.Append(";password = ");
+				_strArg.Append(_PWD);                 // PWD
+				_strArg.Append(";");
+				_strArg.Append("Charset=utf8;");
+
+				_strArg2.Append("Server = ");           // SQL
+				_strArg2.Append(_HostName2);        // 서버
+				_strArg2.Append(";Port = ");
+				_strArg2.Append(_PORT2);                 // 포트
+				_strArg2.Append(";Database = ");
+				_strArg2.Append(_DATABASE2);          // 데이터베이스
+				_strArg2.Append(";username = ");
+				_strArg2.Append(_ID2);                     // ID
+				_strArg2.Append(";password = ");
+				_strArg2.Append(_PWD2);                 // PWD
+				_strArg2.Append(";");
+				_strArg2.Append("Charset=utf8;");
+
+
+
+				//MySqlConnection con = new MySqlConnection(_strArg.ToString());
+				//con.Open();
+				MySqlConnection con2 = new MySqlConnection(_strArg2.ToString());
+				con2.Open();
+
+
+				//데이터베이스2에 생성
+				MySqlDataReader rdr = DBConnect(con2, queryCreate);
 			}
 			catch (Exception ex)
 			{
@@ -1070,11 +1145,61 @@ namespace tableCheck
 			return DateTime.Now;
 		}
 
+
+
 		private void ShowCreateTable(string queryCreate)
 		{
 			try
 			{
-				MySqlDataReader rdr = DBConnectTest(conn, _HostName, _PORT, _DATABASE, _ID, _PWD, queryCreate);
+				_HostName = textBoxIp1.Text;
+				_PORT = textBoxPort1.Text;
+				_DATABASE = textBoxDb1.Text;
+				_ID = textBoxUn1.Text;
+				_PWD = textBoxPw1.Text;
+
+				_HostName2 = textBoxIp2.Text;
+				_PORT2 = textBoxPort2.Text;
+				_DATABASE2 = textBoxDb2.Text;
+				_ID2 = textBoxUn2.Text;
+				_PWD2 = textBoxPw2.Text;
+
+				StringBuilder _strArg = new StringBuilder("");
+				StringBuilder _strArg2 = new StringBuilder("");
+				_strArg.Append("Server = ");           // SQL
+				_strArg.Append(_HostName);        // 서버
+				_strArg.Append(";Port = ");
+				_strArg.Append(_PORT);                 // 포트
+				_strArg.Append(";Database = ");
+				_strArg.Append(_DATABASE);          // 데이터베이스
+				_strArg.Append(";username = ");
+				_strArg.Append(_ID);                     // ID
+				_strArg.Append(";password = ");
+				_strArg.Append(_PWD);                 // PWD
+				_strArg.Append(";");
+				_strArg.Append("Charset=utf8;");
+
+				_strArg2.Append("Server = ");           // SQL
+				_strArg2.Append(_HostName2);        // 서버
+				_strArg2.Append(";Port = ");
+				_strArg2.Append(_PORT2);                 // 포트
+				_strArg2.Append(";Database = ");
+				_strArg2.Append(_DATABASE2);          // 데이터베이스
+				_strArg2.Append(";username = ");
+				_strArg2.Append(_ID2);                     // ID
+				_strArg2.Append(";password = ");
+				_strArg2.Append(_PWD2);                 // PWD
+				_strArg2.Append(";");
+				_strArg2.Append("Charset=utf8;");
+
+
+
+				MySqlConnection con = new MySqlConnection(_strArg.ToString());
+				con.Open();
+				//MySqlConnection con2 = new MySqlConnection(_strArg2.ToString());
+				//con2.Open();
+
+
+				MySqlDataReader rdr = DBConnect(con, queryCreate);
 				List<Columns> listTable1 = new List<Columns>();
 				List<Columns> listTable2 = new List<Columns>();
 				List<ColumnsAll> listTableAll = new List<ColumnsAll>();
@@ -1098,6 +1223,7 @@ namespace tableCheck
 
 				//string createQuery = listTable1[0].CREATETABLE;
 				//Create(createQuery);
+			con.Close();
 			}
 			catch (Exception e)
 			{
@@ -1383,52 +1509,182 @@ namespace tableCheck
 		private void button2_Click(object sender, EventArgs e)
 		{
 			showProceaser();
+
+
+
 		}
 
-		private void showProceaser()
+
+		void createProceasor(string ProcedureName)
 		{
 			try
 			{
 				string connectionDb1 = "Server = " + textBoxIp1.Text + ";Port = " + textBoxPort1.Text + ";Database = " + textBoxDb1.Text + ";username = " + textBoxUn1.Text + ";password = " + textBoxPw1.Text + ";" + "Charset=utf8;";
 				string connectionDb2 = "Server = " + textBoxIp2.Text + ";Port = " + textBoxPort2.Text + ";Database = " + textBoxDb2.Text + ";username = " + textBoxUn2.Text + ";password = " + textBoxPw2.Text + ";" + "Charset=utf8;";
-
 				con = new MySqlConnection(connectionDb1);
 				con2 = new MySqlConnection(connectionDb2);
 				con.Open();
 				con2.Open();
 
-				string showProceddure = "show procedure status";
-				//	MySqlDataAdapter adp = DBAdapter(conn, _HostName, _PORT, _DATABASE, _ID, _PWD, query1);
-				///MySqlDataReader rdr = DBConnectTest(conn, _HostName, _PORT, _DATABASE, _ID, _PWD, showProceddure);
-				///
-				MySqlDataReader rdr = DBConnect(con, showProceddure);
-				List<ListInfo> listTable1 = new List<ListInfo>();
-				List<ListInfo> listTable2 = new List<ListInfo>();
-				List<ListInfoAll> listTableAll = new List<ListInfoAll>();
+				string showProcedure = "SHOW CREATE PROCEDURE " + ProcedureName;
 
-				while (rdr.Read())
+				MySqlDataReader rdrProcedure = DBConnect(con, showProcedure);
+				List<procedureInfo> listTable1 = new List<procedureInfo>();
+				List<procedureInfo> listTable2 = new List<procedureInfo>();
+				List<procedureInfoAll> listTableAll = new List<procedureInfoAll>();
+				while (rdrProcedure.Read())
 				{
-					ListInfo listInfo = new ListInfo() { procedureName = rdr["Name"].ToString(), procedureCreated = rdr["Created"].ToString(), procedureUpdate = rdr["Modified"].ToString(), procedureComment = rdr["Comment"].ToString() };
+					procedureInfo listInfo = new procedureInfo() { procedureQuery = rdrProcedure["Create Procedure"].ToString() };
 					listTable1.Add(listInfo);
-					// dataGridView1.Rows[i].Cells[1].Value = rdr["cnt"].ToString();
 				}
 
-				MySqlDataReader rdr2 = DBConnect(con2, showProceddure);
-				while (rdr2.Read())
+				string showProcedure2 = "SHOW CREATE PROCEDURE " + ProcedureName;
+				MySqlDataReader rdrProcedure2 = DBConnect(con2, showProcedure2);
+
+				if (rdrProcedure2 == null)
 				{
-					ListInfo listInfo = new ListInfo() { procedureName = rdr["Name"].ToString(), procedureCreated = rdr["Created"].ToString(), procedureUpdate = rdr["Modified"].ToString(), procedureComment = rdr["Comment"].ToString() };
+					return;
+				}
+
+				while (rdrProcedure2.Read())
+				{
+					procedureInfo listInfo = new procedureInfo() { procedureQuery = rdrProcedure2["Create Procedure"].ToString() };
+					listTable2.Add(listInfo);
+				}
+				for (int k = 0; k < listTable1.Count; k++)
+				{
+					listTableAll.Add(new procedureInfoAll()
+					{
+						procedureQuery1 = listTable1[k].procedureQuery
+					});
+				}
+				for (int k = 0; k < listTable2.Count; k++)
+				{
+					bool found = false;
+					for (int j = 0; j < listTableAll.Count; j++)
+					{
+						if (listTable2[k].procedureName == listTableAll[j].procedureName1)
+						{
+							listTableAll[j].procedureQuery2 = listTable2[k].procedureQuery;
+
+							found = true;
+							break;
+						}
+					}
+					if (found == false)
+					{
+						listTableAll.Add(new procedureInfoAll()
+						{
+							procedureQuery2 = listTable2[k].procedureQuery
+						});
+					}
+				}
+				dataGridView3.Rows.Clear();
+				for (int k = 0; k < listTableAll.Count; k++)
+				{
+					dataGridView3.Rows.Add(1);
+					dataGridView3.Rows[dataGridView3.Rows.Count - 1].Cells[4].Value = listTableAll[k].procedureQuery1;
+					dataGridView3.Rows[dataGridView3.Rows.Count - 1].Cells[9].Value = listTableAll[k].procedureQuery2;
+
+				}
+				int i = 0;
+				dataGridView3.Columns[i++].ReadOnly = false;
+
+				if (conn == null)
+				{
+				}
+				else if (conn.State == ConnectionState.Open)
+				{
+					conn.Close();
+				}
+			}
+
+			catch (Exception ex)
+			{
+				LogMgr.ExceptionLog(ex);
+			}
+			con.Close();
+			con2.Close();
+		}
+
+
+		private void showProceaser()
+		{
+			try
+			{
+
+				string connectionDb1 = "Server = " + textBoxIp1.Text + ";Port = " + textBoxPort1.Text + ";Database = " + textBoxDb1.Text + ";username = " + textBoxUn1.Text + ";password = " + textBoxPw1.Text + ";" + "Charset=utf8;";
+				string connectionDb2 = "Server = " + textBoxIp2.Text + ";Port = " + textBoxPort2.Text + ";Database = " + textBoxDb2.Text + ";username = " + textBoxUn2.Text + ";password = " + textBoxPw2.Text + ";" + "Charset=utf8;";
+				con = new MySqlConnection(connectionDb1);
+				con2 = new MySqlConnection(connectionDb2);
+				con.Open();
+				con2.Open();
+
+				string showProcedure = "show procedure status where DB='" + textBoxDb1.Text + "'";
+				MySqlDataReader rdrProcedure = DBConnect(con, showProcedure);
+				List<procedureInfo> listTable1 = new List<procedureInfo>();
+				List<procedureInfo> listTable2 = new List<procedureInfo>();
+				List<procedureInfoAll> listTableAll = new List<procedureInfoAll>();
+				while (rdrProcedure.Read())
+				{
+					procedureInfo listInfo = new procedureInfo() { procedureName = rdrProcedure["Name"].ToString(), procedureCreated = rdrProcedure["Created"].ToString(), procedureUpdate = rdrProcedure["Modified"].ToString(), procedureComment = rdrProcedure["Comment"].ToString() };
+					listTable1.Add(listInfo);
+				}
+				//
+				//for (int w = 0; w < listTable1.Count; w++)
+				//{
+				//string showProcedureQuery = "SHOW CREATE PROCEDURE " + listTable1[0].procedureName;
+				//MySqlDataReader rdrProcedure3 = DBConnect(con, showProcedureQuery);
+				//while (rdrProcedure.Read())
+				//{
+				//	procedureInfo listInfo = new procedureInfo() { procedureQuery = rdrProcedure3["Create Procedure"].ToString() };
+				//	listTable1.Add(listInfo);
+				//}
+				//}
+				//
+
+				
+
+				string showProcedure2 = "show procedure status where DB='" + textBoxDb2.Text + "'";
+				MySqlDataReader rdrProcedure2 = DBConnect(con2, showProcedure2);
+				while (rdrProcedure2.Read())
+				{
+					procedureInfo listInfo = new procedureInfo() { procedureName = rdrProcedure2["Name"].ToString(), procedureCreated = rdrProcedure2["Created"].ToString(), procedureUpdate = rdrProcedure2["Modified"].ToString(), procedureComment = rdrProcedure2["Comment"].ToString() };
 					listTable2.Add(listInfo);
 				}
 
 
+				//
+				//for (int q = 0; q < listTable1.Count; q++)
+				//{
+				//	string showProcedureQuery2 = "SHOW CREATE PROCEDURE " + listTable1[q].procedureName;
+				//	MySqlDataReader rdrProcedure4 = DBConnect(con, showProcedureQuery2);
+				//	if (rdrProcedure4 == null)
+				//	{
+				//		continue;
+				//	}
+				//	while (rdrProcedure4.Read())
+				//	{
+				//		procedureInfo listInfo = new procedureInfo() { procedureQuery = rdrProcedure4["Create Procedure"].ToString() };
+				//		listTable1.Add(listInfo);
+				//	}
+				//}
+				//
+
+	
+
+
+
 				for (int k = 0; k < listTable1.Count; k++)
 				{
-					listTableAll.Add(new ListInfoAll()
+					listTableAll.Add(new procedureInfoAll()
 					{
 						procedureName1 = listTable1[k].procedureName,
 						procedureCreated1 = listTable1[k].procedureCreated,
 						procedureUpdate1 = listTable1[k].procedureUpdate,
-						procedureComment1 = listTable1[k].procedureComment
+						procedureComment1 = listTable1[k].procedureComment,
+
+						procedureQuery1 = listTable1[k].procedureQuery
 					});
 				}
 				for (int k = 0; k < listTable2.Count; k++)
@@ -1443,20 +1699,22 @@ namespace tableCheck
 							listTableAll[j].procedureUpdate2 = listTable2[k].procedureUpdate;
 							listTableAll[j].procedureComment2 = listTable2[k].procedureComment;
 
+							listTableAll[j].procedureQuery2 = listTable2[k].procedureQuery;
+
 							found = true;
-							listTableAll[j].db = "A+B";
 							break;
 						}
 					}
-					//listTableAll.Add(new ListInfoAll() { db = "A", tableName = listTable1[k].tableName, fieldCount1 = listTable1[k].fieldCount, fieldCount2 = 0 });
 					if (found == false)
 					{
-						listTableAll.Add(new ListInfoAll()
+						listTableAll.Add(new procedureInfoAll()
 						{
 							procedureName2 = listTable2[k].procedureName,
 							procedureCreated2 = listTable2[k].procedureCreated,
 							procedureUpdate2 = listTable2[k].procedureUpdate,
-							procedureComment2 = listTable2[k].procedureComment
+							procedureComment2 = listTable2[k].procedureComment,
+
+							procedureQuery2 = listTable2[k].procedureQuery
 						});
 					}
 				}
@@ -1469,18 +1727,18 @@ namespace tableCheck
 					dataGridView3.Rows[dataGridView3.Rows.Count - 1].Cells[a++].Value = listTableAll[k].procedureCreated1;
 					dataGridView3.Rows[dataGridView3.Rows.Count - 1].Cells[a++].Value = listTableAll[k].procedureUpdate1;
 					dataGridView3.Rows[dataGridView3.Rows.Count - 1].Cells[a++].Value = listTableAll[k].procedureComment1;
+					dataGridView3.Rows[dataGridView3.Rows.Count - 1].Cells[a++].Value = listTableAll[k].procedureQuery1;
 
 					dataGridView3.Rows[dataGridView3.Rows.Count - 1].Cells[a++].Value = listTableAll[k].procedureName2;
 					dataGridView3.Rows[dataGridView3.Rows.Count - 1].Cells[a++].Value = listTableAll[k].procedureCreated2;
 					dataGridView3.Rows[dataGridView3.Rows.Count - 1].Cells[a++].Value = listTableAll[k].procedureUpdate2;
 					dataGridView3.Rows[dataGridView3.Rows.Count - 1].Cells[a++].Value = listTableAll[k].procedureComment2;
 
-				}
+					dataGridView3.Rows[dataGridView3.Rows.Count - 1].Cells[a++].Value = listTableAll[k].procedureQuery2;
 
+				}
 				int i = 0;
 				dataGridView3.Columns[i++].ReadOnly = false;
-				//compare();
-
 
 				if (conn == null)
 				{
@@ -1726,9 +1984,8 @@ namespace tableCheck
 
 				string showView = "SELECT TABLE_NAME viewName FROM information_schema.`TABLES` WHERE TABLE_TYPE LIKE 'VIEW' AND TABLE_SCHEMA LIKE 'dawoon';";
 				string showView2 = "SELECT TABLE_NAME viewName FROM information_schema.`TABLES` WHERE TABLE_TYPE LIKE 'VIEW' AND TABLE_SCHEMA LIKE 'dawoon2';";
-				//	MySqlDataAdapter adp = DBAdapter(conn, _HostName, _PORT, _DATABASE, _ID, _PWD, query1);
-				///MySqlDataReader rdr = DBConnectTest(conn, _HostName, _PORT, _DATABASE, _ID, _PWD, showProceddure);
-				///
+
+
 				MySqlDataReader rdr = DBConnect(con, showView);
 				List<ListInfo> listTable1 = new List<ListInfo>();
 				List<ListInfo> listTable2 = new List<ListInfo>();
