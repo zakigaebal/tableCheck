@@ -1008,7 +1008,6 @@ namespace tableCheck
 					///상태가 다름이면 해당 쇼테이블 을 가지고 온다
 					///테이블의 생성문을 만들어서
 					///함수에 넣는다
-					///
 					for (int i = 0; i < dataGridView1.Rows.Count; i++)
 					{
 						string tbl = dataGridView1.Rows[i].Cells[2].Value.ToString();
@@ -1035,6 +1034,7 @@ namespace tableCheck
 					}
 				}
 			}
+
 			//탭페이지가 프로시저인경우
 			if (tabControl1.SelectedTab == tabPage2)
 			{
@@ -1231,19 +1231,101 @@ namespace tableCheck
 		{
 			try
 			{
-				int rowIndex = dataGridView1.CurrentCell.RowIndex;
-				if (rowIndex < 0) return;
-				if (dataGridView1.Rows[rowIndex].Cells[0].Value == null)
+
+				if (tabControl1.SelectedTab == tabPage1)
 				{
-					return;
+					int rowIndex = dataGridView1.CurrentCell.RowIndex;
+					if (rowIndex < 0) return;
+					if (dataGridView1.Rows[rowIndex].Cells[0].Value == null)
+					{
+						return;
+					}
+					string tbl = dataGridView1.Rows[rowIndex].Cells[2].Value.ToString();
+					if (tbl == null) return;
+					string queryCreate = "SHOW CREATE TABLE " + tbl;
+					ShowCreateTable(queryCreate);
+					alterChange();
+					changePosition();
+					buttonConnect_Click(sender, e);
 				}
-				string tbl = dataGridView1.Rows[rowIndex].Cells[2].Value.ToString();
-				if (tbl == null) return;
-				string queryCreate = "SHOW CREATE TABLE " + tbl;
-				ShowCreateTable(queryCreate);
-				alterChange();
-				changePosition();
-				buttonConnect_Click(sender, e);
+				//탭페이지가 프로시저인 경우
+				if (tabControl1.SelectedTab == tabPage2)
+				{
+					int rowIndex = dataGridView3.CurrentCell.RowIndex;
+					if (rowIndex < 0) return;
+					if (dataGridView3.Rows[rowIndex].Cells[0].Value == null)
+					{
+						return;
+					}
+					string tbl = dataGridView3.Rows[rowIndex].Cells[0].Value.ToString();
+					if (tbl == null) return;
+					string queryCreate = "SHOW CREATE PROCEDURE " + tbl;
+					procedureCreateTable(queryCreate);
+					dataGridView3.Rows[rowIndex].Cells[10].Value = 100;
+					dataGridView3.Rows[rowIndex].Cells[11].Value = "확인중";
+					showProceaser();
+				}
+
+				//탭페이지가 이벤트인경우
+				if (tabControl1.SelectedTab == tabPage3)
+				{
+
+					int rowIndex = dataGridView5.CurrentCell.RowIndex;
+					if (rowIndex < 0) return;
+					if (dataGridView5.Rows[rowIndex].Cells[0].Value == null)
+					{
+						return;
+					}
+					string tbl = dataGridView5.Rows[rowIndex].Cells[0].Value.ToString();
+
+					if (tbl == null) return;
+					//생성테이블쿼리 저장하기
+					string queryCreate = "SHOW CREATE EVENT " + tbl;
+					eventCreateTable(queryCreate);
+					dataGridView5.Rows[rowIndex].Cells[6].Value = 100;
+					dataGridView5.Rows[rowIndex].Cells[7].Value = "확인중";
+
+					showEvents();
+				}
+
+				//탭페이지가 함수인경우
+				if (tabControl1.SelectedTab == tabPage4)
+				{
+					int rowIndex = dataGridView7.CurrentCell.RowIndex;
+					if (rowIndex < 0) return;
+					if (dataGridView7.Rows[rowIndex].Cells[0].Value == null)
+					{
+						return;
+					}
+					string tbl = dataGridView7.Rows[rowIndex].Cells[0].Value.ToString();
+					if (tbl == null) return;
+					//생성테이블쿼리 저장하기
+					string queryCreate = "show create function " + tbl;
+					functionCreateTable(queryCreate);
+					dataGridView7.Rows[rowIndex].Cells[6].Value = 100;
+					dataGridView7.Rows[rowIndex].Cells[7].Value = "확인중";
+					showFunction();
+				}
+
+				//탭페이지가 뷰인경우
+				if (tabControl1.SelectedTab == tabPage5)
+				{
+					int rowIndex = dataGridView9.CurrentCell.RowIndex;
+					if (rowIndex < 0) return;
+					if (dataGridView9.Rows[rowIndex].Cells[0].Value == null)
+					{
+						return;
+					}
+					string tbl = dataGridView9.Rows[rowIndex].Cells[0].Value.ToString();
+					if (tbl == null) return;
+					//생성테이블쿼리 저장하기
+					string queryCreate = "show create view " + tbl;
+					viewCreateTable(queryCreate);
+					dataGridView9.Rows[rowIndex].Cells[2].Value = 100;
+					dataGridView9.Rows[rowIndex].Cells[3].Value = "확인중";
+					showView();
+				}
+
 			}
 			catch (Exception ex)
 			{
@@ -1682,7 +1764,6 @@ namespace tableCheck
 				con2.Open();
 
 				string showProcedure = "SHOW CREATE PROCEDURE " + ProcedureName;
-
 				MySqlDataReader rdrProcedure = DBConnect(con, showProcedure);
 				List<procedureInfo> listTable1 = new List<procedureInfo>();
 				List<procedureInfo> listTable2 = new List<procedureInfo>();
@@ -1692,7 +1773,6 @@ namespace tableCheck
 					procedureInfo listInfo = new procedureInfo() { procedureQuery = rdrProcedure["Create Procedure"].ToString() };
 					listTable1.Add(listInfo);
 				}
-
 				string showProcedure2 = "SHOW CREATE PROCEDURE " + ProcedureName;
 				MySqlDataReader rdrProcedure2 = DBConnect(con2, showProcedure2);
 
@@ -2164,7 +2244,7 @@ namespace tableCheck
 						listTable1.Add(listInfo);
 					}
 
-					
+
 					MySqlDataReader rdr2 = DBConnect(con2, queryCreate);
 					while (rdr2.Read())
 					{
@@ -2238,7 +2318,7 @@ namespace tableCheck
 				con.Open();
 				con2.Open();
 
-				string showView = "SELECT TABLE_NAME viewName FROM information_schema.`TABLES` WHERE TABLE_TYPE LIKE 'VIEW' AND TABLE_SCHEMA LIKE '"+ textBoxDb1.Text + "';";
+				string showView = "SELECT TABLE_NAME viewName FROM information_schema.`TABLES` WHERE TABLE_TYPE LIKE 'VIEW' AND TABLE_SCHEMA LIKE '" + textBoxDb1.Text + "';";
 				string showView2 = "SELECT TABLE_NAME viewName FROM information_schema.`TABLES` WHERE TABLE_TYPE LIKE 'VIEW' AND TABLE_SCHEMA LIKE '" + textBoxDb2.Text + "';";
 
 
@@ -2327,7 +2407,7 @@ namespace tableCheck
 
 		private void button6_Click(object sender, EventArgs e)
 		{
-			
+
 
 		}
 
@@ -2388,11 +2468,14 @@ namespace tableCheck
 				{
 					Columns listInfo = new Columns() { CREATETABLE = rdr["Create Procedure"].ToString() };
 					listTable1.Add(listInfo);
-					
+
 				}
-			
+
 				string createQuery = listTable1[0].CREATETABLE;
+
 				Create(createQuery);
+				dgvShow(createQuery);
+
 				con.Close();
 			}
 			catch (Exception e)
@@ -2400,6 +2483,122 @@ namespace tableCheck
 				LogMgr.ExceptionLog(e);
 				MessageBox.Show(e.ToString());
 			}
+		}
+
+		private void dgvShow(string queryCreate)
+		{
+			try
+			{
+				_HostName = textBoxIp1.Text;
+				_PORT = textBoxPort1.Text;
+				_DATABASE = textBoxDb1.Text;
+				_ID = textBoxUn1.Text;
+				_PWD = textBoxPw1.Text;
+				_HostName2 = textBoxIp2.Text;
+				_PORT2 = textBoxPort2.Text;
+				_DATABASE2 = textBoxDb2.Text;
+				_ID2 = textBoxUn2.Text;
+				_PWD2 = textBoxPw2.Text;
+
+				StringBuilder _strArg = new StringBuilder("");
+				StringBuilder _strArg2 = new StringBuilder("");
+				_strArg.Append("Server = ");           // SQL
+				_strArg.Append(_HostName);        // 서버
+				_strArg.Append(";Port = ");
+				_strArg.Append(_PORT);                 // 포트
+				_strArg.Append(";Database = ");
+				_strArg.Append(_DATABASE);          // 데이터베이스
+				_strArg.Append(";username = ");
+				_strArg.Append(_ID);                     // ID
+				_strArg.Append(";password = ");
+				_strArg.Append(_PWD);                 // PWD
+				_strArg.Append(";");
+				_strArg.Append("Charset=utf8;");
+
+				_strArg2.Append("Server = ");           // SQL
+				_strArg2.Append(_HostName2);        // 서버
+				_strArg2.Append(";Port = ");
+				_strArg2.Append(_PORT2);                 // 포트
+				_strArg2.Append(";Database = ");
+				_strArg2.Append(_DATABASE2);          // 데이터베이스
+				_strArg2.Append(";username = ");
+				_strArg2.Append(_ID2);                     // ID
+				_strArg2.Append(";password = ");
+				_strArg2.Append(_PWD2);                 // PWD
+				_strArg2.Append(";");
+				_strArg2.Append("Charset=utf8;");
+
+				MySqlConnection con = new MySqlConnection(_strArg2.ToString());
+				con.Open();
+				MySqlConnection con2 = new MySqlConnection(_strArg2.ToString());
+				con2.Open();
+				MySqlDataReader rdr = DBConnect(con, queryCreate);
+				MySqlDataReader rdr2 = DBConnect(con2, queryCreate);
+
+				List<procedureInfo> listTable1 = new List<procedureInfo>();
+				List<procedureInfo> listTable2 = new List<procedureInfo>();
+				List<procedureInfoAll> listTableAll = new List<procedureInfoAll>();
+
+				while (rdr.Read())
+				{
+					procedureInfo listInfo = new procedureInfo() { procedureQuery = rdr["Create Procedure"].ToString() };
+					listTable1.Add(listInfo);
+				}
+
+				string showProcedure2 = "show procedure status where DB='" + textBoxDb2.Text + "'";
+				while (rdr2.Read())
+				{
+					procedureInfo listInfo = new procedureInfo() { procedureQuery = rdr2["Create Procedure"].ToString() };
+					listTable2.Add(listInfo);
+				}
+
+				for (int k = 0; k < listTable1.Count; k++)
+				{
+					listTableAll.Add(new procedureInfoAll()
+					{
+						procedureQuery1 = listTable1[k].procedureQuery
+					});
+				}
+				for (int k = 0; k < listTable2.Count; k++)
+				{
+					bool found = false;
+					for (int j = 0; j < listTableAll.Count; j++)
+					{
+						if (listTable2[k].procedureName == listTableAll[j].procedureName1)
+						{
+							listTableAll[j].procedureQuery2 = listTable2[k].procedureQuery;
+
+							found = true;
+							break;
+						}
+					}
+					if (found == false)
+					{
+						listTableAll.Add(new procedureInfoAll()
+						{
+							procedureQuery2 = listTable2[k].procedureQuery
+						});
+					}
+				}
+				for (int k = 0; k < listTableAll.Count; k++)
+				{
+					dataGridView3.Rows[dataGridView3.Rows.Count - 1].Cells[4].Value = listTableAll[k].procedureQuery1;
+					dataGridView3.Rows[dataGridView3.Rows.Count - 1].Cells[9].Value = listTableAll[k].procedureQuery2;
+				}
+				con.Close();
+				con2.Close();
+				compare();
+			}
+			catch (Exception ex)
+			{
+				LogMgr.ExceptionLog(ex);
+				MessageBox.Show(ex.ToString());
+			}
+
+
+		
+
+
 		}
 
 		private void dataGridView3_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
@@ -2426,7 +2625,7 @@ namespace tableCheck
 			showQueryProcedure();
 		}
 
-	
+
 		private void eventCreateTable(string queryCreate)
 		{
 			try
@@ -2498,7 +2697,7 @@ namespace tableCheck
 
 		private void button2_Click(object sender, EventArgs e)
 		{
-					}
+		}
 
 		private void functionCreateTable(string queryCreate)
 		{
@@ -2571,7 +2770,7 @@ namespace tableCheck
 
 		private void button3_Click(object sender, EventArgs e)
 		{
-		
+
 		}
 
 		private void viewCreateTable(string queryCreate)
@@ -2634,10 +2833,6 @@ namespace tableCheck
 				}
 				string createQuery = listTable1[0].CREATETABLE;
 				Create(createQuery);
-
-				
-
-
 
 				con.Close();
 			}
