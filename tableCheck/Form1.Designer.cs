@@ -43,22 +43,16 @@
 			this.panel8 = new System.Windows.Forms.Panel();
 			this.dataGridView5 = new System.Windows.Forms.DataGridView();
 			this.splitter2 = new System.Windows.Forms.Splitter();
-			this.dataGridView6 = new System.Windows.Forms.DataGridView();
 			this.tabPage4 = new System.Windows.Forms.TabPage();
 			this.panel9 = new System.Windows.Forms.Panel();
 			this.dataGridView7 = new System.Windows.Forms.DataGridView();
 			this.splitter4 = new System.Windows.Forms.Splitter();
-			this.dataGridView8 = new System.Windows.Forms.DataGridView();
 			this.tabPage5 = new System.Windows.Forms.TabPage();
 			this.panel10 = new System.Windows.Forms.Panel();
 			this.dataGridView9 = new System.Windows.Forms.DataGridView();
 			this.splitter5 = new System.Windows.Forms.Splitter();
-			this.dataGridView10 = new System.Windows.Forms.DataGridView();
 			this.panel2 = new System.Windows.Forms.Panel();
-			this.button5 = new System.Windows.Forms.Button();
-			this.button4 = new System.Windows.Forms.Button();
-			this.button3 = new System.Windows.Forms.Button();
-			this.button2 = new System.Windows.Forms.Button();
+			this.button7 = new System.Windows.Forms.Button();
 			this.btnPositionChange = new System.Windows.Forms.Button();
 			this.label2 = new System.Windows.Forms.Label();
 			this.button1 = new System.Windows.Forms.Button();
@@ -102,15 +96,12 @@
 			this.tabPage3.SuspendLayout();
 			this.panel8.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView5)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.dataGridView6)).BeginInit();
 			this.tabPage4.SuspendLayout();
 			this.panel9.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView7)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.dataGridView8)).BeginInit();
 			this.tabPage5.SuspendLayout();
 			this.panel10.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView9)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.dataGridView10)).BeginInit();
 			this.panel2.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -237,6 +228,7 @@
 			this.dataGridView3.RowTemplate.Height = 23;
 			this.dataGridView3.Size = new System.Drawing.Size(1394, 509);
 			this.dataGridView3.TabIndex = 4;
+			this.dataGridView3.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dataGridView3_RowPostPaint);
 			// 
 			// tabPage3
 			// 
@@ -253,7 +245,6 @@
 			// 
 			this.panel8.Controls.Add(this.dataGridView5);
 			this.panel8.Controls.Add(this.splitter2);
-			this.panel8.Controls.Add(this.dataGridView6);
 			this.panel8.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panel8.Location = new System.Drawing.Point(3, 3);
 			this.panel8.Name = "panel8";
@@ -267,31 +258,20 @@
 			this.dataGridView5.Location = new System.Drawing.Point(0, 0);
 			this.dataGridView5.Name = "dataGridView5";
 			this.dataGridView5.RowTemplate.Height = 23;
-			this.dataGridView5.Size = new System.Drawing.Size(1394, 159);
+			this.dataGridView5.Size = new System.Drawing.Size(1394, 502);
 			this.dataGridView5.TabIndex = 4;
+			this.dataGridView5.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dataGridView5_RowPostPaint);
 			// 
 			// splitter2
 			// 
 			this.splitter2.BackColor = System.Drawing.Color.MistyRose;
 			this.splitter2.Cursor = System.Windows.Forms.Cursors.HSplit;
 			this.splitter2.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.splitter2.Location = new System.Drawing.Point(0, 159);
+			this.splitter2.Location = new System.Drawing.Point(0, 502);
 			this.splitter2.Name = "splitter2";
 			this.splitter2.Size = new System.Drawing.Size(1394, 7);
 			this.splitter2.TabIndex = 0;
 			this.splitter2.TabStop = false;
-			// 
-			// dataGridView6
-			// 
-			this.dataGridView6.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-			this.dataGridView6.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			this.dataGridView6.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.dataGridView6.Location = new System.Drawing.Point(0, 166);
-			this.dataGridView6.Name = "dataGridView6";
-			this.dataGridView6.ReadOnly = true;
-			this.dataGridView6.RowTemplate.Height = 23;
-			this.dataGridView6.Size = new System.Drawing.Size(1394, 343);
-			this.dataGridView6.TabIndex = 15;
 			// 
 			// tabPage4
 			// 
@@ -308,7 +288,6 @@
 			// 
 			this.panel9.Controls.Add(this.dataGridView7);
 			this.panel9.Controls.Add(this.splitter4);
-			this.panel9.Controls.Add(this.dataGridView8);
 			this.panel9.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panel9.Location = new System.Drawing.Point(3, 3);
 			this.panel9.Name = "panel9";
@@ -322,31 +301,20 @@
 			this.dataGridView7.Location = new System.Drawing.Point(0, 0);
 			this.dataGridView7.Name = "dataGridView7";
 			this.dataGridView7.RowTemplate.Height = 23;
-			this.dataGridView7.Size = new System.Drawing.Size(1394, 159);
+			this.dataGridView7.Size = new System.Drawing.Size(1394, 502);
 			this.dataGridView7.TabIndex = 4;
+			this.dataGridView7.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dataGridView7_RowPostPaint);
 			// 
 			// splitter4
 			// 
 			this.splitter4.BackColor = System.Drawing.Color.MistyRose;
 			this.splitter4.Cursor = System.Windows.Forms.Cursors.HSplit;
 			this.splitter4.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.splitter4.Location = new System.Drawing.Point(0, 159);
+			this.splitter4.Location = new System.Drawing.Point(0, 502);
 			this.splitter4.Name = "splitter4";
 			this.splitter4.Size = new System.Drawing.Size(1394, 7);
 			this.splitter4.TabIndex = 0;
 			this.splitter4.TabStop = false;
-			// 
-			// dataGridView8
-			// 
-			this.dataGridView8.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-			this.dataGridView8.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			this.dataGridView8.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.dataGridView8.Location = new System.Drawing.Point(0, 166);
-			this.dataGridView8.Name = "dataGridView8";
-			this.dataGridView8.ReadOnly = true;
-			this.dataGridView8.RowTemplate.Height = 23;
-			this.dataGridView8.Size = new System.Drawing.Size(1394, 343);
-			this.dataGridView8.TabIndex = 15;
 			// 
 			// tabPage5
 			// 
@@ -363,7 +331,6 @@
 			// 
 			this.panel10.Controls.Add(this.dataGridView9);
 			this.panel10.Controls.Add(this.splitter5);
-			this.panel10.Controls.Add(this.dataGridView10);
 			this.panel10.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panel10.Location = new System.Drawing.Point(3, 3);
 			this.panel10.Name = "panel10";
@@ -377,38 +344,24 @@
 			this.dataGridView9.Location = new System.Drawing.Point(0, 0);
 			this.dataGridView9.Name = "dataGridView9";
 			this.dataGridView9.RowTemplate.Height = 23;
-			this.dataGridView9.Size = new System.Drawing.Size(1394, 159);
+			this.dataGridView9.Size = new System.Drawing.Size(1394, 502);
 			this.dataGridView9.TabIndex = 4;
+			this.dataGridView9.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dataGridView9_RowPostPaint);
 			// 
 			// splitter5
 			// 
 			this.splitter5.BackColor = System.Drawing.Color.MistyRose;
 			this.splitter5.Cursor = System.Windows.Forms.Cursors.HSplit;
 			this.splitter5.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.splitter5.Location = new System.Drawing.Point(0, 159);
+			this.splitter5.Location = new System.Drawing.Point(0, 502);
 			this.splitter5.Name = "splitter5";
 			this.splitter5.Size = new System.Drawing.Size(1394, 7);
 			this.splitter5.TabIndex = 0;
 			this.splitter5.TabStop = false;
 			// 
-			// dataGridView10
-			// 
-			this.dataGridView10.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-			this.dataGridView10.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			this.dataGridView10.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.dataGridView10.Location = new System.Drawing.Point(0, 166);
-			this.dataGridView10.Name = "dataGridView10";
-			this.dataGridView10.ReadOnly = true;
-			this.dataGridView10.RowTemplate.Height = 23;
-			this.dataGridView10.Size = new System.Drawing.Size(1394, 343);
-			this.dataGridView10.TabIndex = 15;
-			// 
 			// panel2
 			// 
-			this.panel2.Controls.Add(this.button5);
-			this.panel2.Controls.Add(this.button4);
-			this.panel2.Controls.Add(this.button3);
-			this.panel2.Controls.Add(this.button2);
+			this.panel2.Controls.Add(this.button7);
 			this.panel2.Controls.Add(this.btnPositionChange);
 			this.panel2.Controls.Add(this.label2);
 			this.panel2.Controls.Add(this.button1);
@@ -445,51 +398,21 @@
 			this.panel2.Size = new System.Drawing.Size(1408, 49);
 			this.panel2.TabIndex = 10;
 			// 
-			// button5
+			// button7
 			// 
-			this.button5.Location = new System.Drawing.Point(1260, 2);
-			this.button5.Name = "button5";
-			this.button5.Size = new System.Drawing.Size(75, 23);
-			this.button5.TabIndex = 18;
-			this.button5.Text = "뷰";
-			this.button5.UseVisualStyleBackColor = true;
-			this.button5.Click += new System.EventHandler(this.button5_Click);
-			// 
-			// button4
-			// 
-			this.button4.Location = new System.Drawing.Point(1179, 2);
-			this.button4.Name = "button4";
-			this.button4.Size = new System.Drawing.Size(75, 23);
-			this.button4.TabIndex = 18;
-			this.button4.Text = "함수";
-			this.button4.UseVisualStyleBackColor = true;
-			this.button4.Click += new System.EventHandler(this.button4_Click);
-			// 
-			// button3
-			// 
-			this.button3.Location = new System.Drawing.Point(1098, 2);
-			this.button3.Name = "button3";
-			this.button3.Size = new System.Drawing.Size(75, 23);
-			this.button3.TabIndex = 18;
-			this.button3.Text = "이벤트";
-			this.button3.UseVisualStyleBackColor = true;
-			this.button3.Click += new System.EventHandler(this.button3_Click);
-			// 
-			// button2
-			// 
-			this.button2.Location = new System.Drawing.Point(1017, 2);
-			this.button2.Name = "button2";
-			this.button2.Size = new System.Drawing.Size(75, 23);
-			this.button2.TabIndex = 17;
-			this.button2.Text = "프로시저";
-			this.button2.UseVisualStyleBackColor = true;
-			this.button2.Click += new System.EventHandler(this.button2_Click);
+			this.button7.Location = new System.Drawing.Point(1208, 3);
+			this.button7.Name = "button7";
+			this.button7.Size = new System.Drawing.Size(200, 44);
+			this.button7.TabIndex = 20;
+			this.button7.Text = "button7";
+			this.button7.UseVisualStyleBackColor = true;
+			this.button7.Click += new System.EventHandler(this.button7_Click);
 			// 
 			// btnPositionChange
 			// 
 			this.btnPositionChange.Location = new System.Drawing.Point(961, 1);
 			this.btnPositionChange.Name = "btnPositionChange";
-			this.btnPositionChange.Size = new System.Drawing.Size(50, 25);
+			this.btnPositionChange.Size = new System.Drawing.Size(41, 25);
 			this.btnPositionChange.TabIndex = 16;
 			this.btnPositionChange.Text = "순서";
 			this.btnPositionChange.UseVisualStyleBackColor = true;
@@ -773,15 +696,12 @@
 			this.tabPage3.ResumeLayout(false);
 			this.panel8.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView5)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.dataGridView6)).EndInit();
 			this.tabPage4.ResumeLayout(false);
 			this.panel9.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView7)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.dataGridView8)).EndInit();
 			this.tabPage5.ResumeLayout(false);
 			this.panel10.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView9)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.dataGridView10)).EndInit();
 			this.panel2.ResumeLayout(false);
 			this.panel2.PerformLayout();
 			this.ResumeLayout(false);
@@ -836,21 +756,15 @@
 		private System.Windows.Forms.Panel panel8;
 		private System.Windows.Forms.DataGridView dataGridView5;
 		private System.Windows.Forms.Splitter splitter2;
-		private System.Windows.Forms.DataGridView dataGridView6;
 		private System.Windows.Forms.Panel panel9;
 		private System.Windows.Forms.DataGridView dataGridView7;
 		private System.Windows.Forms.Splitter splitter4;
-		private System.Windows.Forms.DataGridView dataGridView8;
 		private System.Windows.Forms.Panel panel10;
 		private System.Windows.Forms.DataGridView dataGridView9;
 		private System.Windows.Forms.Splitter splitter5;
-		private System.Windows.Forms.DataGridView dataGridView10;
 		private System.Windows.Forms.Button btnPositionChange;
 		private System.Windows.Forms.DataGridView dataGridView3;
-		private System.Windows.Forms.Button button2;
-		private System.Windows.Forms.Button button5;
-		private System.Windows.Forms.Button button4;
-		private System.Windows.Forms.Button button3;
+		private System.Windows.Forms.Button button7;
 	}
 }
 

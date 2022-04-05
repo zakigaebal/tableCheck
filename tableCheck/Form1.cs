@@ -35,6 +35,11 @@ namespace tableCheck
 		//프로그레스 추가
 		DataGridViewProgressColumn progressColumn = new DataGridViewProgressColumn();
 
+		DataGridViewProgressColumn progressColumn2 = new DataGridViewProgressColumn();
+		DataGridViewProgressColumn progressColumn3 = new DataGridViewProgressColumn();
+		DataGridViewProgressColumn progressColumn4 = new DataGridViewProgressColumn();
+		DataGridViewProgressColumn progressColumn5 = new DataGridViewProgressColumn();
+
 		private string _HostName = "";    //서버연결방식 도메인
 		private string _ServerName = "";  //서버연결방식 아이피
 		private string _CONNECT = "";    //도메인인지 아이피인지 여부
@@ -68,7 +73,6 @@ namespace tableCheck
 			initCloseMethod();
 		}
 
-
 		#region ini 입력 메소드
 		[DllImport("kernel32")]
 		private static extern long WritePrivateProfileString(string section, string key, string val, string filePath);
@@ -79,7 +83,6 @@ namespace tableCheck
 		{
 			public int Progress { get; set; }
 		}
-
 
 
 		private void Form1_Load(object sender, EventArgs e)
@@ -103,6 +106,7 @@ namespace tableCheck
 			dataGridView1.Columns.Add(progressColumn);
 			dataGridView1.Columns.Add("column4", "상태");
 			dataGridView1.AllowUserToAddRows = false;
+
 			dgvDesign();
 			int i = 0;
 			dataGridView1.Columns[i++].Width = 35;
@@ -132,12 +136,19 @@ namespace tableCheck
 			dataGridView3.Columns.Add("proUpdate", "업데이트됨");
 			dataGridView3.Columns.Add("proComment", "코멘트");
 			dataGridView3.Columns.Add("proQuery", "프로시저 쿼리");
-
 			dataGridView3.Columns.Add("proName2", "프로시저 이름");
 			dataGridView3.Columns.Add("proCreate2", "생성됨");
 			dataGridView3.Columns.Add("proUpdate2", "업데이트됨");
 			dataGridView3.Columns.Add("proComment2", "코멘트");
 			dataGridView3.Columns.Add("proQuery2", "프로시저 쿼리");
+			dataGridView3.Columns.Add(progressColumn2);
+			progressColumn2.HeaderText = "진행중";
+			progressColumn2.Name = "progress2";
+			dataGridView3.Columns.Add("completed", "상태");
+			dataGridView3.Columns[10].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+			dataGridView3.AllowUserToAddRows = false;
+
+
 
 
 			dataGridView5.Columns.Add("proName", "이벤트 이름");
@@ -146,6 +157,13 @@ namespace tableCheck
 			dataGridView5.Columns.Add("proName", "이벤트 이름");
 			dataGridView5.Columns.Add("proCreate", "생성됨");
 			dataGridView5.Columns.Add("proUpdate", "업데이트됨");
+			dataGridView5.Columns.Add(progressColumn3);
+			progressColumn3.HeaderText = "진행중";
+			progressColumn3.Name = "progress3";
+			dataGridView5.Columns.Add("completed", "상태");
+			dataGridView5.Columns[6].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+
+			dataGridView5.AllowUserToAddRows = false;
 
 			dataGridView7.Columns.Add("proName", "함수 이름");
 			dataGridView7.Columns.Add("proCreate", "생성됨");
@@ -153,9 +171,25 @@ namespace tableCheck
 			dataGridView7.Columns.Add("proName", "함수 이름");
 			dataGridView7.Columns.Add("proCreate", "생성됨");
 			dataGridView7.Columns.Add("proUpdate", "업데이트됨");
+			dataGridView7.Columns.Add(progressColumn4);
+			progressColumn4.HeaderText = "진행중";
+			progressColumn4.Name = "progress4";
+			dataGridView7.Columns.Add("completed", "상태");
+			dataGridView7.Columns[6].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+
+			dataGridView7.AllowUserToAddRows = false;
 
 			dataGridView9.Columns.Add("proName", "뷰 이름");
 			dataGridView9.Columns.Add("proName", "뷰 이름");
+			dataGridView9.Columns.Add(progressColumn5);
+			progressColumn5.HeaderText = "진행중";
+			progressColumn5.Name = "progress5";
+			dataGridView9.Columns.Add("completed", "상태");
+			dataGridView9.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+
+
+			dataGridView9.AllowUserToAddRows = false;
+
 
 
 			dataGridView3.Columns[0].Width = 150;
@@ -165,6 +199,7 @@ namespace tableCheck
 
 			dataGridView2.AllowUserToAddRows = false;
 			dataGridView3.AllowUserToAddRows = false;
+			dataGridView5.AllowUserToAddRows = false;
 			i = 0;
 			dataGridView2.Columns[i++].Width = 60;
 			dataGridView2.Columns[i++].Width = 60;
@@ -186,9 +221,6 @@ namespace tableCheck
 				LogMgr.ExceptionLog(ex);
 			}
 		}
-
-
-
 
 		private void dataGridView1_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
 		{
@@ -452,8 +484,17 @@ namespace tableCheck
 				dataGridView1.Columns[i++].ReadOnly = true;
 				dataGridView1.Columns[i++].ReadOnly = true;
 				dataGridView1.Columns[i++].ReadOnly = true;
+
 				compare();
 
+				//프로시저 보여주기메소드
+				showProceaser();
+				//이벤트 보여주기메소드
+				showEvents();
+				//함수 보여주기메소드
+				showFunction();
+				//뷰 보여주기메소드
+				showView();
 
 			}
 			catch (Exception ex)
@@ -958,39 +999,117 @@ namespace tableCheck
 
 		void allStrart()
 		{
-			//체크박스 벨류가 false라면
-			if (dataGridView1.Rows[0].Cells[0].Value.ToString().Contains("False").ToString() == "False")
+			if (tabControl1.SelectedTab == tabPage1)
 			{
-				///데이터그리드뷰1에 로우줄을 다가지고온다
-				///상태가 다름이면 해당 쇼테이블 을 가지고 온다
-				///테이블의 생성문을 만들어서
-				///함수에 넣는다
-				///
-				for (int i = 0; i < dataGridView1.Rows.Count; i++)
+				//체크박스 벨류가 false라면
+				if (dataGridView1.Rows[0].Cells[0].Value.ToString().Contains("False").ToString() == "False")
 				{
-					string tbl = dataGridView1.Rows[i].Cells[2].Value.ToString();
-					if (dataGridView1.Rows[i].Cells[7].Value.ToString() == "없음")
+					///데이터그리드뷰1에 로우줄을 다가지고온다
+					///상태가 다름이면 해당 쇼테이블 을 가지고 온다
+					///테이블의 생성문을 만들어서
+					///함수에 넣는다
+					///
+					for (int i = 0; i < dataGridView1.Rows.Count; i++)
+					{
+						string tbl = dataGridView1.Rows[i].Cells[2].Value.ToString();
+						if (dataGridView1.Rows[i].Cells[7].Value.ToString() == "없음")
+						{
+							if (tbl == null) return;
+							//생성테이블쿼리 저장하기
+							string queryCreate = "SHOW CREATE TABLE " + tbl;
+							ShowCreateTable(queryCreate);
+							dataGridView1.Rows[i].Cells[6].Value = 100;
+							dataGridView1.Rows[i].Cells[5].Value = "확인중";
+						}
+
+						if (dataGridView1.Rows[i].Cells[7].Value.ToString() == "필드수 다름")
+						{
+							showFields(tbl);
+							alterChange();
+							changePosition();
+
+							dataGridView1.Rows[i].Cells[6].Value = 100;
+							dataGridView1.Rows[i].Cells[5].Value = "확인중";
+						}
+						else continue;
+					}
+				}
+			}
+			//탭페이지가 프로시저인경우
+			if (tabControl1.SelectedTab == tabPage2)
+			{
+				for (int i = 0; i < dataGridView3.Rows.Count; i++)
+				{
+					string tbl = dataGridView3.Rows[i].Cells[0].Value.ToString();
+					if (dataGridView3.Rows[i].Cells[5].Value == null)
 					{
 						if (tbl == null) return;
 						//생성테이블쿼리 저장하기
-						string queryCreate = "SHOW CREATE TABLE " + tbl;
-						ShowCreateTable(queryCreate);
-						dataGridView1.Rows[i].Cells[6].Value = 100;
-						dataGridView1.Rows[i].Cells[5].Value = "확인중";
+						string queryCreate = "SHOW CREATE PROCEDURE " + tbl;
+						procedureCreateTable(queryCreate);
+						dataGridView3.Rows[i].Cells[10].Value = 100;
+						dataGridView3.Rows[i].Cells[11].Value = "확인중";
 					}
-
-					if (dataGridView1.Rows[i].Cells[7].Value.ToString() == "필드수 다름")
-					{
-						showFields(tbl);
-						alterChange();
-						changePosition();
-
-						dataGridView1.Rows[i].Cells[6].Value = 100;
-						dataGridView1.Rows[i].Cells[5].Value = "확인중";
-					}
-					else continue;
 				}
+				showProceaser();
 			}
+			//탭페이지가 이벤트인경우
+			if (tabControl1.SelectedTab == tabPage3)
+			{
+				for (int i = 0; i < dataGridView5.Rows.Count; i++)
+				{
+					string tbl = dataGridView5.Rows[i].Cells[0].Value.ToString();
+					if (dataGridView5.Rows[i].Cells[5].Value == null)
+					{
+						if (tbl == null) return;
+						//생성테이블쿼리 저장하기
+						string queryCreate = "SHOW CREATE EVENT " + tbl;
+						eventCreateTable(queryCreate);
+						dataGridView5.Rows[i].Cells[6].Value = 100;
+						dataGridView5.Rows[i].Cells[7].Value = "확인중";
+					}
+				}
+				showEvents();
+			}
+
+			//탭페이지가 함수인경우
+			if (tabControl1.SelectedTab == tabPage4)
+			{
+				for (int i = 0; i < dataGridView7.Rows.Count; i++)
+				{
+					string tbl = dataGridView7.Rows[i].Cells[0].Value.ToString();
+					if (dataGridView7.Rows[i].Cells[3].Value == null)
+					{
+						if (tbl == null) return;
+						//생성테이블쿼리 저장하기
+						string queryCreate = "show create function " + tbl;
+						functionCreateTable(queryCreate);
+						dataGridView7.Rows[i].Cells[6].Value = 100;
+						dataGridView7.Rows[i].Cells[7].Value = "확인중";
+					}
+				}
+				showFunction();
+			}
+
+			//탭페이지가 뷰인경우
+			if (tabControl1.SelectedTab == tabPage5)
+			{
+				for (int i = 0; i < dataGridView9.Rows.Count; i++)
+				{
+					string tbl = dataGridView9.Rows[i].Cells[0].Value.ToString();
+					if (dataGridView9.Rows[i].Cells[3].Value == null)
+					{
+						if (tbl == null) return;
+						//생성테이블쿼리 저장하기
+						string queryCreate = "show create view " + tbl;
+						viewCreateTable(queryCreate);
+						dataGridView9.Rows[i].Cells[2].Value = 100;
+						dataGridView9.Rows[i].Cells[3].Value = "확인중";
+					}
+				}
+				showView();
+			}
+
 		}
 
 		private void DataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -1060,7 +1179,6 @@ namespace tableCheck
 				_strArg2.Append("Charset=utf8;");
 
 
-
 				//MySqlConnection con = new MySqlConnection(_strArg.ToString());
 				//con.Open();
 				MySqlConnection con2 = new MySqlConnection(_strArg2.ToString());
@@ -1069,6 +1187,7 @@ namespace tableCheck
 
 				//데이터베이스2에 생성
 				MySqlDataReader rdr = DBConnect(con2, queryCreate);
+				con2.Close();
 			}
 			catch (Exception ex)
 			{
@@ -1212,18 +1331,8 @@ namespace tableCheck
 				string createQuery = listTable1[0].CREATETABLE;
 				Create(createQuery);
 
-				//DataSet ds = DBAdapter(conn, _HostName, _PORT, _DATABASE, _ID, _PWD, queryCreate);
-				//List<Columns> listTable1 = new List<Columns>();
-				//List<Columns> listTable2 = new List<Columns>();
-				//List<ColumnsAll> listTableAll = new List<ColumnsAll>();
 
-				//Columns listInfo = new Columns() { CREATETABLE = ds.Tables[1].ToString() };
-				//		//("Create Table").ToString() };
-				//	listTable1.Add(listInfo);
-
-				//string createQuery = listTable1[0].CREATETABLE;
-				//Create(createQuery);
-			con.Close();
+				con.Close();
 			}
 			catch (Exception e)
 			{
@@ -1252,6 +1361,60 @@ namespace tableCheck
 					else if (dataGridView1.Rows[i].Cells[5].Value.ToString().Trim() == "0") dataGridView1.Rows[i].Cells[7].Value = "없음";
 					else dataGridView1.Rows[i].Cells[7].Value = "필드수 다름";
 				}
+
+				for (int i = 0; i < dataGridView3.Rows.Count; i++)
+				{
+					if (dataGridView3.Rows[i].Cells[5].Value == null)
+					{
+						continue;
+					}
+					if (dataGridView3.Rows[i].Cells[0].Value.ToString().Trim() == dataGridView3.Rows[i].Cells[5].Value.ToString().Trim())
+					{
+						dataGridView3.Rows[i].Cells[10].Value = "100";
+						dataGridView3.Rows[i].Cells[11].Value = "프로시저존재";
+					}
+				}
+
+				for (int i = 0; i < dataGridView5.Rows.Count; i++)
+				{
+					if (dataGridView5.Rows[i].Cells[5].Value == null)
+					{
+						continue;
+					}
+					if (dataGridView5.Rows[i].Cells[0].Value.ToString().Trim() == dataGridView5.Rows[i].Cells[3].Value.ToString().Trim())
+					{
+						dataGridView5.Rows[i].Cells[6].Value = "100";
+						dataGridView5.Rows[i].Cells[7].Value = "존재";
+					}
+				}
+
+				for (int i = 0; i < dataGridView7.Rows.Count; i++)
+				{
+					if (dataGridView7.Rows[i].Cells[5].Value == null)
+					{
+						continue;
+					}
+					if (dataGridView7.Rows[i].Cells[0].Value.ToString().Trim() == dataGridView7.Rows[i].Cells[3].Value.ToString().Trim())
+					{
+						dataGridView7.Rows[i].Cells[6].Value = "100";
+						dataGridView7.Rows[i].Cells[7].Value = "존재";
+					}
+				}
+
+				for (int i = 0; i < dataGridView9.Rows.Count; i++)
+				{
+					if (dataGridView9.Rows[i].Cells[1].Value == null)
+					{
+						continue;
+					}
+					if (dataGridView9.Rows[i].Cells[0].Value.ToString().Trim() == dataGridView9.Rows[i].Cells[1].Value.ToString().Trim())
+					{
+						dataGridView9.Rows[i].Cells[2].Value = "100";
+						dataGridView9.Rows[i].Cells[3].Value = "존재";
+					}
+				}
+
+
 			}
 			catch (Exception ex)
 			{
@@ -1436,7 +1599,6 @@ namespace tableCheck
 						Create(alterTable);
 					}
 
-
 					// db1 널값이 다르면 no인지 yes인지 파악해서 db2의 맞는값으로 바꿔라
 					if (dataGridView2.Rows[i].Cells[2].Value.ToString().Trim() != dataGridView2.Rows[i].Cells[10].Value.ToString().Trim())
 					{
@@ -1452,15 +1614,12 @@ namespace tableCheck
 						}
 					}
 
-
-
 					//db1 기본값과 db2의 기본값이 다르면 null값 유무와 db1셀의 default값을 넣어서 바꿔라
 					if (dataGridView2.Rows[i].Cells[3].Value.ToString().Trim() != dataGridView2.Rows[i].Cells[11].Value.ToString().Trim())
 					{
 						alterTable = "ALTER TABLE " + tbl + " MODIFY COLUMN `" + dataGridView2.Rows[i].Cells[0].Value.ToString() + "` " + dataGridView2.Rows[i].Cells[1].Value.ToString() + nullYN + " DEFAULT '" + dataGridView2.Rows[i].Cells[3].Value.ToString() + "'";
 						Create(alterTable);
 					}
-
 
 					//CHANGE로 커멘트 변경할려면 컬럼도 동시에 바꿔져야됨 
 					//ALTER TABLE `user` CHANGE `id` `id` INT( 11 ) COMMENT 'user 테이블의 id';
@@ -1484,6 +1643,8 @@ namespace tableCheck
 						alterTable = "ALTER TABLE " + tbl + " MODIFY COLUMN `" + dataGridView2.Rows[i].Cells[0].Value.ToString() + "` " + dataGridView2.Rows[i].Cells[1].Value.ToString() + nullable + " AUTO_INCREMENT";
 						Create(alterTable);
 					}
+					Create(alterTable);
+
 				}
 
 			}
@@ -1506,13 +1667,7 @@ namespace tableCheck
 			buttonConnect_Click(sender, e);
 		}
 
-		private void button2_Click(object sender, EventArgs e)
-		{
-			showProceaser();
 
-
-
-		}
 
 
 		void createProceasor(string ProcedureName)
@@ -1605,6 +1760,7 @@ namespace tableCheck
 			}
 			con.Close();
 			con2.Close();
+			compare();
 		}
 
 
@@ -1643,7 +1799,7 @@ namespace tableCheck
 				//}
 				//
 
-				
+
 
 				string showProcedure2 = "show procedure status where DB='" + textBoxDb2.Text + "'";
 				MySqlDataReader rdrProcedure2 = DBConnect(con2, showProcedure2);
@@ -1671,7 +1827,7 @@ namespace tableCheck
 				//}
 				//
 
-	
+
 
 
 
@@ -1755,12 +1911,10 @@ namespace tableCheck
 			}
 			con.Close();
 			con2.Close();
+			compare();
 		}
 
-		private void button3_Click(object sender, EventArgs e)
-		{
-			showEvents();
-		}
+
 
 		private void showEvents()
 		{
@@ -1768,33 +1922,32 @@ namespace tableCheck
 			{
 				string connectionDb1 = "Server = " + textBoxIp1.Text + ";Port = " + textBoxPort1.Text + ";Database = " + textBoxDb1.Text + ";username = " + textBoxUn1.Text + ";password = " + textBoxPw1.Text + ";" + "Charset=utf8;";
 				string connectionDb2 = "Server = " + textBoxIp2.Text + ";Port = " + textBoxPort2.Text + ";Database = " + textBoxDb2.Text + ";username = " + textBoxUn2.Text + ";password = " + textBoxPw2.Text + ";" + "Charset=utf8;";
-
 				con = new MySqlConnection(connectionDb1);
 				con2 = new MySqlConnection(connectionDb2);
 				con.Open();
 				con2.Open();
 
-				string informationEvent = "SELECT * FROM information_schema.EVENTS";
 
 
-				MySqlDataReader rdr = DBConnect(con, informationEvent);
+				string showEvent = "SELECT * FROM information_schema.EVENTS  WHERE event_schema='" + textBoxDb1.Text + "'";
+				MySqlDataReader rdrEvent = DBConnect(con, showEvent);
 				List<EventInfo> listTable1 = new List<EventInfo>();
 				List<EventInfo> listTable2 = new List<EventInfo>();
 				List<EventInfoAll> listTableAll = new List<EventInfoAll>();
-
-				while (rdr.Read())
+				while (rdrEvent.Read())
 				{
-					EventInfo listInfo = new EventInfo() { EVENT_NAME = rdr["EVENT_NAME"].ToString(), CREATED = rdr["CREATED"].ToString(), LAST_ALTERED = rdr["LAST_ALTERED"].ToString() };
+					EventInfo listInfo = new EventInfo() { EVENT_NAME = rdrEvent["EVENT_NAME"].ToString(), CREATED = rdrEvent["CREATED"].ToString(), LAST_ALTERED = rdrEvent["LAST_ALTERED"].ToString() };
 					listTable1.Add(listInfo);
-					// dataGridView1.Rows[i].Cells[1].Value = rdr["cnt"].ToString();
 				}
 
-				MySqlDataReader rdr2 = DBConnect(con2, informationEvent);
-				while (rdr2.Read())
+				string showEvent2 = "SELECT * FROM information_schema.EVENTS  WHERE event_schema='" + textBoxDb2.Text + "'";
+				MySqlDataReader rdrEvent2 = DBConnect(con2, showEvent2);
+				while (rdrEvent2.Read())
 				{
-					EventInfo listInfo = new EventInfo() { EVENT_NAME = rdr["EVENT_NAME"].ToString(), CREATED = rdr["CREATED"].ToString(), LAST_ALTERED = rdr["LAST_ALTERED"].ToString() };
+					EventInfo listInfo = new EventInfo() { EVENT_NAME = rdrEvent2["EVENT_NAME"].ToString(), CREATED = rdrEvent2["CREATED"].ToString(), LAST_ALTERED = rdrEvent2["LAST_ALTERED"].ToString() };
 					listTable2.Add(listInfo);
 				}
+
 
 				for (int k = 0; k < listTable1.Count; k++)
 				{
@@ -1802,10 +1955,9 @@ namespace tableCheck
 					{
 						EVENT_NAME1 = listTable1[k].EVENT_NAME,
 						CREATED1 = listTable1[k].CREATED,
-						LAST_ALTERED1 = listTable1[k].LAST_ALTERED,
+						LAST_ALTERED1 = listTable1[k].LAST_ALTERED
 					});
 				}
-
 				for (int k = 0; k < listTable2.Count; k++)
 				{
 					bool found = false;
@@ -1816,6 +1968,7 @@ namespace tableCheck
 							listTableAll[j].EVENT_NAME2 = listTable2[k].EVENT_NAME;
 							listTableAll[j].CREATED2 = listTable2[k].CREATED;
 							listTableAll[j].LAST_ALTERED2 = listTable2[k].LAST_ALTERED;
+
 							found = true;
 							break;
 						}
@@ -1826,11 +1979,10 @@ namespace tableCheck
 						{
 							EVENT_NAME2 = listTable2[k].EVENT_NAME,
 							CREATED2 = listTable2[k].CREATED,
-							LAST_ALTERED2 = listTable2[k].LAST_ALTERED
+							LAST_ALTERED2 = listTable2[k].LAST_ALTERED,
 						});
 					}
 				}
-
 				dataGridView5.Rows.Clear();
 				for (int k = 0; k < listTableAll.Count; k++)
 				{
@@ -1844,18 +1996,26 @@ namespace tableCheck
 					dataGridView5.Rows[dataGridView5.Rows.Count - 1].Cells[a++].Value = listTableAll[k].CREATED2;
 					dataGridView5.Rows[dataGridView5.Rows.Count - 1].Cells[a++].Value = listTableAll[k].LAST_ALTERED2;
 				}
+
 				int i = 0;
 				dataGridView5.Columns[i++].ReadOnly = false;
-				//compare();
-				con.Close();
-				con2.Close();
+
+				if (conn == null)
+				{
+				}
+				else if (conn.State == ConnectionState.Open)
+				{
+					conn.Close();
+				}
 			}
 
 			catch (Exception ex)
 			{
 				LogMgr.ExceptionLog(ex);
 			}
-
+			con.Close();
+			con2.Close();
+			compare();
 		}
 
 		private void button4_Click(object sender, EventArgs e)
@@ -1867,7 +2027,6 @@ namespace tableCheck
 		{
 			try
 			{
-
 				string connectionDb1 = "Server = " + textBoxIp1.Text + ";Port = " + textBoxPort1.Text + ";Database = " + textBoxDb1.Text + ";username = " + textBoxUn1.Text + ";password = " + textBoxPw1.Text + ";" + "Charset=utf8;";
 				string connectionDb2 = "Server = " + textBoxIp2.Text + ";Port = " + textBoxPort2.Text + ";Database = " + textBoxDb2.Text + ";username = " + textBoxUn2.Text + ";password = " + textBoxPw2.Text + ";" + "Charset=utf8;";
 
@@ -1876,7 +2035,7 @@ namespace tableCheck
 				con.Open();
 				con2.Open();
 
-				string showFunction = "show function status";
+				string showFunction = "show function status where Db='" + textBoxDb1.Text + "'";
 				MySqlDataReader rdr = DBConnect(con, showFunction);
 				List<ListInfo> listTable1 = new List<ListInfo>();
 				List<ListInfo> listTable2 = new List<ListInfo>();
@@ -1886,16 +2045,15 @@ namespace tableCheck
 				{
 					ListInfo listInfo = new ListInfo() { FUNCTION_NAME = rdr["Name"].ToString(), FUNCTION_CREATED = rdr["Created"].ToString(), FUNCTION_MODIFIED = rdr["Modified"].ToString() };
 					listTable1.Add(listInfo);
-					// dataGridView1.Rows[i].Cells[1].Value = rdr["cnt"].ToString();
 				}
+				string showFunction2 = "show function status where Db='" + textBoxDb2.Text + "'";
 
-				MySqlDataReader rdr2 = DBConnect(con2, showFunction);
+				MySqlDataReader rdr2 = DBConnect(con2, showFunction2);
 				while (rdr2.Read())
 				{
-					ListInfo listInfo = new ListInfo() { FUNCTION_NAME = rdr["Name"].ToString(), FUNCTION_CREATED = rdr["Created"].ToString(), FUNCTION_MODIFIED = rdr["Modified"].ToString() };
+					ListInfo listInfo = new ListInfo() { FUNCTION_NAME = rdr2["Name"].ToString(), FUNCTION_CREATED = rdr2["Created"].ToString(), FUNCTION_MODIFIED = rdr2["Modified"].ToString() };
 					listTable2.Add(listInfo);
 				}
-
 
 				for (int k = 0; k < listTable1.Count; k++)
 				{
@@ -1941,6 +2099,7 @@ namespace tableCheck
 					dataGridView7.Rows[dataGridView7.Rows.Count - 1].Cells[a++].Value = listTableAll[k].FUNCTION_NAME1;
 					dataGridView7.Rows[dataGridView7.Rows.Count - 1].Cells[a++].Value = listTableAll[k].FUNCTION_CREATED1;
 					dataGridView7.Rows[dataGridView7.Rows.Count - 1].Cells[a++].Value = listTableAll[k].FUNCTION_MODIFIED1;
+
 					dataGridView7.Rows[dataGridView7.Rows.Count - 1].Cells[a++].Value = listTableAll[k].FUNCTION_NAME2;
 					dataGridView7.Rows[dataGridView7.Rows.Count - 1].Cells[a++].Value = listTableAll[k].FUNCTION_CREATED2;
 					dataGridView7.Rows[dataGridView7.Rows.Count - 1].Cells[a++].Value = listTableAll[k].FUNCTION_MODIFIED2;
@@ -1948,7 +2107,7 @@ namespace tableCheck
 
 				int i = 0;
 				dataGridView7.Columns[i++].ReadOnly = false;
-				//compare();
+				compare();
 				if (conn == null)
 				{
 				}
@@ -1965,10 +2124,107 @@ namespace tableCheck
 			con2.Close();
 		}
 
-		private void button5_Click(object sender, EventArgs e)
+		void showQueryProcedure()
 		{
-			showView();
+
+			try
+			{
+				string connectionDb1 = "Server = " + textBoxIp1.Text + ";Port = " + textBoxPort1.Text + ";Database = " + textBoxDb1.Text + ";username = " + textBoxUn1.Text + ";password = " + textBoxPw1.Text + ";" + "Charset=utf8;";
+				string connectionDb2 = "Server = " + textBoxIp2.Text + ";Port = " + textBoxPort2.Text + ";Database = " + textBoxDb2.Text + ";username = " + textBoxUn2.Text + ";password = " + textBoxPw2.Text + ";" + "Charset=utf8;";
+				con = new MySqlConnection(connectionDb1);
+				con2 = new MySqlConnection(connectionDb2);
+				con.Open();
+				con2.Open();
+
+				for (int s = 0; s < dataGridView3.Rows.Count; s++)
+				{
+					if (dataGridView3.Rows[s].Cells[0].Value == null)
+					{
+						continue;
+					}
+
+					string tbl = dataGridView3.Rows[s].Cells[0].Value.ToString();
+
+					string queryCreate = "SHOW CREATE PROCEDURE " + tbl;
+
+					MySqlDataReader rdr = DBConnect(con, queryCreate);
+
+
+					List<procedureInfo> listTable1 = new List<procedureInfo>();
+					List<procedureInfo> listTable2 = new List<procedureInfo>();
+					List<procedureInfoAll> listTableAll = new List<procedureInfoAll>();
+
+					if (rdr == null)
+					{
+						continue;
+					}
+					while (rdr.Read())
+					{
+						procedureInfo listInfo = new procedureInfo() { procedureQuery = rdr["Create Procedure"].ToString() };
+						listTable1.Add(listInfo);
+					}
+
+					
+					MySqlDataReader rdr2 = DBConnect(con2, queryCreate);
+					while (rdr2.Read())
+					{
+						procedureInfo listInfo = new procedureInfo() { procedureQuery = rdr2["Create Procedure"].ToString() };
+						listTable2.Add(listInfo);
+					}
+
+					for (int k = 0; k < listTable1.Count; k++)
+					{
+						listTableAll.Add(new procedureInfoAll()
+						{
+							procedureQuery1 = listTable1[k].procedureQuery
+						});
+					}
+					for (int k = 0; k < listTable2.Count; k++)
+					{
+						bool found = false;
+						for (int j = 0; j < listTableAll.Count; j++)
+						{
+							if (listTable2[k].procedureName == listTableAll[j].procedureName1)
+							{
+								listTableAll[j].procedureQuery2 = listTable2[k].procedureQuery;
+
+								found = true;
+								break;
+							}
+						}
+						if (found == false)
+						{
+							listTableAll.Add(new procedureInfoAll()
+							{
+								procedureQuery2 = listTable2[k].procedureQuery
+							});
+						}
+					}
+					dataGridView3.Rows.Add(1);
+					dataGridView3.Rows[s].Cells[4].Value = listTableAll[s].procedureQuery1;
+					dataGridView3.Rows[s].Cells[9].Value = listTableAll[s].procedureQuery2;
+
+				}
+
+				int i = 0;
+				dataGridView3.Columns[i++].ReadOnly = false;
+
+
+
+			}
+
+			catch (Exception ex)
+			{
+				LogMgr.ExceptionLog(ex);
+			}
+			con.Close();
+			con2.Close();
+			compare();
+
 		}
+
+
+
 
 		private void showView()
 		{
@@ -1982,8 +2238,8 @@ namespace tableCheck
 				con.Open();
 				con2.Open();
 
-				string showView = "SELECT TABLE_NAME viewName FROM information_schema.`TABLES` WHERE TABLE_TYPE LIKE 'VIEW' AND TABLE_SCHEMA LIKE 'dawoon';";
-				string showView2 = "SELECT TABLE_NAME viewName FROM information_schema.`TABLES` WHERE TABLE_TYPE LIKE 'VIEW' AND TABLE_SCHEMA LIKE 'dawoon2';";
+				string showView = "SELECT TABLE_NAME viewName FROM information_schema.`TABLES` WHERE TABLE_TYPE LIKE 'VIEW' AND TABLE_SCHEMA LIKE '"+ textBoxDb1.Text + "';";
+				string showView2 = "SELECT TABLE_NAME viewName FROM information_schema.`TABLES` WHERE TABLE_TYPE LIKE 'VIEW' AND TABLE_SCHEMA LIKE '" + textBoxDb2.Text + "';";
 
 
 				MySqlDataReader rdr = DBConnect(con, showView);
@@ -2001,7 +2257,7 @@ namespace tableCheck
 				MySqlDataReader rdr2 = DBConnect(con2, showView2);
 				while (rdr2.Read())
 				{
-					ListInfo listInfo = new ListInfo() { viewName = rdr["viewName"].ToString() };
+					ListInfo listInfo = new ListInfo() { viewName = rdr2["viewName"].ToString() };
 					listTable2.Add(listInfo);
 				}
 
@@ -2049,7 +2305,7 @@ namespace tableCheck
 
 				int i = 0;
 				dataGridView9.Columns[i++].ReadOnly = false;
-				//compare();
+				compare();
 
 
 				if (conn == null)
@@ -2067,6 +2323,386 @@ namespace tableCheck
 			}
 			con.Close();
 			con2.Close();
+		}
+
+		private void button6_Click(object sender, EventArgs e)
+		{
+			
+
+		}
+
+		private void procedureCreateTable(string queryCreate)
+		{
+			try
+			{
+				_HostName = textBoxIp1.Text;
+				_PORT = textBoxPort1.Text;
+				_DATABASE = textBoxDb1.Text;
+				_ID = textBoxUn1.Text;
+				_PWD = textBoxPw1.Text;
+
+				_HostName2 = textBoxIp2.Text;
+				_PORT2 = textBoxPort2.Text;
+				_DATABASE2 = textBoxDb2.Text;
+				_ID2 = textBoxUn2.Text;
+				_PWD2 = textBoxPw2.Text;
+
+				StringBuilder _strArg = new StringBuilder("");
+				StringBuilder _strArg2 = new StringBuilder("");
+				_strArg.Append("Server = ");           // SQL
+				_strArg.Append(_HostName);        // 서버
+				_strArg.Append(";Port = ");
+				_strArg.Append(_PORT);                 // 포트
+				_strArg.Append(";Database = ");
+				_strArg.Append(_DATABASE);          // 데이터베이스
+				_strArg.Append(";username = ");
+				_strArg.Append(_ID);                     // ID
+				_strArg.Append(";password = ");
+				_strArg.Append(_PWD);                 // PWD
+				_strArg.Append(";");
+				_strArg.Append("Charset=utf8;");
+
+				_strArg2.Append("Server = ");           // SQL
+				_strArg2.Append(_HostName2);        // 서버
+				_strArg2.Append(";Port = ");
+				_strArg2.Append(_PORT2);                 // 포트
+				_strArg2.Append(";Database = ");
+				_strArg2.Append(_DATABASE2);          // 데이터베이스
+				_strArg2.Append(";username = ");
+				_strArg2.Append(_ID2);                     // ID
+				_strArg2.Append(";password = ");
+				_strArg2.Append(_PWD2);                 // PWD
+				_strArg2.Append(";");
+				_strArg2.Append("Charset=utf8;");
+
+				MySqlConnection con = new MySqlConnection(_strArg.ToString());
+				con.Open();
+
+				MySqlDataReader rdr = DBConnect(con, queryCreate);
+				List<Columns> listTable1 = new List<Columns>();
+				List<Columns> listTable2 = new List<Columns>();
+				List<ColumnsAll> listTableAll = new List<ColumnsAll>();
+				Delay(200);
+
+				while (rdr.Read())
+				{
+					Columns listInfo = new Columns() { CREATETABLE = rdr["Create Procedure"].ToString() };
+					listTable1.Add(listInfo);
+					
+				}
+			
+				string createQuery = listTable1[0].CREATETABLE;
+				Create(createQuery);
+				con.Close();
+			}
+			catch (Exception e)
+			{
+				LogMgr.ExceptionLog(e);
+				MessageBox.Show(e.ToString());
+			}
+		}
+
+		private void dataGridView3_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
+		{
+			try
+			{
+				// row header 에 자동 일련번호 넣기
+				StringFormat drawFormat = new StringFormat();
+				//drawFormat.FormatFlags = StringFormatFlags.DirectionVertical;
+				drawFormat.FormatFlags = StringFormatFlags.DirectionRightToLeft;
+				using (Brush brush = new SolidBrush(Color.Red))
+				{
+					e.Graphics.DrawString((e.RowIndex + 1).ToString(), e.InheritedRowStyle.Font, brush, e.RowBounds.Location.X + 35, e.RowBounds.Location.Y + 4, drawFormat);
+				}
+			}
+			catch (Exception ex)
+			{
+				LogMgr.ExceptionLog(ex);
+			}
+		}
+
+		private void button7_Click(object sender, EventArgs e)
+		{
+			showQueryProcedure();
+		}
+
+	
+		private void eventCreateTable(string queryCreate)
+		{
+			try
+			{
+				_HostName = textBoxIp1.Text;
+				_PORT = textBoxPort1.Text;
+				_DATABASE = textBoxDb1.Text;
+				_ID = textBoxUn1.Text;
+				_PWD = textBoxPw1.Text;
+
+				_HostName2 = textBoxIp2.Text;
+				_PORT2 = textBoxPort2.Text;
+				_DATABASE2 = textBoxDb2.Text;
+				_ID2 = textBoxUn2.Text;
+				_PWD2 = textBoxPw2.Text;
+
+				StringBuilder _strArg = new StringBuilder("");
+				StringBuilder _strArg2 = new StringBuilder("");
+				_strArg.Append("Server = ");           // SQL
+				_strArg.Append(_HostName);        // 서버
+				_strArg.Append(";Port = ");
+				_strArg.Append(_PORT);                 // 포트
+				_strArg.Append(";Database = ");
+				_strArg.Append(_DATABASE);          // 데이터베이스
+				_strArg.Append(";username = ");
+				_strArg.Append(_ID);                     // ID
+				_strArg.Append(";password = ");
+				_strArg.Append(_PWD);                 // PWD
+				_strArg.Append(";");
+				_strArg.Append("Charset=utf8;");
+
+				_strArg2.Append("Server = ");           // SQL
+				_strArg2.Append(_HostName2);        // 서버
+				_strArg2.Append(";Port = ");
+				_strArg2.Append(_PORT2);                 // 포트
+				_strArg2.Append(";Database = ");
+				_strArg2.Append(_DATABASE2);          // 데이터베이스
+				_strArg2.Append(";username = ");
+				_strArg2.Append(_ID2);                     // ID
+				_strArg2.Append(";password = ");
+				_strArg2.Append(_PWD2);                 // PWD
+				_strArg2.Append(";");
+				_strArg2.Append("Charset=utf8;");
+
+				MySqlConnection con = new MySqlConnection(_strArg.ToString());
+				con.Open();
+
+				MySqlDataReader rdr = DBConnect(con, queryCreate);
+				List<Columns> listTable1 = new List<Columns>();
+				List<Columns> listTable2 = new List<Columns>();
+				List<ColumnsAll> listTableAll = new List<ColumnsAll>();
+				Delay(200);
+
+				while (rdr.Read())
+				{
+					Columns listInfo = new Columns() { CREATETABLE = rdr["Create Event"].ToString() };
+					listTable1.Add(listInfo);
+				}
+				string createQuery = listTable1[0].CREATETABLE;
+				Create(createQuery);
+				con.Close();
+			}
+			catch (Exception e)
+			{
+				LogMgr.ExceptionLog(e);
+				MessageBox.Show(e.ToString());
+			}
+		}
+
+		private void button2_Click(object sender, EventArgs e)
+		{
+					}
+
+		private void functionCreateTable(string queryCreate)
+		{
+			try
+			{
+				_HostName = textBoxIp1.Text;
+				_PORT = textBoxPort1.Text;
+				_DATABASE = textBoxDb1.Text;
+				_ID = textBoxUn1.Text;
+				_PWD = textBoxPw1.Text;
+
+				_HostName2 = textBoxIp2.Text;
+				_PORT2 = textBoxPort2.Text;
+				_DATABASE2 = textBoxDb2.Text;
+				_ID2 = textBoxUn2.Text;
+				_PWD2 = textBoxPw2.Text;
+
+				StringBuilder _strArg = new StringBuilder("");
+				StringBuilder _strArg2 = new StringBuilder("");
+				_strArg.Append("Server = ");           // SQL
+				_strArg.Append(_HostName);        // 서버
+				_strArg.Append(";Port = ");
+				_strArg.Append(_PORT);                 // 포트
+				_strArg.Append(";Database = ");
+				_strArg.Append(_DATABASE);          // 데이터베이스
+				_strArg.Append(";username = ");
+				_strArg.Append(_ID);                     // ID
+				_strArg.Append(";password = ");
+				_strArg.Append(_PWD);                 // PWD
+				_strArg.Append(";");
+				_strArg.Append("Charset=utf8;");
+
+				_strArg2.Append("Server = ");           // SQL
+				_strArg2.Append(_HostName2);        // 서버
+				_strArg2.Append(";Port = ");
+				_strArg2.Append(_PORT2);                 // 포트
+				_strArg2.Append(";Database = ");
+				_strArg2.Append(_DATABASE2);          // 데이터베이스
+				_strArg2.Append(";username = ");
+				_strArg2.Append(_ID2);                     // ID
+				_strArg2.Append(";password = ");
+				_strArg2.Append(_PWD2);                 // PWD
+				_strArg2.Append(";");
+				_strArg2.Append("Charset=utf8;");
+
+				MySqlConnection con = new MySqlConnection(_strArg.ToString());
+				con.Open();
+
+				MySqlDataReader rdr = DBConnect(con, queryCreate);
+				List<Columns> listTable1 = new List<Columns>();
+				List<Columns> listTable2 = new List<Columns>();
+				List<ColumnsAll> listTableAll = new List<ColumnsAll>();
+				Delay(200);
+
+				while (rdr.Read())
+				{
+					Columns listInfo = new Columns() { CREATETABLE = rdr["Create Function"].ToString() };
+					listTable1.Add(listInfo);
+				}
+				string createQuery = listTable1[0].CREATETABLE;
+				Create(createQuery);
+				con.Close();
+			}
+			catch (Exception e)
+			{
+				LogMgr.ExceptionLog(e);
+				MessageBox.Show(e.ToString());
+			}
+		}
+
+		private void button3_Click(object sender, EventArgs e)
+		{
+		
+		}
+
+		private void viewCreateTable(string queryCreate)
+		{
+			try
+			{
+				_HostName = textBoxIp1.Text;
+				_PORT = textBoxPort1.Text;
+				_DATABASE = textBoxDb1.Text;
+				_ID = textBoxUn1.Text;
+				_PWD = textBoxPw1.Text;
+
+				_HostName2 = textBoxIp2.Text;
+				_PORT2 = textBoxPort2.Text;
+				_DATABASE2 = textBoxDb2.Text;
+				_ID2 = textBoxUn2.Text;
+				_PWD2 = textBoxPw2.Text;
+
+				StringBuilder _strArg = new StringBuilder("");
+				StringBuilder _strArg2 = new StringBuilder("");
+				_strArg.Append("Server = ");           // SQL
+				_strArg.Append(_HostName);        // 서버
+				_strArg.Append(";Port = ");
+				_strArg.Append(_PORT);                 // 포트
+				_strArg.Append(";Database = ");
+				_strArg.Append(_DATABASE);          // 데이터베이스
+				_strArg.Append(";username = ");
+				_strArg.Append(_ID);                     // ID
+				_strArg.Append(";password = ");
+				_strArg.Append(_PWD);                 // PWD
+				_strArg.Append(";");
+				_strArg.Append("Charset=utf8;");
+
+				_strArg2.Append("Server = ");           // SQL
+				_strArg2.Append(_HostName2);        // 서버
+				_strArg2.Append(";Port = ");
+				_strArg2.Append(_PORT2);                 // 포트
+				_strArg2.Append(";Database = ");
+				_strArg2.Append(_DATABASE2);          // 데이터베이스
+				_strArg2.Append(";username = ");
+				_strArg2.Append(_ID2);                     // ID
+				_strArg2.Append(";password = ");
+				_strArg2.Append(_PWD2);                 // PWD
+				_strArg2.Append(";");
+				_strArg2.Append("Charset=utf8;");
+
+				MySqlConnection con = new MySqlConnection(_strArg.ToString());
+				con.Open();
+
+				MySqlDataReader rdr = DBConnect(con, queryCreate);
+				List<Columns> listTable1 = new List<Columns>();
+				List<Columns> listTable2 = new List<Columns>();
+				List<ColumnsAll> listTableAll = new List<ColumnsAll>();
+				Delay(200);
+
+				while (rdr.Read())
+				{
+					Columns listInfo = new Columns() { CREATETABLE = rdr["Create View"].ToString() };
+					listTable1.Add(listInfo);
+				}
+				string createQuery = listTable1[0].CREATETABLE;
+				Create(createQuery);
+
+				
+
+
+
+				con.Close();
+			}
+			catch (Exception e)
+			{
+				LogMgr.ExceptionLog(e);
+				MessageBox.Show(e.ToString());
+			}
+		}
+
+		private void dataGridView5_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
+		{
+			try
+			{
+				// row header 에 자동 일련번호 넣기
+				StringFormat drawFormat = new StringFormat();
+				//drawFormat.FormatFlags = StringFormatFlags.DirectionVertical;
+				drawFormat.FormatFlags = StringFormatFlags.DirectionRightToLeft;
+				using (Brush brush = new SolidBrush(Color.Red))
+				{
+					e.Graphics.DrawString((e.RowIndex + 1).ToString(), e.InheritedRowStyle.Font, brush, e.RowBounds.Location.X + 35, e.RowBounds.Location.Y + 4, drawFormat);
+				}
+			}
+			catch (Exception ex)
+			{
+				LogMgr.ExceptionLog(ex);
+			}
+		}
+
+		private void dataGridView7_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
+		{
+			try
+			{
+				// row header 에 자동 일련번호 넣기
+				StringFormat drawFormat = new StringFormat();
+				//drawFormat.FormatFlags = StringFormatFlags.DirectionVertical;
+				drawFormat.FormatFlags = StringFormatFlags.DirectionRightToLeft;
+				using (Brush brush = new SolidBrush(Color.Red))
+				{
+					e.Graphics.DrawString((e.RowIndex + 1).ToString(), e.InheritedRowStyle.Font, brush, e.RowBounds.Location.X + 35, e.RowBounds.Location.Y + 4, drawFormat);
+				}
+			}
+			catch (Exception ex)
+			{
+				LogMgr.ExceptionLog(ex);
+			}
+		}
+
+		private void dataGridView9_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
+		{
+			try
+			{
+				// row header 에 자동 일련번호 넣기
+				StringFormat drawFormat = new StringFormat();
+				//drawFormat.FormatFlags = StringFormatFlags.DirectionVertical;
+				drawFormat.FormatFlags = StringFormatFlags.DirectionRightToLeft;
+				using (Brush brush = new SolidBrush(Color.Red))
+				{
+					e.Graphics.DrawString((e.RowIndex + 1).ToString(), e.InheritedRowStyle.Font, brush, e.RowBounds.Location.X + 35, e.RowBounds.Location.Y + 4, drawFormat);
+				}
+			}
+			catch (Exception ex)
+			{
+				LogMgr.ExceptionLog(ex);
+			}
 		}
 	}
 }
