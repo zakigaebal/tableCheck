@@ -144,7 +144,7 @@ namespace tableCheck
 			dataGridView3.Columns.Add("proUpdate2", "업데이트됨2");
 			dataGridView3.Columns.Add("proComment2", "코멘트2");
 			dataGridView3.Columns.Add("proQuery2", "프로시저 쿼리2");
-			
+
 			dataGridView3.Columns.Add(progressColumn2);
 			progressColumn2.HeaderText = "진행중";
 			progressColumn2.Name = "progress2";
@@ -196,7 +196,7 @@ namespace tableCheck
 
 			dataGridView9.Columns.Add("proName", "뷰 이름2");
 			dataGridView9.Columns.Add("proName", "뷰 쿼리2");
-			
+
 
 			dataGridView9.Columns.Add(progressColumn5);
 			progressColumn5.HeaderText = "진행중";
@@ -433,9 +433,13 @@ namespace tableCheck
 				//프로시저 보여주기메소드
 				showProceaser();
 
-				//프로시저 생성쿼리메소드
+
+				//연결스트링
 				string connectionDb1 = "Server = " + textBoxIp1.Text + ";Port = " + textBoxPort1.Text + ";Database = " + textBoxDb1.Text + ";username = " + textBoxUn1.Text + ";password = " + textBoxPw1.Text + ";" + "Charset=utf8;";
 				string connectionDb2 = "Server = " + textBoxIp2.Text + ";Port = " + textBoxPort2.Text + ";Database = " + textBoxDb2.Text + ";username = " + textBoxUn2.Text + ";password = " + textBoxPw2.Text + ";" + "Charset=utf8;";
+
+
+				//프로시저 생성쿼리메소드
 				for (int num = 0; num < dataGridView3.Rows.Count; num++)
 				{
 					//멈추기 기능
@@ -451,20 +455,96 @@ namespace tableCheck
 					string tbl = dataGridView3.Rows[num].Cells[0].Value.ToString();
 					if (tbl == null) return;
 					string queryCreate = "SHOW CREATE PROCEDURE " + tbl;
+					string rdrString = "Create Procedure";
 
-					dgvShowAll(queryCreate, num);
+					dgvShowAll(queryCreate, num, rdrString);
+
+					con.Close();
+					con2.Close();
+				}
+
+				//이벤트 보여주기 메소드
+				showEvents();
+
+				//이벤트 생성쿼리메소드
+				for (int num = 0; num < dataGridView5.Rows.Count; num++)
+				{
+					//멈추기 기능
+					if (checkBoxStop.Checked)
+					{
+						break;
+					}
+					con = new MySqlConnection(connectionDb1);
+					con.Open();
+					con2 = new MySqlConnection(connectionDb2);
+					con2.Open();
+
+					string tbl = dataGridView5.Rows[num].Cells[0].Value.ToString();
+					if (tbl == null) return;
+					string queryCreate = "SHOW CREATE EVENT " + tbl;
+					string rdrString = "Create Event";
+
+					dgvShowAll(queryCreate, num, rdrString);
+
+					con.Close();
+					con2.Close();
+				}
+
+				//함수 보여주기메소드
+				showFunction();
+				// 함수 생성쿼리메소드
+				for (int num = 0; num < dataGridView7.Rows.Count; num++)
+				{
+					//멈추기 기능
+					if (checkBoxStop.Checked)
+					{
+						break;
+					}
+					con = new MySqlConnection(connectionDb1);
+					con.Open();
+					con2 = new MySqlConnection(connectionDb2);
+					con2.Open();
+
+					string tbl = dataGridView7.Rows[num].Cells[0].Value.ToString();
+					if (tbl == null) return;
+					string queryCreate = "SHOW CREATE FUNCTION " + tbl;
+					string rdrString = "Create Function";
+
+					dgvShowAll(queryCreate, num, rdrString);
 
 					con.Close();
 					con2.Close();
 				}
 
 
-				//이벤트 보여주기 메소드
-				showEvents();
-				//함수 보여주기메소드
-				showFunction();
 				//뷰 보여주기메소드
 				showView();
+				// 뷰 생성쿼리메소드
+				for (int num = 0; num < dataGridView9.Rows.Count; num++)
+				{
+					//멈추기 기능
+					if (checkBoxStop.Checked)
+					{
+						break;
+					}
+					con = new MySqlConnection(connectionDb1);
+					con.Open();
+					con2 = new MySqlConnection(connectionDb2);
+					con2.Open();
+
+					string tbl = dataGridView9.Rows[num].Cells[0].Value.ToString();
+					if (tbl == null) return;
+					string queryCreate = "SHOW CREATE VIEW " + tbl;
+					string rdrString = "Create View";
+
+					dgvShowAll(queryCreate, num, rdrString);
+
+					con.Close();
+					con2.Close();
+				}
+
+
+
 
 				//진행중 작업사항 100 채우기 메소드
 				compare();
@@ -2180,6 +2260,8 @@ namespace tableCheck
 
 
 
+
+
 				string showEvent = "SELECT * FROM information_schema.EVENTS  WHERE event_schema='" + textBoxDb1.Text + "'";
 				MySqlDataReader rdrEvent = DBConnect(con, showEvent);
 				List<EventInfo> listTable1 = new List<EventInfo>();
@@ -2190,7 +2272,6 @@ namespace tableCheck
 					EventInfo listInfo = new EventInfo() { EVENT_NAME = rdrEvent["EVENT_NAME"].ToString(), CREATED = rdrEvent["CREATED"].ToString(), LAST_ALTERED = rdrEvent["LAST_ALTERED"].ToString() };
 					listTable1.Add(listInfo);
 				}
-
 				string showEvent2 = "SELECT * FROM information_schema.EVENTS  WHERE event_schema='" + textBoxDb2.Text + "'";
 				MySqlDataReader rdrEvent2 = DBConnect(con2, showEvent2);
 				while (rdrEvent2.Read())
@@ -2198,8 +2279,6 @@ namespace tableCheck
 					EventInfo listInfo = new EventInfo() { EVENT_NAME = rdrEvent2["EVENT_NAME"].ToString(), CREATED = rdrEvent2["CREATED"].ToString(), LAST_ALTERED = rdrEvent2["LAST_ALTERED"].ToString() };
 					listTable2.Add(listInfo);
 				}
-
-
 				for (int k = 0; k < listTable1.Count; k++)
 				{
 					listTableAll.Add(new EventInfoAll()
@@ -2252,10 +2331,8 @@ namespace tableCheck
 					dataGridView5.Rows[dataGridView5.Rows.Count - 1].Cells[a++].Value = listTableAll[k].LAST_ALTERED2;
 					dataGridView5.Rows[dataGridView5.Rows.Count - 1].Cells[a++].Value = listTableAll[k].EVENTQUERY2;
 				}
-
 				int i = 0;
 				dataGridView5.Columns[i++].ReadOnly = false;
-
 				if (conn == null)
 				{
 				}
@@ -2264,7 +2341,6 @@ namespace tableCheck
 					conn.Close();
 				}
 			}
-
 			catch (Exception ex)
 			{
 				LogMgr.ExceptionLog(ex);
@@ -2655,7 +2731,7 @@ namespace tableCheck
 			}
 		}
 
-		void dgvShowAll(string queryCreate, int number)
+		void dgvShowAll(string queryCreate, int number, string rdrString)
 		{
 			try
 			{
@@ -2669,7 +2745,7 @@ namespace tableCheck
 
 				while (rdr.Read())
 				{
-					Columns listInfo = new Columns() { CREATETABLE = rdr["Create Procedure"].ToString() };
+					Columns listInfo = new Columns() { CREATETABLE = rdr[rdrString].ToString() };
 					listTable1.Add(listInfo);
 				}
 				if (rdr2 == null)
@@ -2678,7 +2754,7 @@ namespace tableCheck
 				}
 				while (rdr2.Read())
 				{
-					Columns listInfo = new Columns() { CREATETABLE = rdr2["Create Procedure"].ToString() };
+					Columns listInfo = new Columns() { CREATETABLE = rdr2[rdrString].ToString() };
 					listTable2.Add(listInfo);
 				}
 				for (int k = 0; k < listTable1.Count; k++)
@@ -2687,7 +2763,23 @@ namespace tableCheck
 					{
 						CREATETABLE1 = listTable1[k].CREATETABLE
 					});
-					dataGridView3.Rows[number].Cells[4].Value = listTableAll[0].CREATETABLE1;
+					if (rdrString == "Create Procedure")
+					{
+						dataGridView3.Rows[number].Cells[4].Value = listTableAll[0].CREATETABLE1;
+					}
+					else if (rdrString == "Create Event")
+					{
+						dataGridView5.Rows[number].Cells[3].Value = listTableAll[0].CREATETABLE1;
+					}
+					else if (rdrString == "Create Function")
+					{
+						dataGridView7.Rows[number].Cells[3].Value = listTableAll[0].CREATETABLE1;
+					}
+					else if (rdrString == "Create View")
+					{
+						dataGridView9.Rows[number].Cells[1].Value = listTableAll[0].CREATETABLE1;
+					}
+
 				}
 				for (int k = 0; k < listTable2.Count; k++)
 				{
@@ -2708,8 +2800,27 @@ namespace tableCheck
 							CREATETABLE2 = listTable2[k].CREATETABLE,
 						});
 					}
-					dataGridView3.Rows[number].Cells[4].Value = listTableAll[0].CREATETABLE1;
-					dataGridView3.Rows[number].Cells[9].Value = listTableAll[0].CREATETABLE2;
+					if (rdrString == "Create Procedure")
+					{
+						dataGridView3.Rows[number].Cells[4].Value = listTableAll[0].CREATETABLE1;
+						dataGridView3.Rows[number].Cells[9].Value = listTableAll[0].CREATETABLE2;
+					}
+					else if (rdrString == "Create Event")
+					{
+						dataGridView5.Rows[number].Cells[3].Value = listTableAll[0].CREATETABLE1;
+						dataGridView5.Rows[number].Cells[7].Value = listTableAll[0].CREATETABLE2;
+					}
+					else if (rdrString == "Create Function")
+					{
+						dataGridView7.Rows[number].Cells[3].Value = listTableAll[0].CREATETABLE1;
+						dataGridView7.Rows[number].Cells[7].Value = listTableAll[0].CREATETABLE2;
+					}
+					else if (rdrString == "Create View")
+					{
+						dataGridView9.Rows[number].Cells[1].Value = listTableAll[0].CREATETABLE1;
+						dataGridView9.Rows[number].Cells[3].Value = listTableAll[0].CREATETABLE2;
+					}
+
 				}
 
 
