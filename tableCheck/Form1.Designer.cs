@@ -83,6 +83,7 @@
 			this.textBoxDb1 = new System.Windows.Forms.TextBox();
 			this.label4 = new System.Windows.Forms.Label();
 			this.textBoxPw2 = new System.Windows.Forms.TextBox();
+			this.checkBoxStop = new System.Windows.Forms.CheckBox();
 			this.panel1.SuspendLayout();
 			this.panel5.SuspendLayout();
 			this.tabControl1.SuspendLayout();
@@ -261,6 +262,7 @@
 			this.dataGridView5.RowTemplate.Height = 23;
 			this.dataGridView5.Size = new System.Drawing.Size(1394, 502);
 			this.dataGridView5.TabIndex = 4;
+			this.dataGridView5.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridView5_CellFormatting);
 			this.dataGridView5.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dataGridView5_RowPostPaint);
 			// 
 			// splitter2
@@ -304,6 +306,7 @@
 			this.dataGridView7.RowTemplate.Height = 23;
 			this.dataGridView7.Size = new System.Drawing.Size(1394, 502);
 			this.dataGridView7.TabIndex = 4;
+			this.dataGridView7.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridView7_CellFormatting);
 			this.dataGridView7.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dataGridView7_RowPostPaint);
 			// 
 			// splitter4
@@ -347,6 +350,7 @@
 			this.dataGridView9.RowTemplate.Height = 23;
 			this.dataGridView9.Size = new System.Drawing.Size(1394, 502);
 			this.dataGridView9.TabIndex = 4;
+			this.dataGridView9.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridView9_CellFormatting);
 			this.dataGridView9.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dataGridView9_RowPostPaint);
 			// 
 			// splitter5
@@ -362,6 +366,7 @@
 			// 
 			// panel2
 			// 
+			this.panel2.Controls.Add(this.checkBoxStop);
 			this.panel2.Controls.Add(this.button7);
 			this.panel2.Controls.Add(this.btnPositionChange);
 			this.panel2.Controls.Add(this.label2);
@@ -404,7 +409,7 @@
 			this.button7.Location = new System.Drawing.Point(1208, 3);
 			this.button7.Name = "button7";
 			this.button7.Size = new System.Drawing.Size(200, 44);
-			this.button7.TabIndex = 20;
+			this.button7.TabIndex = 11;
 			this.button7.Text = "button7";
 			this.button7.UseVisualStyleBackColor = true;
 			this.button7.Click += new System.EventHandler(this.button7_Click);
@@ -414,7 +419,7 @@
 			this.btnPositionChange.Location = new System.Drawing.Point(961, 1);
 			this.btnPositionChange.Name = "btnPositionChange";
 			this.btnPositionChange.Size = new System.Drawing.Size(41, 25);
-			this.btnPositionChange.TabIndex = 16;
+			this.btnPositionChange.TabIndex = 6;
 			this.btnPositionChange.Text = "순서";
 			this.btnPositionChange.UseVisualStyleBackColor = true;
 			this.btnPositionChange.Click += new System.EventHandler(this.btnPositionChange_Click);
@@ -433,7 +438,7 @@
 			this.button1.Location = new System.Drawing.Point(856, 2);
 			this.button1.Name = "button1";
 			this.button1.Size = new System.Drawing.Size(47, 23);
-			this.button1.TabIndex = 15;
+			this.button1.TabIndex = 4;
 			this.button1.Text = "수정";
 			this.button1.UseVisualStyleBackColor = true;
 			this.button1.Click += new System.EventHandler(this.button1_Click_1);
@@ -484,7 +489,7 @@
 			this.buttonDelete.Location = new System.Drawing.Point(909, 1);
 			this.buttonDelete.Name = "buttonDelete";
 			this.buttonDelete.Size = new System.Drawing.Size(46, 25);
-			this.buttonDelete.TabIndex = 0;
+			this.buttonDelete.TabIndex = 5;
 			this.buttonDelete.Text = "삭제";
 			this.buttonDelete.UseVisualStyleBackColor = true;
 			this.buttonDelete.Click += new System.EventHandler(this.buttonDelete_Click);
@@ -502,7 +507,7 @@
 			this.checkBoxCancel.Location = new System.Drawing.Point(751, 26);
 			this.checkBoxCancel.Name = "checkBoxCancel";
 			this.checkBoxCancel.Size = new System.Drawing.Size(72, 16);
-			this.checkBoxCancel.TabIndex = 12;
+			this.checkBoxCancel.TabIndex = 10;
 			this.checkBoxCancel.Text = "선택취소";
 			this.checkBoxCancel.UseVisualStyleBackColor = true;
 			this.checkBoxCancel.CheckedChanged += new System.EventHandler(this.checkBoxCancel_CheckedChanged);
@@ -521,7 +526,7 @@
 			this.buttonClear.Location = new System.Drawing.Point(653, 2);
 			this.buttonClear.Name = "buttonClear";
 			this.buttonClear.Size = new System.Drawing.Size(47, 23);
-			this.buttonClear.TabIndex = 12;
+			this.buttonClear.TabIndex = 1;
 			this.buttonClear.Text = "C";
 			this.buttonClear.UseVisualStyleBackColor = true;
 			this.buttonClear.Click += new System.EventHandler(this.buttonClear_Click);
@@ -540,7 +545,7 @@
 			this.checkBox2.Location = new System.Drawing.Point(685, 26);
 			this.checkBox2.Name = "checkBox2";
 			this.checkBox2.Size = new System.Drawing.Size(72, 16);
-			this.checkBox2.TabIndex = 11;
+			this.checkBox2.TabIndex = 9;
 			this.checkBox2.Text = "선택반전";
 			this.checkBox2.UseVisualStyleBackColor = true;
 			this.checkBox2.CheckedChanged += new System.EventHandler(this.checkBox2_CheckedChanged);
@@ -559,7 +564,7 @@
 			this.buttonStart.Location = new System.Drawing.Point(775, 2);
 			this.buttonStart.Name = "buttonStart";
 			this.buttonStart.Size = new System.Drawing.Size(75, 23);
-			this.buttonStart.TabIndex = 14;
+			this.buttonStart.TabIndex = 3;
 			this.buttonStart.Text = "실행";
 			this.buttonStart.UseVisualStyleBackColor = true;
 			this.buttonStart.Click += new System.EventHandler(this.buttonStart_Click);
@@ -569,7 +574,7 @@
 			this.buttonConnect.Location = new System.Drawing.Point(615, 2);
 			this.buttonConnect.Name = "buttonConnect";
 			this.buttonConnect.Size = new System.Drawing.Size(39, 23);
-			this.buttonConnect.TabIndex = 10;
+			this.buttonConnect.TabIndex = 0;
 			this.buttonConnect.Text = "연결";
 			this.buttonConnect.UseVisualStyleBackColor = true;
 			this.buttonConnect.Click += new System.EventHandler(this.buttonConnect_Click);
@@ -580,7 +585,7 @@
 			this.CheckBox_All.Location = new System.Drawing.Point(618, 26);
 			this.CheckBox_All.Name = "CheckBox_All";
 			this.CheckBox_All.Size = new System.Drawing.Size(72, 16);
-			this.CheckBox_All.TabIndex = 10;
+			this.CheckBox_All.TabIndex = 8;
 			this.CheckBox_All.Text = "전체선택";
 			this.CheckBox_All.UseVisualStyleBackColor = true;
 			this.CheckBox_All.CheckedChanged += new System.EventHandler(this.CheckBox_All_CheckedChanged);
@@ -597,7 +602,7 @@
 			this.buttonOnes.Location = new System.Drawing.Point(700, 2);
 			this.buttonOnes.Name = "buttonOnes";
 			this.buttonOnes.Size = new System.Drawing.Size(75, 23);
-			this.buttonOnes.TabIndex = 13;
+			this.buttonOnes.TabIndex = 2;
 			this.buttonOnes.Text = "1개 실행";
 			this.buttonOnes.UseVisualStyleBackColor = true;
 			this.buttonOnes.Click += new System.EventHandler(this.buttonOnes_Click);
@@ -673,6 +678,16 @@
 			this.textBoxPw2.PasswordChar = '*';
 			this.textBoxPw2.Size = new System.Drawing.Size(70, 21);
 			this.textBoxPw2.TabIndex = 9;
+			// 
+			// checkBoxStop
+			// 
+			this.checkBoxStop.AutoSize = true;
+			this.checkBoxStop.Location = new System.Drawing.Point(1037, 5);
+			this.checkBoxStop.Name = "checkBoxStop";
+			this.checkBoxStop.Size = new System.Drawing.Size(60, 16);
+			this.checkBoxStop.TabIndex = 7;
+			this.checkBoxStop.Text = "멈추기";
+			this.checkBoxStop.UseVisualStyleBackColor = true;
 			// 
 			// Form1
 			// 
@@ -766,6 +781,7 @@
 		private System.Windows.Forms.Button btnPositionChange;
 		private System.Windows.Forms.DataGridView dataGridView3;
 		private System.Windows.Forms.Button button7;
+		private System.Windows.Forms.CheckBox checkBoxStop;
 	}
 }
 
