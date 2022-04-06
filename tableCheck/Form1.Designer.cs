@@ -228,6 +228,7 @@
 			this.dataGridView3.RowTemplate.Height = 23;
 			this.dataGridView3.Size = new System.Drawing.Size(1394, 509);
 			this.dataGridView3.TabIndex = 4;
+			this.dataGridView3.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridView3_CellFormatting);
 			this.dataGridView3.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dataGridView3_RowPostPaint);
 			// 
 			// tabPage3

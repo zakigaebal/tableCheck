@@ -18,6 +18,7 @@ namespace tableCheck
 	/// 상태에 진행중 진행완료
 	/// 진행중 컬럼은 프로그레스바로 보여주기
 	/// </summary>
+
 	public partial class Form1 : Form
 	{
 
@@ -401,46 +402,45 @@ namespace tableCheck
 					return;
 				}
 
-				if (tabControl1.SelectedTab == tabPage1)
-				{
+
 				//테이블 보여주기 메소드
 				showTable();
-				}
-				if (tabControl1.SelectedTab == tabPage2)
+
+				//프로시저 보여주기메소드
+				showProceaser();
+
+				//프로시저 생성쿼리메소드
+				string connectionDb1 = "Server = " + textBoxIp1.Text + ";Port = " + textBoxPort1.Text + ";Database = " + textBoxDb1.Text + ";username = " + textBoxUn1.Text + ";password = " + textBoxPw1.Text + ";" + "Charset=utf8;";
+				string connectionDb2 = "Server = " + textBoxIp2.Text + ";Port = " + textBoxPort2.Text + ";Database = " + textBoxDb2.Text + ";username = " + textBoxUn2.Text + ";password = " + textBoxPw2.Text + ";" + "Charset=utf8;";
+				for (int num = 0; num < dataGridView3.Rows.Count; num++)
 				{
-					//프로시저 보여주기메소드
-					showProceaser();
-					for (int num = 0; num < dataGridView3.Rows.Count; num++)
-					{
-						string tbl = dataGridView3.Rows[num].Cells[0].Value.ToString();
-						if (tbl == null) return;
-						string queryCreate = "SHOW CREATE PROCEDURE " + tbl;
-						dgvShowAll(queryCreate, num);
-					}
-				}
-				if (tabControl1.SelectedTab == tabPage3)
-				{
-					//이벤트 보여주기메소드
-					showEvents();
-				}
-				if (tabControl1.SelectedTab == tabPage4)
-				{
-					//함수 보여주기메소드
-					showFunction();
-				}
-				if (tabControl1.SelectedTab == tabPage5)
-				{
-					//뷰 보여주기메소드
-					showView();
+					con = new MySqlConnection(connectionDb1);
+					con.Open();
+					con2 = new MySqlConnection(connectionDb2);
+					con2.Open();
+					string tbl = dataGridView3.Rows[num].Cells[0].Value.ToString();
+					if (tbl == null) return;
+					string queryCreate = "SHOW CREATE PROCEDURE " + tbl;
+
+					dgvShowAll(queryCreate, num);
+
+					con.Close();
+					con2.Close();
+
+
 				}
 
+				showEvents();
+				//함수 보여주기메소드
+				showFunction();
+				//뷰 보여주기메소드
+				showView();
 				compare();
 			}
 			catch (Exception ex)
 			{
 				LogMgr.ExceptionLog(ex);
 			}
-
 		}
 
 		private void showTable()
@@ -1070,7 +1070,7 @@ namespace tableCheck
 						//생성테이블쿼리 저장하기
 						string queryCreate = "SHOW CREATE PROCEDURE " + tbl;
 						procedureCreateTable(queryCreate);
-						dgvShowAll(queryCreate, i);
+						//	dgvShowAll(queryCreate, i);
 						dataGridView3.Rows[i].Cells[10].Value = 100;
 						dataGridView3.Rows[i].Cells[11].Value = "확인중";
 					}
@@ -1712,12 +1712,15 @@ namespace tableCheck
 					}
 
 					string alterTable = "";
-
+					bool isChanged = false;
 
 
 					// db2 이름이 비었있으면 db1셀에 있는 컬럼내용을 db2에 추가해라
 					if (dataGridView2.Rows[i].Cells[8].Value == null)
 					{
+						isChanged = true;
+						alterTable = tbl;
+						///!!
 						alterTable = "ALTER TABLE " + tbl + " ADD `" + dataGridView2.Rows[i].Cells[0].Value.ToString() + "` " + dataGridView2.Rows[i].Cells[1].Value.ToString() + nullable + def;
 
 						Create(alterTable);
@@ -1783,6 +1786,11 @@ namespace tableCheck
 					Create(alterTable);
 
 				}
+				//if (isChanged)
+				//{
+				//	Create(alterTable);
+				//}
+
 
 			}
 			catch (Exception ex)
@@ -2392,6 +2400,10 @@ namespace tableCheck
 						});
 					}
 				}
+				///!!
+				///커서 모래시계
+				///중간에 멈출수있는 기능 체크박스
+				///
 				dataGridView9.Rows.Clear();
 				for (int k = 0; k < listTableAll.Count; k++)
 				{
@@ -2476,7 +2488,7 @@ namespace tableCheck
 				_strArg2.Append("Charset=utf8;");
 
 				MySqlConnection con = new MySqlConnection(_strArg.ToString());
-			//	MySqlConnection con2 = new MySqlConnection(_strArg2.ToString());
+				//	MySqlConnection con2 = new MySqlConnection(_strArg2.ToString());
 				con.Open();
 				//con2.Open();
 
@@ -2563,55 +2575,14 @@ namespace tableCheck
 		{
 			try
 			{
-				_HostName = textBoxIp1.Text;
-				_PORT = textBoxPort1.Text;
-				_DATABASE = textBoxDb1.Text;
-				_ID = textBoxUn1.Text;
-				_PWD = textBoxPw1.Text;
-				_HostName2 = textBoxIp2.Text;
-				_PORT2 = textBoxPort2.Text;
-				_DATABASE2 = textBoxDb2.Text;
-				_ID2 = textBoxUn2.Text;
-				_PWD2 = textBoxPw2.Text;
-
-				StringBuilder _strArg = new StringBuilder("");
-				StringBuilder _strArg2 = new StringBuilder("");
-				_strArg.Append("Server = ");           // SQL
-				_strArg.Append(_HostName);        // 서버
-				_strArg.Append(";Port = ");
-				_strArg.Append(_PORT);                 // 포트
-				_strArg.Append(";Database = ");
-				_strArg.Append(_DATABASE);          // 데이터베이스
-				_strArg.Append(";username = ");
-				_strArg.Append(_ID);                     // ID
-				_strArg.Append(";password = ");
-				_strArg.Append(_PWD);                 // PWD
-				_strArg.Append(";");
-				_strArg.Append("Charset=utf8;");
-
-				_strArg2.Append("Server = ");           // SQL
-				_strArg2.Append(_HostName2);        // 서버
-				_strArg2.Append(";Port = ");
-				_strArg2.Append(_PORT2);                 // 포트
-				_strArg2.Append(";Database = ");
-				_strArg2.Append(_DATABASE2);          // 데이터베이스
-				_strArg2.Append(";username = ");
-				_strArg2.Append(_ID2);                     // ID
-				_strArg2.Append(";password = ");
-				_strArg2.Append(_PWD2);                 // PWD
-				_strArg2.Append(";");
-				_strArg2.Append("Charset=utf8;");
-
-				MySqlConnection con = new MySqlConnection(_strArg.ToString());
-				MySqlConnection con2 = new MySqlConnection(_strArg2.ToString());
-				con.Open();
-				con2.Open();
-
 				MySqlDataReader rdr = DBConnect(con, queryCreate);
 				MySqlDataReader rdr2 = DBConnect(con2, queryCreate);
+
 				List<Columns> listTable1 = new List<Columns>();
 				List<Columns> listTable2 = new List<Columns>();
 				List<ColumnsAll> listTableAll = new List<ColumnsAll>();
+
+
 				while (rdr.Read())
 				{
 					Columns listInfo = new Columns() { CREATETABLE = rdr["Create Procedure"].ToString() };
@@ -2656,10 +2627,8 @@ namespace tableCheck
 					dataGridView3.Rows[number].Cells[4].Value = listTableAll[0].CREATETABLE1;
 					dataGridView3.Rows[number].Cells[9].Value = listTableAll[0].CREATETABLE2;
 				}
-				string createQuery = listTable1[0].CREATETABLE;
-				Create(createQuery);
-				con.Close();
-				con2.Close();
+
+
 			}
 			catch (Exception e)
 			{
@@ -2777,7 +2746,7 @@ namespace tableCheck
 							CREATETABLE2 = listTable2[k].CREATETABLE,
 						});
 					}
-				
+
 					dataGridView3.Rows[rowIndex].Cells[4].Value = listTableAll[0].CREATETABLE1;
 					dataGridView3.Rows[rowIndex].Cells[9].Value = listTableAll[0].CREATETABLE2;
 				}
@@ -3093,6 +3062,16 @@ namespace tableCheck
 			catch (Exception ex)
 			{
 				LogMgr.ExceptionLog(ex);
+			}
+		}
+
+		private void dataGridView3_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+		{
+			{
+				for (int i = (dataGridView3.Columns.Count) / 2; i < dataGridView3.Columns.Count; i++)
+				{
+					dataGridView3.Columns[i].DefaultCellStyle.BackColor = Color.GreenYellow;
+				}
 			}
 		}
 	}
