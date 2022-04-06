@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
@@ -371,6 +372,7 @@ namespace tableCheck
 		{
 			try
 			{
+			
 				if (textBoxIp1.Text == "")
 				{
 					MessageBox.Show("데이터베이스 서버를 입력해주세요.");
@@ -403,6 +405,13 @@ namespace tableCheck
 				}
 
 
+				dataGridView1.SuspendLayout();
+				dataGridView2.SuspendLayout();
+				dataGridView3.SuspendLayout();
+				dataGridView5.SuspendLayout();
+				dataGridView7.SuspendLayout();
+				dataGridView9.SuspendLayout();
+
 				//테이블 보여주기 메소드
 				showTable();
 
@@ -426,8 +435,6 @@ namespace tableCheck
 
 					con.Close();
 					con2.Close();
-
-
 				}
 
 				showEvents();
@@ -436,6 +443,14 @@ namespace tableCheck
 				//뷰 보여주기메소드
 				showView();
 				compare();
+
+
+				dataGridView1.ResumeLayout();
+				dataGridView2.ResumeLayout();
+				dataGridView3.ResumeLayout();
+				dataGridView5.ResumeLayout();
+				dataGridView7.ResumeLayout();
+				dataGridView9.ResumeLayout();
 			}
 			catch (Exception ex)
 			{
@@ -3074,7 +3089,19 @@ namespace tableCheck
 				}
 			}
 		}
+
+	}
+	//Put this class at the end of the main class or you will have problems.
+	public static class ExtensionMethods    // DoubleBuffered 메서드를 확장 시켜주자..
+	{
+		public static void DoubleBuffered(this DataGridView dgv, bool setting)
+		{
+			Type dgvType = dgv.GetType();
+			PropertyInfo pi = dgvType.GetProperty("DoubleBuffered", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.SetProperty);
+			pi.SetValue(dgv, setting, null);
+		}
 	}
 }
+
 
 
