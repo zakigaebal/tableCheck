@@ -401,106 +401,129 @@ namespace tableCheck
 					return;
 				}
 
-				string connectionDb1 = "Server = " + textBoxIp1.Text + ";Port = " + textBoxPort1.Text + ";Database = " + textBoxDb1.Text + ";username = " + textBoxUn1.Text + ";password=" + textBoxPw1.Text + ";Charset=utf8;";
-				string connectionDb2 = "Server = " + textBoxIp2.Text + ";Port = " + textBoxPort2.Text + ";Database = " + textBoxDb2.Text + ";username = " + textBoxUn2.Text + ";password=" + textBoxPw2.Text + ";Charset=utf8;";
-
-				con = new MySqlConnection(connectionDb1);
-				con2 = new MySqlConnection(connectionDb2);
-				con.Open();
-				con2.Open();
-
-
-				string query1 = "SELECT b.table_name tbl, a.table_comment cmt, COUNT(*) cnt, b.EXTRA ex  FROM information_schema.tables a left JOIN information_schema.columns b ON a.TABLE_NAME=b.table_name WHERE a.table_schema = '" + textBoxDb1.Text + "' AND b.table_schema = '" + textBoxDb1.Text + "'  AND a.table_type='BASE TABLE' group BY b.TABLE_NAME ORDER BY b.TABLE_NAME asc;";
-				string query2 = "SELECT b.table_name tbl, a.table_comment cmt, COUNT(*) cnt, b.EXTRA ex  FROM information_schema.tables a left JOIN information_schema.columns b ON a.TABLE_NAME=b.table_name WHERE a.table_schema = '" + textBoxDb2.Text + "' AND b.table_schema = '" + textBoxDb2.Text + "' AND a.table_type='BASE TABLE'  group BY b.TABLE_NAME ORDER BY b.TABLE_NAME asc;";
-				//	MySqlDataAdapter adp = DBAdapter(conn, _HostName, _PORT, _DATABASE, _ID, _PWD, query1);
-				//MySqlDataReader rdr = DBConnectTest(conn, _HostName, _PORT, _DATABASE, _ID, _PWD, query1);
-				MySqlDataReader rdr = DBConnect(con, query1);
-				List<ListInfo> listTable1 = new List<ListInfo>();
-				List<ListInfo> listTable2 = new List<ListInfo>();
-				List<ListInfoAll> listTableAll = new List<ListInfoAll>();
-
-				while (rdr.Read())
+				if (tabControl1.SelectedTab == tabPage1)
 				{
-					ListInfo listInfo = new ListInfo() { tableName = rdr["tbl"].ToString(), fieldCount = Convert.ToInt32(rdr["cnt"].ToString()), tableCmt = rdr["cmt"].ToString() };
-					listTable1.Add(listInfo);
-					// dataGridView1.Rows[i].Cells[1].Value = rdr["cnt"].ToString();
+				//테이블 보여주기 메소드
+				showTable();
 				}
-
-				MySqlDataReader rdr2 = DBConnect(con2, query2);
-				while (rdr2.Read())
+				if (tabControl1.SelectedTab == tabPage2)
 				{
-					ListInfo listInfo = new ListInfo() { tableName = rdr2["tbl"].ToString(), fieldCount = Convert.ToInt32(rdr2["cnt"].ToString()), tableCmt = rdr["cmt"].ToString() };
-					listTable2.Add(listInfo);
-				}
-
-
-				for (int k = 0; k < listTable1.Count; k++)
-				{
-					listTableAll.Add(new ListInfoAll() { db = "A", tableName = listTable1[k].tableName, fieldCount1 = listTable1[k].fieldCount, fieldCount2 = 0, tableCmt = listTable1[k].tableCmt });
-				}
-				for (int k = 0; k < listTable2.Count; k++)
-				{
-					bool found = false;
-					for (int j = 0; j < listTableAll.Count; j++)
+					//프로시저 보여주기메소드
+					showProceaser();
+					for (int num = 0; num < dataGridView3.Rows.Count; num++)
 					{
-						if (listTable2[k].tableName == listTableAll[j].tableName)
-						{
-							listTableAll[j].fieldCount2 = listTable2[k].fieldCount;
-							found = true;
-							listTableAll[j].db = "A+B";
-							break;
-						}
-					}
-					//listTableAll.Add(new ListInfoAll() { db = "A", tableName = listTable1[k].tableName, fieldCount1 = listTable1[k].fieldCount, fieldCount2 = 0 });
-					if (found == false)
-					{
-						listTableAll.Add(new ListInfoAll() { db = "B", tableName = listTable2[k].tableName, fieldCount1 = 0, fieldCount2 = listTable2[k].fieldCount, tableCmt = listTable2[k].tableCmt });
+						string tbl = dataGridView3.Rows[num].Cells[0].Value.ToString();
+						if (tbl == null) return;
+						string queryCreate = "SHOW CREATE PROCEDURE " + tbl;
+						dgvShowAll(queryCreate, num);
 					}
 				}
-				dataGridView1.Rows.Clear();
-				for (int k = 0; k < listTableAll.Count; k++)
+				if (tabControl1.SelectedTab == tabPage3)
 				{
-					dataGridView1.Rows.Add(1);
-					dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[0].Value = true;
-					if (listTableAll[k].db == "B")
-					{
-						dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[0].Value = false;
-
-					}
-					dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[1].Value = listTableAll[k].db;
-					dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[2].Value = listTableAll[k].tableName;
-					dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[3].Value = listTableAll[k].tableCmt;
-					dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[4].Value = listTableAll[k].fieldCount1;
-					dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[5].Value = listTableAll[k].fieldCount2;
+					//이벤트 보여주기메소드
+					showEvents();
 				}
-
-
-				int i = 0;
-				dataGridView1.Columns[i++].ReadOnly = false;
-				dataGridView1.Columns[i++].ReadOnly = true;
-				dataGridView1.Columns[i++].ReadOnly = true;
-				dataGridView1.Columns[i++].ReadOnly = true;
-				dataGridView1.Columns[i++].ReadOnly = true;
-				dataGridView1.Columns[i++].ReadOnly = true;
-				dataGridView1.Columns[i++].ReadOnly = true;
-				dataGridView1.Columns[i++].ReadOnly = true;
+				if (tabControl1.SelectedTab == tabPage4)
+				{
+					//함수 보여주기메소드
+					showFunction();
+				}
+				if (tabControl1.SelectedTab == tabPage5)
+				{
+					//뷰 보여주기메소드
+					showView();
+				}
 
 				compare();
-
-				//프로시저 보여주기메소드
-				showProceaser();
-				//이벤트 보여주기메소드
-				showEvents();
-				//함수 보여주기메소드
-				showFunction();
-				//뷰 보여주기메소드
-				showView();
-
 			}
 			catch (Exception ex)
 			{
 				LogMgr.ExceptionLog(ex);
 			}
+
+		}
+
+		private void showTable()
+		{
+			string connectionDb1 = "Server = " + textBoxIp1.Text + ";Port = " + textBoxPort1.Text + ";Database = " + textBoxDb1.Text + ";username = " + textBoxUn1.Text + ";password=" + textBoxPw1.Text + ";Charset=utf8;";
+			string connectionDb2 = "Server = " + textBoxIp2.Text + ";Port = " + textBoxPort2.Text + ";Database = " + textBoxDb2.Text + ";username = " + textBoxUn2.Text + ";password=" + textBoxPw2.Text + ";Charset=utf8;";
+
+			con = new MySqlConnection(connectionDb1);
+			con2 = new MySqlConnection(connectionDb2);
+			con.Open();
+			con2.Open();
+
+
+			string query1 = "SELECT b.table_name tbl, a.table_comment cmt, COUNT(*) cnt, b.EXTRA ex  FROM information_schema.tables a left JOIN information_schema.columns b ON a.TABLE_NAME=b.table_name WHERE a.table_schema = '" + textBoxDb1.Text + "' AND b.table_schema = '" + textBoxDb1.Text + "'  AND a.table_type='BASE TABLE' group BY b.TABLE_NAME ORDER BY b.TABLE_NAME asc;";
+			string query2 = "SELECT b.table_name tbl, a.table_comment cmt, COUNT(*) cnt, b.EXTRA ex  FROM information_schema.tables a left JOIN information_schema.columns b ON a.TABLE_NAME=b.table_name WHERE a.table_schema = '" + textBoxDb2.Text + "' AND b.table_schema = '" + textBoxDb2.Text + "' AND a.table_type='BASE TABLE'  group BY b.TABLE_NAME ORDER BY b.TABLE_NAME asc;";
+			MySqlDataReader rdr = DBConnect(con, query1);
+			List<ListInfo> listTable1 = new List<ListInfo>();
+			List<ListInfo> listTable2 = new List<ListInfo>();
+			List<ListInfoAll> listTableAll = new List<ListInfoAll>();
+
+			while (rdr.Read())
+			{
+				ListInfo listInfo = new ListInfo() { tableName = rdr["tbl"].ToString(), fieldCount = Convert.ToInt32(rdr["cnt"].ToString()), tableCmt = rdr["cmt"].ToString() };
+				listTable1.Add(listInfo);
+			}
+
+			MySqlDataReader rdr2 = DBConnect(con2, query2);
+			while (rdr2.Read())
+			{
+				ListInfo listInfo = new ListInfo() { tableName = rdr2["tbl"].ToString(), fieldCount = Convert.ToInt32(rdr2["cnt"].ToString()), tableCmt = rdr["cmt"].ToString() };
+				listTable2.Add(listInfo);
+			}
+
+
+			for (int k = 0; k < listTable1.Count; k++)
+			{
+				listTableAll.Add(new ListInfoAll() { db = "A", tableName = listTable1[k].tableName, fieldCount1 = listTable1[k].fieldCount, fieldCount2 = 0, tableCmt = listTable1[k].tableCmt });
+			}
+			for (int k = 0; k < listTable2.Count; k++)
+			{
+				bool found = false;
+				for (int j = 0; j < listTableAll.Count; j++)
+				{
+					if (listTable2[k].tableName == listTableAll[j].tableName)
+					{
+						listTableAll[j].fieldCount2 = listTable2[k].fieldCount;
+						found = true;
+						listTableAll[j].db = "A+B";
+						break;
+					}
+				}
+				//listTableAll.Add(new ListInfoAll() { db = "A", tableName = listTable1[k].tableName, fieldCount1 = listTable1[k].fieldCount, fieldCount2 = 0 });
+				if (found == false)
+				{
+					listTableAll.Add(new ListInfoAll() { db = "B", tableName = listTable2[k].tableName, fieldCount1 = 0, fieldCount2 = listTable2[k].fieldCount, tableCmt = listTable2[k].tableCmt });
+				}
+			}
+			dataGridView1.Rows.Clear();
+			for (int k = 0; k < listTableAll.Count; k++)
+			{
+				dataGridView1.Rows.Add(1);
+				dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[0].Value = true;
+				if (listTableAll[k].db == "B")
+				{
+					dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[0].Value = false;
+
+				}
+				dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[1].Value = listTableAll[k].db;
+				dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[2].Value = listTableAll[k].tableName;
+				dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[3].Value = listTableAll[k].tableCmt;
+				dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[4].Value = listTableAll[k].fieldCount1;
+				dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[5].Value = listTableAll[k].fieldCount2;
+			}
+
+			int i = 0;
+			dataGridView1.Columns[i++].ReadOnly = false;
+			dataGridView1.Columns[i++].ReadOnly = true;
+			dataGridView1.Columns[i++].ReadOnly = true;
+			dataGridView1.Columns[i++].ReadOnly = true;
+			dataGridView1.Columns[i++].ReadOnly = true;
+			dataGridView1.Columns[i++].ReadOnly = true;
+			dataGridView1.Columns[i++].ReadOnly = true;
+			dataGridView1.Columns[i++].ReadOnly = true;
 			con.Close();
 			con2.Close();
 		}
@@ -1047,6 +1070,7 @@ namespace tableCheck
 						//생성테이블쿼리 저장하기
 						string queryCreate = "SHOW CREATE PROCEDURE " + tbl;
 						procedureCreateTable(queryCreate);
+						dgvShowAll(queryCreate, i);
 						dataGridView3.Rows[i].Cells[10].Value = 100;
 						dataGridView3.Rows[i].Cells[11].Value = "확인중";
 					}
@@ -1261,9 +1285,11 @@ namespace tableCheck
 					if (tbl == null) return;
 					string queryCreate = "SHOW CREATE PROCEDURE " + tbl;
 					procedureCreateTable(queryCreate);
+					dgvShow(queryCreate);
+
 					dataGridView3.Rows[rowIndex].Cells[10].Value = 100;
 					dataGridView3.Rows[rowIndex].Cells[11].Value = "확인중";
-					showProceaser();
+					//showProceaser();
 				}
 
 				//탭페이지가 이벤트인경우
@@ -1505,26 +1531,55 @@ namespace tableCheck
 		}
 		private void buttonDelete_Click(object sender, EventArgs e)
 		{
-			try
+			if (tabControl1.SelectedTab == tabPage1)
 			{
-				int rowIndex = dataGridView1.CurrentCell.RowIndex;
-				if (rowIndex < 0) return;
-				if (dataGridView1.Rows[rowIndex].Cells[0].Value == null)
+				try
 				{
-					return;
+					int rowIndex = dataGridView1.CurrentCell.RowIndex;
+					if (rowIndex < 0) return;
+					if (dataGridView1.Rows[rowIndex].Cells[0].Value == null)
+					{
+						return;
+					}
+					string tbl = dataGridView1.Rows[rowIndex].Cells[2].Value.ToString();
+					if (tbl == null) return;
+
+					string dropTable = "drop table " + tbl;
+					Create(dropTable);
+
+					buttonConnect_Click(sender, e);
 				}
-				string tbl = dataGridView1.Rows[rowIndex].Cells[2].Value.ToString();
-				if (tbl == null) return;
-
-				string dropTable = "drop table " + tbl;
-				Create(dropTable);
-
-				buttonConnect_Click(sender, e);
+				catch (Exception ex)
+				{
+					LogMgr.ExceptionLog(ex);
+				}
 			}
-			catch (Exception ex)
+
+			if (tabControl1.SelectedTab == tabPage2)
 			{
-				LogMgr.ExceptionLog(ex);
+				try
+				{
+					int rowIndex = dataGridView3.CurrentCell.RowIndex;
+					if (rowIndex < 0) return;
+					if (dataGridView3.Rows[rowIndex].Cells[0].Value == null)
+					{
+						return;
+					}
+					string tbl = dataGridView3.Rows[rowIndex].Cells[0].Value.ToString();
+					if (tbl == null) return;
+
+					string dropTable = "drop procedure " + tbl;
+					Create(dropTable);
+
+					buttonConnect_Click(sender, e);
+				}
+				catch (Exception ex)
+				{
+					LogMgr.ExceptionLog(ex);
+				}
 			}
+
+
 		}
 
 		void changePosition()
@@ -1848,13 +1903,13 @@ namespace tableCheck
 		{
 			try
 			{
-
 				string connectionDb1 = "Server = " + textBoxIp1.Text + ";Port = " + textBoxPort1.Text + ";Database = " + textBoxDb1.Text + ";username = " + textBoxUn1.Text + ";password = " + textBoxPw1.Text + ";" + "Charset=utf8;";
 				string connectionDb2 = "Server = " + textBoxIp2.Text + ";Port = " + textBoxPort2.Text + ";Database = " + textBoxDb2.Text + ";username = " + textBoxUn2.Text + ";password = " + textBoxPw2.Text + ";" + "Charset=utf8;";
 				con = new MySqlConnection(connectionDb1);
 				con2 = new MySqlConnection(connectionDb2);
 				con.Open();
 				con2.Open();
+
 
 				string showProcedure = "show procedure status where DB='" + textBoxDb1.Text + "'";
 				MySqlDataReader rdrProcedure = DBConnect(con, showProcedure);
@@ -1866,20 +1921,6 @@ namespace tableCheck
 					procedureInfo listInfo = new procedureInfo() { procedureName = rdrProcedure["Name"].ToString(), procedureCreated = rdrProcedure["Created"].ToString(), procedureUpdate = rdrProcedure["Modified"].ToString(), procedureComment = rdrProcedure["Comment"].ToString() };
 					listTable1.Add(listInfo);
 				}
-				//
-				//for (int w = 0; w < listTable1.Count; w++)
-				//{
-				//string showProcedureQuery = "SHOW CREATE PROCEDURE " + listTable1[0].procedureName;
-				//MySqlDataReader rdrProcedure3 = DBConnect(con, showProcedureQuery);
-				//while (rdrProcedure.Read())
-				//{
-				//	procedureInfo listInfo = new procedureInfo() { procedureQuery = rdrProcedure3["Create Procedure"].ToString() };
-				//	listTable1.Add(listInfo);
-				//}
-				//}
-				//
-
-
 
 				string showProcedure2 = "show procedure status where DB='" + textBoxDb2.Text + "'";
 				MySqlDataReader rdrProcedure2 = DBConnect(con2, showProcedure2);
@@ -1888,27 +1929,6 @@ namespace tableCheck
 					procedureInfo listInfo = new procedureInfo() { procedureName = rdrProcedure2["Name"].ToString(), procedureCreated = rdrProcedure2["Created"].ToString(), procedureUpdate = rdrProcedure2["Modified"].ToString(), procedureComment = rdrProcedure2["Comment"].ToString() };
 					listTable2.Add(listInfo);
 				}
-
-
-				//
-				//for (int q = 0; q < listTable1.Count; q++)
-				//{
-				//	string showProcedureQuery2 = "SHOW CREATE PROCEDURE " + listTable1[q].procedureName;
-				//	MySqlDataReader rdrProcedure4 = DBConnect(con, showProcedureQuery2);
-				//	if (rdrProcedure4 == null)
-				//	{
-				//		continue;
-				//	}
-				//	while (rdrProcedure4.Read())
-				//	{
-				//		procedureInfo listInfo = new procedureInfo() { procedureQuery = rdrProcedure4["Create Procedure"].ToString() };
-				//		listTable1.Add(listInfo);
-				//	}
-				//}
-				//
-
-
-
 
 
 				for (int k = 0; k < listTable1.Count; k++)
@@ -2456,9 +2476,12 @@ namespace tableCheck
 				_strArg2.Append("Charset=utf8;");
 
 				MySqlConnection con = new MySqlConnection(_strArg.ToString());
+			//	MySqlConnection con2 = new MySqlConnection(_strArg2.ToString());
 				con.Open();
+				//con2.Open();
 
 				MySqlDataReader rdr = DBConnect(con, queryCreate);
+				MySqlDataReader rdr2 = DBConnect(con2, queryCreate);
 				List<Columns> listTable1 = new List<Columns>();
 				List<Columns> listTable2 = new List<Columns>();
 				List<ColumnsAll> listTableAll = new List<ColumnsAll>();
@@ -2468,15 +2491,66 @@ namespace tableCheck
 				{
 					Columns listInfo = new Columns() { CREATETABLE = rdr["Create Procedure"].ToString() };
 					listTable1.Add(listInfo);
-
 				}
 
-				string createQuery = listTable1[0].CREATETABLE;
+				//if (rdr2 == null)
+				//{
+				//	rdr2 = rdr;
+				//}
+				//while (rdr2.Read())
+				//{
+				//	Columns listInfo = new Columns() { CREATETABLE = rdr2["Create Procedure"].ToString() };
+				//	listTable2.Add(listInfo);
+				//}
 
+
+				//for (int k = 0; k < listTable1.Count; k++)
+				//{
+				//	listTableAll.Add(new ColumnsAll()
+				//	{
+				//		CREATETABLE1 = listTable1[k].CREATETABLE
+				//	});
+				//}
+
+
+				//for (int k = 0; k < listTable2.Count; k++)
+				//{
+				//	bool found = false;
+				//	for (int j = 0; j < listTableAll.Count; j++)
+				//	{
+				//		if (listTable2[k].CREATETABLE == listTableAll[j].CREATETABLE1)
+				//		{
+				//			listTableAll[j].CREATETABLE2 = listTable2[k].CREATETABLE;
+				//			found = true;
+				//			break;
+				//		}
+				//	}
+				//	if (found == false)
+				//	{
+				//		listTableAll.Add(new ColumnsAll()
+				//		{
+				//			CREATETABLE2 = listTable2[k].CREATETABLE,
+				//		});
+				//	}
+				//}
+
+
+				//for (int k = 0; k < listTableAll.Count; k++)
+				//{
+				//	dataGridView3.Rows.Add(1);
+				//	dataGridView3.Rows[k].Cells[4].Value = listTableAll[k].CREATETABLE1;
+
+				//	dataGridView3.Rows[k].Cells[9].Value = listTableAll[k].CREATETABLE2;
+
+				//}
+
+
+
+				string createQuery = listTable1[0].CREATETABLE;
 				Create(createQuery);
-				dgvShow(createQuery);
 
 				con.Close();
+				//con2.Close();
 			}
 			catch (Exception e)
 			{
@@ -2485,7 +2559,7 @@ namespace tableCheck
 			}
 		}
 
-		private void dgvShow(string queryCreate)
+		void dgvShowAll(string queryCreate, int number)
 		{
 			try
 			{
@@ -2528,78 +2602,200 @@ namespace tableCheck
 				_strArg2.Append(";");
 				_strArg2.Append("Charset=utf8;");
 
-				MySqlConnection con = new MySqlConnection(_strArg2.ToString());
-				con.Open();
+				MySqlConnection con = new MySqlConnection(_strArg.ToString());
 				MySqlConnection con2 = new MySqlConnection(_strArg2.ToString());
+				con.Open();
 				con2.Open();
+
 				MySqlDataReader rdr = DBConnect(con, queryCreate);
 				MySqlDataReader rdr2 = DBConnect(con2, queryCreate);
-
-				List<procedureInfo> listTable1 = new List<procedureInfo>();
-				List<procedureInfo> listTable2 = new List<procedureInfo>();
-				List<procedureInfoAll> listTableAll = new List<procedureInfoAll>();
-
+				List<Columns> listTable1 = new List<Columns>();
+				List<Columns> listTable2 = new List<Columns>();
+				List<ColumnsAll> listTableAll = new List<ColumnsAll>();
 				while (rdr.Read())
 				{
-					procedureInfo listInfo = new procedureInfo() { procedureQuery = rdr["Create Procedure"].ToString() };
+					Columns listInfo = new Columns() { CREATETABLE = rdr["Create Procedure"].ToString() };
 					listTable1.Add(listInfo);
 				}
-
-				string showProcedure2 = "show procedure status where DB='" + textBoxDb2.Text + "'";
+				if (rdr2 == null)
+				{
+					rdr2 = rdr;
+				}
 				while (rdr2.Read())
 				{
-					procedureInfo listInfo = new procedureInfo() { procedureQuery = rdr2["Create Procedure"].ToString() };
+					Columns listInfo = new Columns() { CREATETABLE = rdr2["Create Procedure"].ToString() };
 					listTable2.Add(listInfo);
 				}
-
 				for (int k = 0; k < listTable1.Count; k++)
 				{
-					listTableAll.Add(new procedureInfoAll()
+					listTableAll.Add(new ColumnsAll()
 					{
-						procedureQuery1 = listTable1[k].procedureQuery
+						CREATETABLE1 = listTable1[k].CREATETABLE
 					});
+					dataGridView3.Rows[number].Cells[4].Value = listTableAll[0].CREATETABLE1;
 				}
 				for (int k = 0; k < listTable2.Count; k++)
 				{
 					bool found = false;
 					for (int j = 0; j < listTableAll.Count; j++)
 					{
-						if (listTable2[k].procedureName == listTableAll[j].procedureName1)
+						if (listTable2[k].CREATETABLE == listTableAll[j].CREATETABLE1)
 						{
-							listTableAll[j].procedureQuery2 = listTable2[k].procedureQuery;
-
+							listTableAll[j].CREATETABLE2 = listTable2[k].CREATETABLE;
 							found = true;
 							break;
 						}
 					}
 					if (found == false)
 					{
-						listTableAll.Add(new procedureInfoAll()
+						listTableAll.Add(new ColumnsAll()
 						{
-							procedureQuery2 = listTable2[k].procedureQuery
+							CREATETABLE2 = listTable2[k].CREATETABLE,
 						});
 					}
+					dataGridView3.Rows[number].Cells[4].Value = listTableAll[0].CREATETABLE1;
+					dataGridView3.Rows[number].Cells[9].Value = listTableAll[0].CREATETABLE2;
 				}
-				for (int k = 0; k < listTableAll.Count; k++)
-				{
-					dataGridView3.Rows[dataGridView3.Rows.Count - 1].Cells[4].Value = listTableAll[k].procedureQuery1;
-					dataGridView3.Rows[dataGridView3.Rows.Count - 1].Cells[9].Value = listTableAll[k].procedureQuery2;
-				}
+				string createQuery = listTable1[0].CREATETABLE;
+				Create(createQuery);
 				con.Close();
 				con2.Close();
-				compare();
 			}
-			catch (Exception ex)
+			catch (Exception e)
 			{
-				LogMgr.ExceptionLog(ex);
-				MessageBox.Show(ex.ToString());
+				LogMgr.ExceptionLog(e);
+				MessageBox.Show(e.ToString());
 			}
-
-
-		
-
-
 		}
+
+
+
+		private void dgvShow(string queryCreate)
+		{
+			try
+			{
+				int rowIndex = dataGridView3.CurrentCell.RowIndex;
+				if (rowIndex < 0) return;
+				if (dataGridView3.Rows[rowIndex].Cells[0].Value == null)
+				{
+					return;
+				}
+
+				_HostName = textBoxIp1.Text;
+				_PORT = textBoxPort1.Text;
+				_DATABASE = textBoxDb1.Text;
+				_ID = textBoxUn1.Text;
+				_PWD = textBoxPw1.Text;
+
+				_HostName2 = textBoxIp2.Text;
+				_PORT2 = textBoxPort2.Text;
+				_DATABASE2 = textBoxDb2.Text;
+				_ID2 = textBoxUn2.Text;
+				_PWD2 = textBoxPw2.Text;
+
+				StringBuilder _strArg = new StringBuilder("");
+				StringBuilder _strArg2 = new StringBuilder("");
+				_strArg.Append("Server = ");           // SQL
+				_strArg.Append(_HostName);        // 서버
+				_strArg.Append(";Port = ");
+				_strArg.Append(_PORT);                 // 포트
+				_strArg.Append(";Database = ");
+				_strArg.Append(_DATABASE);          // 데이터베이스
+				_strArg.Append(";username = ");
+				_strArg.Append(_ID);                     // ID
+				_strArg.Append(";password = ");
+				_strArg.Append(_PWD);                 // PWD
+				_strArg.Append(";");
+				_strArg.Append("Charset=utf8;");
+
+				_strArg2.Append("Server = ");           // SQL
+				_strArg2.Append(_HostName2);        // 서버
+				_strArg2.Append(";Port = ");
+				_strArg2.Append(_PORT2);                 // 포트
+				_strArg2.Append(";Database = ");
+				_strArg2.Append(_DATABASE2);          // 데이터베이스
+				_strArg2.Append(";username = ");
+				_strArg2.Append(_ID2);                     // ID
+				_strArg2.Append(";password = ");
+				_strArg2.Append(_PWD2);                 // PWD
+				_strArg2.Append(";");
+				_strArg2.Append("Charset=utf8;");
+
+				MySqlConnection con = new MySqlConnection(_strArg.ToString());
+				MySqlConnection con2 = new MySqlConnection(_strArg2.ToString());
+				con.Open();
+				con2.Open();
+
+				MySqlDataReader rdr = DBConnect(con, queryCreate);
+				MySqlDataReader rdr2 = DBConnect(con2, queryCreate);
+				List<Columns> listTable1 = new List<Columns>();
+				List<Columns> listTable2 = new List<Columns>();
+				List<ColumnsAll> listTableAll = new List<ColumnsAll>();
+				Delay(200);
+
+				while (rdr.Read())
+				{
+					Columns listInfo = new Columns() { CREATETABLE = rdr["Create Procedure"].ToString() };
+					listTable1.Add(listInfo);
+				}
+
+				if (rdr2 == null)
+				{
+					rdr2 = rdr;
+				}
+				while (rdr2.Read())
+				{
+					Columns listInfo = new Columns() { CREATETABLE = rdr2["Create Procedure"].ToString() };
+					listTable2.Add(listInfo);
+				}
+
+
+				for (int k = 0; k < listTable1.Count; k++)
+				{
+					listTableAll.Add(new ColumnsAll()
+					{
+						CREATETABLE1 = listTable1[k].CREATETABLE
+					});
+					dataGridView3.Rows[rowIndex].Cells[4].Value = listTableAll[0].CREATETABLE1;
+				}
+				for (int k = 0; k < listTable2.Count; k++)
+				{
+					bool found = false;
+					for (int j = 0; j < listTableAll.Count; j++)
+					{
+						if (listTable2[k].CREATETABLE == listTableAll[j].CREATETABLE1)
+						{
+							listTableAll[j].CREATETABLE2 = listTable2[k].CREATETABLE;
+							found = true;
+							break;
+						}
+					}
+					if (found == false)
+					{
+						listTableAll.Add(new ColumnsAll()
+						{
+							CREATETABLE2 = listTable2[k].CREATETABLE,
+						});
+					}
+				
+					dataGridView3.Rows[rowIndex].Cells[4].Value = listTableAll[0].CREATETABLE1;
+					dataGridView3.Rows[rowIndex].Cells[9].Value = listTableAll[0].CREATETABLE2;
+				}
+				string createQuery = listTable1[0].CREATETABLE;
+				Create(createQuery);
+				con.Close();
+				con2.Close();
+			}
+			catch (Exception e)
+			{
+				LogMgr.ExceptionLog(e);
+				MessageBox.Show(e.ToString());
+			}
+		}
+
+
+
+
 
 		private void dataGridView3_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
 		{
