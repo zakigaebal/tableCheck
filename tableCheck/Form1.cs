@@ -392,7 +392,7 @@ namespace tableCheck
 		{
 			try
 			{
-
+	
 
 				if (textBoxIp1.Text == "")
 				{
@@ -428,12 +428,6 @@ namespace tableCheck
 				Cursor.Current = Cursors.WaitCursor;
 
 
-				dataGridView1.SuspendLayout();
-				dataGridView2.SuspendLayout();
-				dataGridView3.SuspendLayout();
-				dataGridView5.SuspendLayout();
-				dataGridView7.SuspendLayout();
-				dataGridView9.SuspendLayout();
 
 				//테이블 보여주기 메소드
 				showTable();
@@ -557,13 +551,8 @@ namespace tableCheck
 				//진행중 작업사항 100 채우기 메소드
 				compare();
 
+		
 
-				dataGridView1.ResumeLayout();
-				dataGridView2.ResumeLayout();
-				dataGridView3.ResumeLayout();
-				dataGridView5.ResumeLayout();
-				dataGridView7.ResumeLayout();
-				dataGridView9.ResumeLayout();
 
 				Cursor.Current = Cursors.Default;
 			}
@@ -1460,7 +1449,6 @@ namespace tableCheck
 					if (tbl == null) return;
 					string queryCreate = "SHOW CREATE PROCEDURE " + tbl;
 					procedureCreateTable(queryCreate);
-					
 
 					dataGridView3.Rows[rowIndex].Cells[10].Value = 100;
 					dataGridView3.Rows[rowIndex].Cells[11].Value = "확인중";
@@ -2197,6 +2185,13 @@ namespace tableCheck
 		{
 			try
 			{
+				dataGridView1.SuspendLayout();
+				dataGridView2.SuspendLayout();
+				dataGridView3.SuspendLayout();
+				dataGridView5.SuspendLayout();
+				dataGridView7.SuspendLayout();
+				dataGridView9.SuspendLayout();
+
 				string connectionDb1 = "Server = " + textBoxIp1.Text + ";Port = " + textBoxPort1.Text + ";Database = " + textBoxDb1.Text + ";username = " + textBoxUn1.Text + ";password = " + textBoxPw1.Text + ";" + "Charset=utf8;";
 				string connectionDb2 = "Server = " + textBoxIp2.Text + ";Port = " + textBoxPort2.Text + ";Database = " + textBoxDb2.Text + ";username = " + textBoxUn2.Text + ";password = " + textBoxPw2.Text + ";" + "Charset=utf8;";
 				con = new MySqlConnection(connectionDb1);
@@ -2297,6 +2292,12 @@ namespace tableCheck
 				{
 					conn.Close();
 				}
+				dataGridView1.ResumeLayout();
+				dataGridView2.ResumeLayout();
+				dataGridView3.ResumeLayout();
+				dataGridView5.ResumeLayout();
+				dataGridView7.ResumeLayout();
+				dataGridView9.ResumeLayout();
 			}
 
 			catch (Exception ex)
@@ -2812,7 +2813,7 @@ namespace tableCheck
 				}
 				if (rdr2 == null)
 				{
-					return;
+					rdr2 = rdr;
 				}
 				while (rdr2.Read())
 				{
