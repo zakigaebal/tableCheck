@@ -53,7 +53,6 @@
 			this.splitter5 = new System.Windows.Forms.Splitter();
 			this.panel2 = new System.Windows.Forms.Panel();
 			this.checkBoxStop = new System.Windows.Forms.CheckBox();
-			this.button7 = new System.Windows.Forms.Button();
 			this.btnPositionChange = new System.Windows.Forms.Button();
 			this.label2 = new System.Windows.Forms.Label();
 			this.button1 = new System.Windows.Forms.Button();
@@ -368,7 +367,6 @@
 			// panel2
 			// 
 			this.panel2.Controls.Add(this.checkBoxStop);
-			this.panel2.Controls.Add(this.button7);
 			this.panel2.Controls.Add(this.btnPositionChange);
 			this.panel2.Controls.Add(this.label2);
 			this.panel2.Controls.Add(this.button1);
@@ -408,26 +406,17 @@
 			// checkBoxStop
 			// 
 			this.checkBoxStop.AutoSize = true;
-			this.checkBoxStop.Location = new System.Drawing.Point(1037, 5);
+			this.checkBoxStop.Location = new System.Drawing.Point(820, 26);
 			this.checkBoxStop.Name = "checkBoxStop";
 			this.checkBoxStop.Size = new System.Drawing.Size(60, 16);
 			this.checkBoxStop.TabIndex = 7;
 			this.checkBoxStop.Text = "멈추기";
 			this.checkBoxStop.UseVisualStyleBackColor = true;
-			// 
-			// button7
-			// 
-			this.button7.Location = new System.Drawing.Point(1208, 3);
-			this.button7.Name = "button7";
-			this.button7.Size = new System.Drawing.Size(200, 44);
-			this.button7.TabIndex = 11;
-			this.button7.Text = "button7";
-			this.button7.UseVisualStyleBackColor = true;
-			this.button7.Click += new System.EventHandler(this.button7_Click);
+			this.checkBoxStop.CheckedChanged += new System.EventHandler(this.checkBoxStop_CheckedChanged);
 			// 
 			// btnPositionChange
 			// 
-			this.btnPositionChange.Location = new System.Drawing.Point(961, 1);
+			this.btnPositionChange.Location = new System.Drawing.Point(1361, 22);
 			this.btnPositionChange.Name = "btnPositionChange";
 			this.btnPositionChange.Size = new System.Drawing.Size(41, 25);
 			this.btnPositionChange.TabIndex = 6;
@@ -446,7 +435,7 @@
 			// 
 			// button1
 			// 
-			this.button1.Location = new System.Drawing.Point(856, 2);
+			this.button1.Location = new System.Drawing.Point(1308, 22);
 			this.button1.Name = "button1";
 			this.button1.Size = new System.Drawing.Size(47, 23);
 			this.button1.TabIndex = 4;
@@ -497,7 +486,7 @@
 			// 
 			// buttonDelete
 			// 
-			this.buttonDelete.Location = new System.Drawing.Point(909, 1);
+			this.buttonDelete.Location = new System.Drawing.Point(849, 1);
 			this.buttonDelete.Name = "buttonDelete";
 			this.buttonDelete.Size = new System.Drawing.Size(46, 25);
 			this.buttonDelete.TabIndex = 5;
@@ -781,7 +770,6 @@
 		private System.Windows.Forms.Splitter splitter5;
 		private System.Windows.Forms.Button btnPositionChange;
 		private System.Windows.Forms.DataGridView dataGridView3;
-		private System.Windows.Forms.Button button7;
 		private System.Windows.Forms.CheckBox checkBoxStop;
 	}
 }

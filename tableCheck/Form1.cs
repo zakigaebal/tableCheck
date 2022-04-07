@@ -1169,8 +1169,12 @@ namespace tableCheck
 				}
 				con.Close();
 				con2.Close();
-				dataGridView2.Sort(dataGridView2.Columns[15], ListSortDirection.Ascending);
-
+				int rowIndex = dataGridView1.CurrentCell.RowIndex;
+				if (rowIndex < 0) return;
+				if (dataGridView1.Rows[rowIndex].Cells[7].Value == "필드수 다름")
+				{
+			//	dataGridView2.Sort(dataGridView2.Columns[15], ListSortDirection.Ascending);
+				}
 			}
 			catch (Exception ex)
 			{
@@ -1210,8 +1214,6 @@ namespace tableCheck
 						{
 							showFields(tbl);
 							alterChange();
-							changePosition();
-
 							dataGridView1.Rows[i].Cells[6].Value = 100;
 							dataGridView1.Rows[i].Cells[5].Value = "확인중";
 						}
@@ -1219,7 +1221,6 @@ namespace tableCheck
 					}
 				}
 			}
-
 			//탭페이지가 프로시저인경우
 			if (tabControl1.SelectedTab == tabPage2)
 			{
@@ -1229,16 +1230,26 @@ namespace tableCheck
 					if (dataGridView3.Rows[i].Cells[5].Value == null)
 					{
 						if (tbl == null) return;
+
 						//생성테이블쿼리 저장하기
 						string queryCreate = "SHOW CREATE PROCEDURE " + tbl;
 						procedureCreateTable(queryCreate);
-						//	dgvShowAll(queryCreate, i);
+
+						con.Open();
+						con2.Open();
+						string rdrString = "Create Procedure";
+
+						dgvShowAll(queryCreate, i, rdrString);
+						con.Close();
+						con2.Close();
+
 						dataGridView3.Rows[i].Cells[10].Value = 100;
 						dataGridView3.Rows[i].Cells[11].Value = "확인중";
 					}
 				}
 				showProceaser();
 			}
+
 			//탭페이지가 이벤트인경우
 			if (tabControl1.SelectedTab == tabPage3)
 			{
@@ -1251,8 +1262,8 @@ namespace tableCheck
 						//생성테이블쿼리 저장하기
 						string queryCreate = "SHOW CREATE EVENT " + tbl;
 						eventCreateTable(queryCreate);
-						dataGridView5.Rows[i].Cells[6].Value = 100;
-						dataGridView5.Rows[i].Cells[7].Value = "확인중";
+						dataGridView5.Rows[i].Cells[dataGridView5.Columns.Count - 2].Value = 100;
+						dataGridView5.Rows[i].Cells[dataGridView5.Columns.Count - 1].Value = "확인중";
 					}
 				}
 				showEvents();
@@ -1270,8 +1281,11 @@ namespace tableCheck
 						//생성테이블쿼리 저장하기
 						string queryCreate = "show create function " + tbl;
 						functionCreateTable(queryCreate);
-						dataGridView7.Rows[i].Cells[6].Value = 100;
-						dataGridView7.Rows[i].Cells[7].Value = "확인중";
+						dataGridView7.Rows[i].Cells[dataGridView7.Columns.Count - 2].Value = 100;
+						dataGridView7.Rows[i].Cells[dataGridView7.Columns.Count - 1].Value = "확인중";
+
+						
+
 					}
 				}
 				showFunction();
@@ -1289,8 +1303,8 @@ namespace tableCheck
 						//생성테이블쿼리 저장하기
 						string queryCreate = "show create view " + tbl;
 						viewCreateTable(queryCreate);
-						dataGridView9.Rows[i].Cells[2].Value = 100;
-						dataGridView9.Rows[i].Cells[3].Value = "확인중";
+						dataGridView9.Rows[i].Cells[dataGridView9.Columns.Count - 2].Value = 100;
+						dataGridView9.Rows[i].Cells[dataGridView9.Columns.Count - 1].Value = "확인중";
 					}
 				}
 				showView();
@@ -1431,7 +1445,6 @@ namespace tableCheck
 					string queryCreate = "SHOW CREATE TABLE " + tbl;
 					ShowCreateTable(queryCreate);
 					alterChange();
-					changePosition();
 					buttonConnect_Click(sender, e);
 				}
 				//탭페이지가 프로시저인 경우
@@ -1447,11 +1460,11 @@ namespace tableCheck
 					if (tbl == null) return;
 					string queryCreate = "SHOW CREATE PROCEDURE " + tbl;
 					procedureCreateTable(queryCreate);
-					dgvShow(queryCreate);
+					
 
 					dataGridView3.Rows[rowIndex].Cells[10].Value = 100;
 					dataGridView3.Rows[rowIndex].Cells[11].Value = "확인중";
-					//showProceaser();
+					showProceaser();
 				}
 
 				//탭페이지가 이벤트인경우
@@ -1470,6 +1483,9 @@ namespace tableCheck
 					//생성테이블쿼리 저장하기
 					string queryCreate = "SHOW CREATE EVENT " + tbl;
 					eventCreateTable(queryCreate);
+					dgvShow(queryCreate);
+
+
 					dataGridView5.Rows[rowIndex].Cells[6].Value = 100;
 					dataGridView5.Rows[rowIndex].Cells[7].Value = "확인중";
 
@@ -1667,7 +1683,7 @@ namespace tableCheck
 					if (dataGridView7.Rows[i].Cells[0].Value.ToString().Trim() == dataGridView7.Rows[i].Cells[4].Value.ToString().Trim())
 					{
 						dataGridView7.Rows[i].Cells[dataGridView7.Columns.Count - 2].Value = "100";
-						dataGridView7.Rows[i].Cells[dataGridView7.Columns.Count - 1].Value = "존재d";
+						dataGridView7.Rows[i].Cells[dataGridView7.Columns.Count - 1].Value = "존재";
 					}
 				}
 
@@ -2757,7 +2773,7 @@ namespace tableCheck
 				List<Columns> listTable1 = new List<Columns>();
 				List<Columns> listTable2 = new List<Columns>();
 				List<ColumnsAll> listTableAll = new List<ColumnsAll>();
-				Delay(200);
+				Delay(20);
 
 				while (rdr.Read())
 				{
@@ -2941,7 +2957,7 @@ namespace tableCheck
 				List<Columns> listTable1 = new List<Columns>();
 				List<Columns> listTable2 = new List<Columns>();
 				List<ColumnsAll> listTableAll = new List<ColumnsAll>();
-				Delay(200);
+				Delay(20);
 
 				while (rdr.Read())
 				{
@@ -2991,8 +3007,6 @@ namespace tableCheck
 					dataGridView3.Rows[rowIndex].Cells[4].Value = listTableAll[0].CREATETABLE1;
 					dataGridView3.Rows[rowIndex].Cells[9].Value = listTableAll[0].CREATETABLE2;
 				}
-				string createQuery = listTable1[0].CREATETABLE;
-				Create(createQuery);
 				con.Close();
 				con2.Close();
 			}
@@ -3079,7 +3093,7 @@ namespace tableCheck
 				List<Columns> listTable1 = new List<Columns>();
 				List<Columns> listTable2 = new List<Columns>();
 				List<ColumnsAll> listTableAll = new List<ColumnsAll>();
-				Delay(200);
+				Delay(20);
 
 				while (rdr.Read())
 				{
@@ -3350,6 +3364,11 @@ namespace tableCheck
 		private void button2_Click(object sender, EventArgs e)
 		{
 			dataGridView2.Sort(dataGridView2.Columns[15], ListSortDirection.Ascending);
+		}
+
+		private void checkBoxStop_CheckedChanged(object sender, EventArgs e)
+		{
+
 		}
 	}
 	//Put this class at the end of the main class or you will have problems.
