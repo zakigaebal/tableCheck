@@ -1264,7 +1264,7 @@ namespace tableCheck
 				for (int i = 0; i < dataGridView7.Rows.Count; i++)
 				{
 					string tbl = dataGridView7.Rows[i].Cells[0].Value.ToString();
-					if (dataGridView7.Rows[i].Cells[3].Value == null)
+					if (dataGridView7.Rows[i].Cells[4].Value == null)
 					{
 						if (tbl == null) return;
 						//생성테이블쿼리 저장하기
@@ -1272,9 +1272,6 @@ namespace tableCheck
 						functionCreateTable(queryCreate);
 						dataGridView7.Rows[i].Cells[dataGridView7.Columns.Count - 2].Value = 100;
 						dataGridView7.Rows[i].Cells[dataGridView7.Columns.Count - 1].Value = "확인중";
-
-						
-
 					}
 				}
 				showFunction();
@@ -2774,7 +2771,7 @@ namespace tableCheck
 				List<Columns> listTable1 = new List<Columns>();
 				List<Columns> listTable2 = new List<Columns>();
 				List<ColumnsAll> listTableAll = new List<ColumnsAll>();
-				Delay(20);
+				Delay(200);
 
 				while (rdr.Read())
 				{
