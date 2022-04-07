@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Reflection;
@@ -121,8 +122,7 @@ namespace tableCheck
 			dataGridView1.Columns[i++].Width = 100;
 
 
-			for (i = 0; i < 2; i++)
-			{
+			
 				dataGridView2.Columns.Add("column0", "이름");
 				dataGridView2.Columns.Add("column1", "유형");
 				dataGridView2.Columns.Add("column7", "NULL 허용");
@@ -130,8 +130,16 @@ namespace tableCheck
 				dataGridView2.Columns.Add("column7", "코멘트");
 				dataGridView2.Columns.Add("column7", "조합");
 				dataGridView2.Columns.Add("column7", "EXTRA");
-				dataGridView2.Columns.Add("column7", "위치");
-			}
+				dataGridView2.Columns.Add("column7", "위치1");
+			dataGridView2.Columns.Add("column0", "이름");
+			dataGridView2.Columns.Add("column1", "유형");
+			dataGridView2.Columns.Add("column7", "NULL 허용");
+			dataGridView2.Columns.Add("column6", "기본값");
+			dataGridView2.Columns.Add("column7", "코멘트");
+			dataGridView2.Columns.Add("column7", "조합");
+			dataGridView2.Columns.Add("column7", "EXTRA");
+			dataGridView2.Columns.Add("column7", "위치2");
+
 
 			dataGridView3.Columns.Add("proName", "프로시저 이름1");
 			dataGridView3.Columns.Add("proCreate", "생성됨1");
@@ -1161,6 +1169,8 @@ namespace tableCheck
 				}
 				con.Close();
 				con2.Close();
+				dataGridView2.Sort(dataGridView2.Columns[15], ListSortDirection.Ascending);
+
 			}
 			catch (Exception ex)
 			{
@@ -1823,8 +1833,6 @@ namespace tableCheck
 					continue;
 				}
 
-
-
 				string changePosition;
 				for (int k = 1; k < dataGridView2.Rows.Count; k++)
 				{
@@ -1857,9 +1865,6 @@ namespace tableCheck
 						Create(changePosition);
 					}
 				}
-
-
-
 			}
 		}
 		// !! 로딩중 살펴보기
@@ -1873,12 +1878,12 @@ namespace tableCheck
 					string fields = "";
 					string primarykey = "";
 
-					string fieldName = dataGridView2.Rows[i].Cells[0].Value.ToString();
-					if (fieldName == null) return;
-					if (i == 0)
-					{
-						primarykey = fieldName;
-					}
+					//string fieldName = dataGridView2.Rows[i].Cells[0].Value.ToString();
+					//if (fieldName == null) return;
+					//if (i == 0)
+					//{
+					//	primarykey = fieldName;
+					//}
 					int rowIndex = dataGridView1.CurrentCell.RowIndex;
 					if (rowIndex < 0) return;
 					if (dataGridView1.Rows[rowIndex].Cells[0].Value == null)
@@ -1945,7 +1950,6 @@ namespace tableCheck
 					}
 					else def = " DEFAULT '" + def + "'";
 					
-
 					string alterTable = "";
 					bool isChanged = false;
 
@@ -1974,7 +1978,7 @@ namespace tableCheck
 					else if (dataGridView2.Rows[i].Cells[1].Value.ToString().Trim() != dataGridView2.Rows[i].Cells[9].Value.ToString().Trim())
 					{
 						isChanged = true;
-						alterTable = modify + fieldType1 + nullYN + default1;
+						alterTable = modify + fieldType1 + nullYN + def + comment1;
 					}
 
 					// db2 필드이름 선언
@@ -1995,21 +1999,19 @@ namespace tableCheck
 						}
 					}
 
-
 					//db1 기본값과 db2의 기본값이 다르면 null값 유무와 db1셀의 default값을 넣어서 바꿔라
 					if (dataGridView2.Rows[i].Cells[3].Value.ToString().Trim() != dataGridView2.Rows[i].Cells[11].Value.ToString().Trim())
 					{
 						isChanged = true;
-						alterTable = modify + fieldName2 + nullYN + " DEFAULT '" + default1 + "'";
+						alterTable = modify + fieldType1 + nullable + def + comment1;
 					}
-
 
 					//CHANGE로 커멘트 변경할려면 컬럼도 동시에 바꿔져야됨 
 					//ALTER TABLE `user` CHANGE `id` `id` INT( 11 ) COMMENT 'user 테이블의 id';
 					if (dataGridView2.Rows[i].Cells[4].Value.ToString().Trim() != dataGridView2.Rows[i].Cells[12].Value.ToString().Trim())
 					{
 						isChanged = true;
-						alterTable = modify + fieldType1 + nullable + comment1 + "";
+						alterTable = modify + fieldType1 + nullable + def + comment1;
 					}
 
 					//collate utf8로 전부 수정
@@ -2017,14 +2019,39 @@ namespace tableCheck
 					if (dataGridView2.Rows[i].Cells[5].Value.ToString().Trim() != dataGridView2.Rows[i].Cells[13].Value.ToString().Trim())
 					{
 						isChanged = true;
-						alterTable = modify + fieldType1 + " CHARACTER SET utf8 COLLATE utf8_general_ci";
+						alterTable = modify + fieldType1 + nullable + def + comment1 + " CHARACTER SET utf8 COLLATE utf8_general_ci";
 					}
 					//autoincrement alter
 					//ALTER TABLE 적용할테이블명칭 MODIFY 컬럼 INT NOT NULL AUTO_INCREMENT;
 					if (dataGridView2.Rows[i].Cells[6].Value.ToString().Trim() != dataGridView2.Rows[i].Cells[14].Value.ToString().Trim())
 					{
 						isChanged = true;
-						alterTable = modify + fieldType1 + nullable + " AUTO_INCREMENT";
+						alterTable = modify + fieldType1 + nullable + def + comment1 + " AUTO_INCREMENT";
+					}
+
+
+					//위치바꾸기
+					if (dataGridView2.Rows[0].Cells[15].Value == null)
+					{
+						continue;
+					}
+					if (dataGridView2.Rows[0].Cells[7].Value.ToString().Trim() != dataGridView2.Rows[0].Cells[15].Value.ToString().Trim())
+					{
+						isChanged = true;
+						alterTable = modify + fieldType1 + nullable + def + comment1 + " FIRST";
+					}
+					else if (dataGridView2.Rows[i].Cells[7].Value == null)
+					{
+						continue;
+					}
+					else if (dataGridView2.Rows[i].Cells[15].Value == null)
+					{
+						continue;
+					}
+					else if (dataGridView2.Rows[i].Cells[7].Value.ToString().Trim() != dataGridView2.Rows[i].Cells[15].Value.ToString().Trim())
+					{
+						isChanged = true;
+						alterTable = modify + fieldType1 + nullable + def +  comment1 + " AFTER " + dataGridView2.Rows[i - 1].Cells[0].Value.ToString();
 					}
 
 					//fields = fields + "`" + fieldName + "` " + columnType + " " + nullable + def + columnComment + ",";
@@ -2032,12 +2059,10 @@ namespace tableCheck
 					//+ "` (" + fields + "PRIMARY KEY (`" + primarykey + "`) USING BTREE)" + "DEFAULT CHARACTER SET utf8 COLLATE=" + "'utf8_general_ci'" + "ENGINE=InnoDB;";
 					//Create(queryCreate);
 					// db2 이름이 비었있으면 db1셀에 있는 컬럼내용을 db2에 추가해라
-
 					if (isChanged == true)
 				{
 					Create(alterTable);
 				}
-
 				}
 			}
 			catch (Exception ex)
@@ -3310,6 +3335,21 @@ namespace tableCheck
 					dataGridView7.Columns[i].DefaultCellStyle.BackColor = Color.LightGoldenrodYellow;
 				}
 			}
+		}
+
+		private void dataGridView2_SortCompare(object sender, DataGridViewSortCompareEventArgs e)
+		{
+			
+		}
+
+		private void button3_Click(object sender, EventArgs e)
+		{
+
+		}
+
+		private void button2_Click(object sender, EventArgs e)
+		{
+			dataGridView2.Sort(dataGridView2.Columns[15], ListSortDirection.Ascending);
 		}
 	}
 	//Put this class at the end of the main class or you will have problems.

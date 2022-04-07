@@ -52,6 +52,7 @@
 			this.dataGridView9 = new System.Windows.Forms.DataGridView();
 			this.splitter5 = new System.Windows.Forms.Splitter();
 			this.panel2 = new System.Windows.Forms.Panel();
+			this.checkBoxStop = new System.Windows.Forms.CheckBox();
 			this.button7 = new System.Windows.Forms.Button();
 			this.btnPositionChange = new System.Windows.Forms.Button();
 			this.label2 = new System.Windows.Forms.Label();
@@ -83,7 +84,6 @@
 			this.textBoxDb1 = new System.Windows.Forms.TextBox();
 			this.label4 = new System.Windows.Forms.Label();
 			this.textBoxPw2 = new System.Windows.Forms.TextBox();
-			this.checkBoxStop = new System.Windows.Forms.CheckBox();
 			this.panel1.SuspendLayout();
 			this.panel5.SuspendLayout();
 			this.tabControl1.SuspendLayout();
@@ -199,6 +199,7 @@
 			this.dataGridView2.TabIndex = 15;
 			this.dataGridView2.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridView2_CellFormatting);
 			this.dataGridView2.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dataGridView2_RowPostPaint);
+			this.dataGridView2.SortCompare += new System.Windows.Forms.DataGridViewSortCompareEventHandler(this.dataGridView2_SortCompare);
 			// 
 			// tabPage2
 			// 
@@ -403,6 +404,16 @@
 			this.panel2.Name = "panel2";
 			this.panel2.Size = new System.Drawing.Size(1408, 49);
 			this.panel2.TabIndex = 10;
+			// 
+			// checkBoxStop
+			// 
+			this.checkBoxStop.AutoSize = true;
+			this.checkBoxStop.Location = new System.Drawing.Point(1037, 5);
+			this.checkBoxStop.Name = "checkBoxStop";
+			this.checkBoxStop.Size = new System.Drawing.Size(60, 16);
+			this.checkBoxStop.TabIndex = 7;
+			this.checkBoxStop.Text = "멈추기";
+			this.checkBoxStop.UseVisualStyleBackColor = true;
 			// 
 			// button7
 			// 
@@ -678,16 +689,6 @@
 			this.textBoxPw2.PasswordChar = '*';
 			this.textBoxPw2.Size = new System.Drawing.Size(70, 21);
 			this.textBoxPw2.TabIndex = 9;
-			// 
-			// checkBoxStop
-			// 
-			this.checkBoxStop.AutoSize = true;
-			this.checkBoxStop.Location = new System.Drawing.Point(1037, 5);
-			this.checkBoxStop.Name = "checkBoxStop";
-			this.checkBoxStop.Size = new System.Drawing.Size(60, 16);
-			this.checkBoxStop.TabIndex = 7;
-			this.checkBoxStop.Text = "멈추기";
-			this.checkBoxStop.UseVisualStyleBackColor = true;
 			// 
 			// Form1
 			// 
