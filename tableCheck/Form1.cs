@@ -1862,7 +1862,7 @@ namespace tableCheck
 
 			}
 		}
-
+		// !! 로딩중 살펴보기
 
 		void alterChange()
 		{
@@ -1870,6 +1870,15 @@ namespace tableCheck
 			{
 				for (int i = 0; i < dataGridView2.Rows.Count; i++)
 				{
+					string fields = "";
+					string primarykey = "";
+
+					string fieldName = dataGridView2.Rows[i].Cells[0].Value.ToString();
+					if (fieldName == null) return;
+					if (i == 0)
+					{
+						primarykey = fieldName;
+					}
 					int rowIndex = dataGridView1.CurrentCell.RowIndex;
 					if (rowIndex < 0) return;
 					if (dataGridView1.Rows[rowIndex].Cells[0].Value == null)
@@ -1907,6 +1916,13 @@ namespace tableCheck
 					{
 						nullable = "";
 					}
+
+
+					string utf8 = dataGridView2.Rows[i].Cells[6].Value.ToString();
+					if (utf8 == null) utf8 = "";
+					else if (utf8 == "") utf8 = "";
+					else utf8 = " COLLATE '" + utf8 + "'";
+
 					string def = dataGridView2.Rows[i].Cells[3].Value.ToString();
 					if (def == null) def = "";
 					if (columnType.ToUpper().Contains("INT"))
@@ -1915,106 +1931,114 @@ namespace tableCheck
 					}
 					if (columnType.ToUpper().Contains("SMALLINT") || columnType.ToUpper().Contains("DECIMAL"))
 					{
-						def = " 0";
-					}
-
-					else def = " DEFAULT '" + def + "'";
-
-					if (nullable.ToUpper().Contains("NULL"))
-					{
-						def = " DEFAULT NULL";
+						def = "0";
 					}
 					if (nullable.ToUpper().Contains(" NOT NULL"))
 					{
 						def = "";
 					}
+
 					else if (columnType.ToUpper().Contains("DATETIME"))
 					{
 						def = " DEFAULT NULL ";
 
 					}
+					else def = " DEFAULT '" + def + "'";
+					
 
 					string alterTable = "";
 					bool isChanged = false;
 
+					string fieldName1 = dataGridView2.Rows[i].Cells[0].Value.ToString();
+					string fieldType1 = dataGridView2.Rows[i].Cells[1].Value.ToString();
 
-					// db2 이름이 비었있으면 db1셀에 있는 컬럼내용을 db2에 추가해라
+					string default1 = dataGridView2.Rows[i].Cells[3].Value.ToString();
+					string comment1 = dataGridView2.Rows[i].Cells[4].Value.ToString();
+					if (comment1 == null) comment1 = "";
+					else comment1 = " COMMENT '" + comment1 + "'";
+
+					string modify = "ALTER TABLE " + tbl + " MODIFY COLUMN " + "`" + fieldName1 + "` ";
+
+		
 					if (dataGridView2.Rows[i].Cells[8].Value == null)
 					{
-						isChanged = true;
-						alterTable = tbl;
-						///!!
-						alterTable = "ALTER TABLE " + tbl + " ADD `" + dataGridView2.Rows[i].Cells[0].Value.ToString() + "` " + dataGridView2.Rows[i].Cells[1].Value.ToString() + nullable + def;
-
-						Create(alterTable);
+						string addTable = "ALTER TABLE " + tbl + " ADD `" + fieldName1 + "` " + fieldType1 + nullable + def;
+						Create(addTable);
 					}
 
-					//db2 유형이 비어있으면 넘어가라
 					if (dataGridView2.Rows[i].Cells[9].Value == null)
 					{
 						continue;
 					}
-
 					//db1 유형과 db2유형이 다르면 db2유형을 db1유형으로 바꿔라
-					if (dataGridView2.Rows[i].Cells[1].Value.ToString().Trim() != dataGridView2.Rows[i].Cells[9].Value.ToString().Trim())
+					else if (dataGridView2.Rows[i].Cells[1].Value.ToString().Trim() != dataGridView2.Rows[i].Cells[9].Value.ToString().Trim())
 					{
-						alterTable = "ALTER TABLE " + tbl + " MODIFY COLUMN `" + dataGridView2.Rows[i].Cells[0].Value.ToString() + "` " + dataGridView2.Rows[i].Cells[1].Value.ToString() + nullable + def;
-						Create(alterTable);
+						isChanged = true;
+						alterTable = modify + fieldType1 + nullYN + default1;
 					}
+
+					// db2 필드이름 선언
+					string fieldName2 = dataGridView2.Rows[i].Cells[8].Value.ToString();
+
 
 					// db1 널값이 다르면 no인지 yes인지 파악해서 db2의 맞는값으로 바꿔라
 					if (dataGridView2.Rows[i].Cells[2].Value.ToString().Trim() != dataGridView2.Rows[i].Cells[10].Value.ToString().Trim())
 					{
+						isChanged = true;
 						if (dataGridView2.Rows[i].Cells[2].Value.ToString().Trim() == "NO")
 						{
-							alterTable = "ALTER TABLE " + tbl + " MODIFY `" + dataGridView2.Rows[i].Cells[8].Value.ToString() + "` " + dataGridView2.Rows[i].Cells[1].Value.ToString() + "NOT NULL";
-							Create(alterTable);
+							alterTable = modify + fieldName2 + "NOT NULL";
 						}
 						else if (dataGridView2.Rows[i].Cells[2].Value.ToString().Trim() == "YES")
 						{
-							alterTable = "ALTER TABLE " + tbl + " MODIFY `" + dataGridView2.Rows[i].Cells[8].Value.ToString() + "` " + dataGridView2.Rows[i].Cells[1].Value.ToString();
-							Create(alterTable);
+							alterTable = modify + fieldName2;
 						}
 					}
+
 
 					//db1 기본값과 db2의 기본값이 다르면 null값 유무와 db1셀의 default값을 넣어서 바꿔라
 					if (dataGridView2.Rows[i].Cells[3].Value.ToString().Trim() != dataGridView2.Rows[i].Cells[11].Value.ToString().Trim())
 					{
-						alterTable = "ALTER TABLE " + tbl + " MODIFY COLUMN `" + dataGridView2.Rows[i].Cells[0].Value.ToString() + "` " + dataGridView2.Rows[i].Cells[1].Value.ToString() + nullYN + " DEFAULT '" + dataGridView2.Rows[i].Cells[3].Value.ToString() + "'";
-						Create(alterTable);
+						isChanged = true;
+						alterTable = modify + fieldName2 + nullYN + " DEFAULT '" + default1 + "'";
 					}
+
 
 					//CHANGE로 커멘트 변경할려면 컬럼도 동시에 바꿔져야됨 
 					//ALTER TABLE `user` CHANGE `id` `id` INT( 11 ) COMMENT 'user 테이블의 id';
 					if (dataGridView2.Rows[i].Cells[4].Value.ToString().Trim() != dataGridView2.Rows[i].Cells[12].Value.ToString().Trim())
 					{
-						alterTable = "ALTER TABLE " + tbl + " MODIFY COLUMN `" + dataGridView2.Rows[i].Cells[0].Value.ToString() + "` " + dataGridView2.Rows[i].Cells[1].Value.ToString() + nullable + " COMMENT '" + dataGridView2.Rows[i].Cells[4].Value.ToString() + "'";
-						Create(alterTable);
+						isChanged = true;
+						alterTable = modify + fieldType1 + nullable + comment1 + "";
 					}
 
 					//collate utf8로 전부 수정
 					//ALTER TABLE 테이블명 MODIFY COLUMN 컬럼 VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci
 					if (dataGridView2.Rows[i].Cells[5].Value.ToString().Trim() != dataGridView2.Rows[i].Cells[13].Value.ToString().Trim())
 					{
-						alterTable = "ALTER TABLE " + tbl + " MODIFY COLUMN `" + dataGridView2.Rows[i].Cells[0].Value.ToString() + "` " + dataGridView2.Rows[i].Cells[1].Value.ToString() + " CHARACTER SET utf8 COLLATE utf8_general_ci";
-						Create(alterTable);
+						isChanged = true;
+						alterTable = modify + fieldType1 + " CHARACTER SET utf8 COLLATE utf8_general_ci";
 					}
 					//autoincrement alter
 					//ALTER TABLE 적용할테이블명칭 MODIFY 컬럼 INT NOT NULL AUTO_INCREMENT;
 					if (dataGridView2.Rows[i].Cells[6].Value.ToString().Trim() != dataGridView2.Rows[i].Cells[14].Value.ToString().Trim())
 					{
-						alterTable = "ALTER TABLE " + tbl + " MODIFY COLUMN `" + dataGridView2.Rows[i].Cells[0].Value.ToString() + "` " + dataGridView2.Rows[i].Cells[1].Value.ToString() + nullable + " AUTO_INCREMENT";
-						Create(alterTable);
+						isChanged = true;
+						alterTable = modify + fieldType1 + nullable + " AUTO_INCREMENT";
 					}
+
+					//fields = fields + "`" + fieldName + "` " + columnType + " " + nullable + def + columnComment + ",";
+					//string queryCreate = "CREATE TABLE `" + tbl
+					//+ "` (" + fields + "PRIMARY KEY (`" + primarykey + "`) USING BTREE)" + "DEFAULT CHARACTER SET utf8 COLLATE=" + "'utf8_general_ci'" + "ENGINE=InnoDB;";
+					//Create(queryCreate);
+					// db2 이름이 비었있으면 db1셀에 있는 컬럼내용을 db2에 추가해라
+
+					if (isChanged == true)
+				{
 					Create(alterTable);
+				}
 
 				}
-				//if (isChanged)
-				//{
-				//	Create(alterTable);
-				//}
-
-
 			}
 			catch (Exception ex)
 			{
@@ -2034,8 +2058,6 @@ namespace tableCheck
 			changePosition();
 			buttonConnect_Click(sender, e);
 		}
-
-
 
 
 		void createProceasor(string ProcedureName)
@@ -2741,7 +2763,6 @@ namespace tableCheck
 				List<Columns> listTable1 = new List<Columns>();
 				List<Columns> listTable2 = new List<Columns>();
 				List<ColumnsAll> listTableAll = new List<ColumnsAll>();
-
 
 				while (rdr.Read())
 				{

@@ -87,12 +87,12 @@ namespace tableCheck
 
 
 		//	string alter = "ALTER DATABASE dawoon2 DEFAULT CHARACTER SET utf8";
-		//	Create(alter);
+		//Create(alter);
 
-		//	string queryCreate = "CREATE TABLE `" + tbl
-		//		+ "` (" + fields + "PRIMARY KEY (`" + primarykey + "`) USING BTREE) COMMENT='" + tableComment + "'" + "DEFAULT CHARACTER SET utf8 COLLATE=" + "'utf8_general_ci'" + "ENGINE=InnoDB;"
-		//		;
-		//	Create(queryCreate);
+		//string queryCreate = "CREATE TABLE `" + tbl
+		//	+ "` (" + fields + "PRIMARY KEY (`" + primarykey + "`) USING BTREE) COMMENT='" + tableComment + "'" + "DEFAULT CHARACTER SET utf8 COLLATE=" + "'utf8_general_ci'" + "ENGINE=InnoDB;"
+		//	;
+		//Create(queryCreate);
 
 		//}
 
