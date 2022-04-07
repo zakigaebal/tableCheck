@@ -122,15 +122,15 @@ namespace tableCheck
 			dataGridView1.Columns[i++].Width = 100;
 
 
-			
-				dataGridView2.Columns.Add("column0", "이름");
-				dataGridView2.Columns.Add("column1", "유형");
-				dataGridView2.Columns.Add("column7", "NULL 허용");
-				dataGridView2.Columns.Add("column6", "기본값");
-				dataGridView2.Columns.Add("column7", "코멘트");
-				dataGridView2.Columns.Add("column7", "조합");
-				dataGridView2.Columns.Add("column7", "EXTRA");
-				dataGridView2.Columns.Add("column7", "위치1");
+
+			dataGridView2.Columns.Add("column0", "이름");
+			dataGridView2.Columns.Add("column1", "유형");
+			dataGridView2.Columns.Add("column7", "NULL 허용");
+			dataGridView2.Columns.Add("column6", "기본값");
+			dataGridView2.Columns.Add("column7", "코멘트");
+			dataGridView2.Columns.Add("column7", "조합");
+			dataGridView2.Columns.Add("column7", "EXTRA");
+			dataGridView2.Columns.Add("column7", "위치1");
 			dataGridView2.Columns.Add("column0", "이름");
 			dataGridView2.Columns.Add("column1", "유형");
 			dataGridView2.Columns.Add("column7", "NULL 허용");
@@ -392,7 +392,7 @@ namespace tableCheck
 		{
 			try
 			{
-	
+
 
 				if (textBoxIp1.Text == "")
 				{
@@ -551,7 +551,7 @@ namespace tableCheck
 				//진행중 작업사항 100 채우기 메소드
 				compare();
 
-		
+
 
 
 				Cursor.Current = Cursors.Default;
@@ -969,6 +969,9 @@ namespace tableCheck
 			}
 		}
 
+
+
+
 		private void checkBoxCancel_CheckedChanged(object sender, EventArgs e)
 		{
 			try
@@ -983,6 +986,9 @@ namespace tableCheck
 				LogMgr.ExceptionLog(ex);
 			}
 		}
+
+
+
 
 		private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
 		{
@@ -1001,6 +1007,9 @@ namespace tableCheck
 				LogMgr.ExceptionLog(ex);
 			}
 		}
+
+
+
 		void showFields(string tableName)
 		{
 			try
@@ -1044,7 +1053,6 @@ namespace tableCheck
 				_strArg2.Append(_PWD2);                 // PWD
 				_strArg2.Append(";");
 				_strArg2.Append("Charset=utf8;");
-
 
 
 				MySqlConnection con = new MySqlConnection(_strArg.ToString());
@@ -1130,7 +1138,6 @@ namespace tableCheck
 				}
 
 
-
 				dataGridView2.Rows.Clear();
 				for (int i = 0; i < listTableAll.Count; i++)
 				{
@@ -1162,7 +1169,7 @@ namespace tableCheck
 				if (rowIndex < 0) return;
 				if (dataGridView1.Rows[rowIndex].Cells[7].Value == "필드수 다름")
 				{
-			//	dataGridView2.Sort(dataGridView2.Columns[15], ListSortDirection.Ascending);
+					//	dataGridView2.Sort(dataGridView2.Columns[15], ListSortDirection.Ascending);
 				}
 			}
 			catch (Exception ex)
@@ -1171,8 +1178,6 @@ namespace tableCheck
 				LogMgr.ExceptionLog(ex);
 			}
 		}
-
-
 
 
 		void allStrart()
@@ -1210,6 +1215,8 @@ namespace tableCheck
 					}
 				}
 			}
+
+
 			//탭페이지가 프로시저인경우
 			if (tabControl1.SelectedTab == tabPage2)
 			{
@@ -1870,6 +1877,28 @@ namespace tableCheck
 		}
 		// !! 로딩중 살펴보기
 
+		void alter()
+		{
+			for (int i = 0; i < dataGridView2.Rows.Count; i++)
+			{
+				for (int k = 0; k < dataGridView2.Columns.Count / 2; k++)
+				{
+					if (dataGridView2.Rows[i].Cells[8].Value.ToString().ToUpper() == null)
+					{
+						//add
+						continue;
+					}
+					if (dataGridView2.Rows[i].Cells[k].Value.ToString().ToUpper() != dataGridView2.Rows[i].Cells[k + 8].Value.ToString().ToUpper())
+					{
+						//modify
+						continue;
+					}
+				}
+			}
+		}
+
+
+
 		void alterChange()
 		{
 			try
@@ -1950,7 +1979,7 @@ namespace tableCheck
 
 					}
 					else def = " DEFAULT '" + def + "'";
-					
+
 					string alterTable = "";
 					bool isChanged = false;
 
@@ -1964,7 +1993,7 @@ namespace tableCheck
 
 					string modify = "ALTER TABLE " + tbl + " MODIFY COLUMN " + "`" + fieldName1 + "` ";
 
-		
+
 					if (dataGridView2.Rows[i].Cells[8].Value == null)
 					{
 						string addTable = "ALTER TABLE " + tbl + " ADD `" + fieldName1 + "` " + fieldType1 + nullable + def;
@@ -2052,7 +2081,7 @@ namespace tableCheck
 					else if (dataGridView2.Rows[i].Cells[7].Value.ToString().Trim() != dataGridView2.Rows[i].Cells[15].Value.ToString().Trim())
 					{
 						isChanged = true;
-						alterTable = modify + fieldType1 + nullable + def +  comment1 + " AFTER " + dataGridView2.Rows[i - 1].Cells[0].Value.ToString();
+						alterTable = modify + fieldType1 + nullable + def + comment1 + " AFTER " + dataGridView2.Rows[i - 1].Cells[0].Value.ToString();
 					}
 
 					//fields = fields + "`" + fieldName + "` " + columnType + " " + nullable + def + columnComment + ",";
@@ -2061,9 +2090,9 @@ namespace tableCheck
 					//Create(queryCreate);
 					// db2 이름이 비었있으면 db1셀에 있는 컬럼내용을 db2에 추가해라
 					if (isChanged == true)
-				{
-					Create(alterTable);
-				}
+					{
+						Create(alterTable);
+					}
 				}
 			}
 			catch (Exception ex)
@@ -2182,12 +2211,6 @@ namespace tableCheck
 		{
 			try
 			{
-				dataGridView1.SuspendLayout();
-				dataGridView2.SuspendLayout();
-				dataGridView3.SuspendLayout();
-				dataGridView5.SuspendLayout();
-				dataGridView7.SuspendLayout();
-				dataGridView9.SuspendLayout();
 
 				string connectionDb1 = "Server = " + textBoxIp1.Text + ";Port = " + textBoxPort1.Text + ";Database = " + textBoxDb1.Text + ";username = " + textBoxUn1.Text + ";password = " + textBoxPw1.Text + ";" + "Charset=utf8;";
 				string connectionDb2 = "Server = " + textBoxIp2.Text + ";Port = " + textBoxPort2.Text + ";Database = " + textBoxDb2.Text + ";username = " + textBoxUn2.Text + ";password = " + textBoxPw2.Text + ";" + "Charset=utf8;";
@@ -2216,6 +2239,8 @@ namespace tableCheck
 					listTable2.Add(listInfo);
 				}
 
+				//프로시저 서스펜드
+				dataGridView3.SuspendLayout();
 
 				for (int k = 0; k < listTable1.Count; k++)
 				{
@@ -2278,6 +2303,8 @@ namespace tableCheck
 
 					dataGridView3.Rows[dataGridView3.Rows.Count - 1].Cells[a++].Value = listTableAll[k].procedureQuery2;
 
+					//프로시저 레주메
+					dataGridView3.ResumeLayout();
 				}
 				int i = 0;
 				dataGridView3.Columns[i++].ReadOnly = false;
@@ -2289,12 +2316,6 @@ namespace tableCheck
 				{
 					conn.Close();
 				}
-				dataGridView1.ResumeLayout();
-				dataGridView2.ResumeLayout();
-				dataGridView3.ResumeLayout();
-				dataGridView5.ResumeLayout();
-				dataGridView7.ResumeLayout();
-				dataGridView9.ResumeLayout();
 			}
 
 			catch (Exception ex)
@@ -3351,7 +3372,7 @@ namespace tableCheck
 
 		private void dataGridView2_SortCompare(object sender, DataGridViewSortCompareEventArgs e)
 		{
-			
+
 		}
 
 		private void button3_Click(object sender, EventArgs e)
