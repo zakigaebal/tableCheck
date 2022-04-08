@@ -612,6 +612,8 @@ namespace tableCheck
 				}
 			}
 			dataGridView1.Rows.Clear();
+			dataGridView1.SuspendLayout();
+
 			for (int k = 0; k < listTableAll.Count; k++)
 			{
 				dataGridView1.Rows.Add(1);
@@ -635,6 +637,8 @@ namespace tableCheck
 			dataGridView1.Columns[i++].ReadOnly = true;
 			dataGridView1.Columns[i++].ReadOnly = true;
 			dataGridView1.Columns[i++].ReadOnly = true;
+			dataGridView1.ResumeLayout();
+
 		}
 
 
@@ -1115,7 +1119,7 @@ namespace tableCheck
 					if (found == false)
 					{
 					//listTable2가 다르면 새 컬럼에 넣어
-						listTableAll.Insert(i, new ColumnsAll()
+						listTableAll.Insert(i+1, new ColumnsAll()
 						{
 							COLUMN_NAME2 = listTable2[i].COLUMN_NAME,
 							DATA_TYPE2 = listTable2[i].DATA_TYPE,
@@ -1169,6 +1173,8 @@ namespace tableCheck
 
 
 				dataGridView2.Rows.Clear();
+				dataGridView2.SuspendLayout();
+
 				for (int i = 0; i < listTableAll.Count; i++)
 				{
 					dataGridView2.Rows.Add(1);
@@ -1192,6 +1198,8 @@ namespace tableCheck
 					dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[k++].Value = listTableAll[i].ORDINAL_POSITION2;
 
 				}
+				dataGridView2.ResumeLayout();
+
 				con.Close();
 				con2.Close();
 			}
