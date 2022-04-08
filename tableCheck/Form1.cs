@@ -392,8 +392,6 @@ namespace tableCheck
 		{
 			try
 			{
-
-
 				if (textBoxIp1.Text == "")
 				{
 					MessageBox.Show("데이터베이스 서버를 입력해주세요.");
@@ -424,22 +422,22 @@ namespace tableCheck
 					textBoxPw1.Focus();
 					return;
 				}
-
 				Cursor.Current = Cursors.WaitCursor;
 
+				//연결스트링
+				string connectionDb1 = "Server = " + textBoxIp1.Text + ";Port = " + textBoxPort1.Text + ";Database = " + textBoxDb1.Text + ";username = " + textBoxUn1.Text + ";password=" + textBoxPw1.Text + ";Charset=utf8;";
+				string connectionDb2 = "Server = " + textBoxIp2.Text + ";Port = " + textBoxPort2.Text + ";Database = " + textBoxDb2.Text + ";username = " + textBoxUn2.Text + ";password=" + textBoxPw2.Text + ";Charset=utf8;";
 
+				con = new MySqlConnection(connectionDb1);
+				con2 = new MySqlConnection(connectionDb2);
+				con.Open();
+				con2.Open();
 
 				//테이블 보여주기 메소드
 				showTable();
 
 				//프로시저 보여주기메소드
 				showProceaser();
-
-
-				//연결스트링
-				string connectionDb1 = "Server = " + textBoxIp1.Text + ";Port = " + textBoxPort1.Text + ";Database = " + textBoxDb1.Text + ";username = " + textBoxUn1.Text + ";password = " + textBoxPw1.Text + ";" + "Charset=utf8;";
-				string connectionDb2 = "Server = " + textBoxIp2.Text + ";Port = " + textBoxPort2.Text + ";Database = " + textBoxDb2.Text + ";username = " + textBoxUn2.Text + ";password = " + textBoxPw2.Text + ";" + "Charset=utf8;";
-
 
 				//프로시저 생성쿼리메소드
 				for (int num = 0; num < dataGridView3.Rows.Count; num++)
@@ -545,7 +543,8 @@ namespace tableCheck
 					con2.Close();
 				}
 
-
+				con.Close();
+				con2.Close();
 
 
 				//진행중 작업사항 100 채우기 메소드
@@ -564,13 +563,7 @@ namespace tableCheck
 
 		private void showTable()
 		{
-			string connectionDb1 = "Server = " + textBoxIp1.Text + ";Port = " + textBoxPort1.Text + ";Database = " + textBoxDb1.Text + ";username = " + textBoxUn1.Text + ";password=" + textBoxPw1.Text + ";Charset=utf8;";
-			string connectionDb2 = "Server = " + textBoxIp2.Text + ";Port = " + textBoxPort2.Text + ";Database = " + textBoxDb2.Text + ";username = " + textBoxUn2.Text + ";password=" + textBoxPw2.Text + ";Charset=utf8;";
 
-			con = new MySqlConnection(connectionDb1);
-			con2 = new MySqlConnection(connectionDb2);
-			con.Open();
-			con2.Open();
 
 
 			string query1 = "SELECT b.table_name tbl, a.table_comment cmt, COUNT(*) cnt, b.EXTRA ex  FROM information_schema.tables a left JOIN information_schema.columns b ON a.TABLE_NAME=b.table_name WHERE a.table_schema = '" + textBoxDb1.Text + "' AND b.table_schema = '" + textBoxDb1.Text + "'  AND a.table_type='BASE TABLE' group BY b.TABLE_NAME ORDER BY b.TABLE_NAME asc;";
@@ -643,8 +636,7 @@ namespace tableCheck
 			dataGridView1.Columns[i++].ReadOnly = true;
 			dataGridView1.Columns[i++].ReadOnly = true;
 			dataGridView1.Columns[i++].ReadOnly = true;
-			con.Close();
-			con2.Close();
+
 		}
 
 		class functionInfo
@@ -1026,60 +1018,60 @@ namespace tableCheck
 				_ID2 = textBoxUn2.Text;
 				_PWD2 = textBoxPw2.Text;
 
-				StringBuilder _strArg = new StringBuilder("");
-				StringBuilder _strArg2 = new StringBuilder("");
-				_strArg.Append("Server = ");           // SQL
-				_strArg.Append(_HostName);        // 서버
-				_strArg.Append(";Port = ");
-				_strArg.Append(_PORT);                 // 포트
-				_strArg.Append(";Database = ");
-				_strArg.Append(_DATABASE);          // 데이터베이스
-				_strArg.Append(";username = ");
-				_strArg.Append(_ID);                     // ID
-				_strArg.Append(";password = ");
-				_strArg.Append(_PWD);                 // PWD
-				_strArg.Append(";");
-				_strArg.Append("Charset=utf8;");
+				StringBuilder _str = new StringBuilder("");
+				StringBuilder _str2 = new StringBuilder("");
+				_str.Append("Server = ");           // SQL
+				_str.Append(_HostName);        // 서버
+				_str.Append(";Port = ");
+				_str.Append(_PORT);                 // 포트
+				_str.Append(";Database = ");
+				_str.Append(_DATABASE);          // 데이터베이스
+				_str.Append(";username = ");
+				_str.Append(_ID);                     // ID
+				_str.Append(";password = ");
+				_str.Append(_PWD);                 // PWD
+				_str.Append(";");
+				_str.Append("Charset=utf8;");
 
-				_strArg2.Append("Server = ");           // SQL
-				_strArg2.Append(_HostName2);        // 서버
-				_strArg2.Append(";Port = ");
-				_strArg2.Append(_PORT2);                 // 포트
-				_strArg2.Append(";Database = ");
-				_strArg2.Append(_DATABASE2);          // 데이터베이스
-				_strArg2.Append(";username = ");
-				_strArg2.Append(_ID2);                     // ID
-				_strArg2.Append(";password = ");
-				_strArg2.Append(_PWD2);                 // PWD
-				_strArg2.Append(";");
-				_strArg2.Append("Charset=utf8;");
+				_str2.Append("Server = ");           // SQL
+				_str2.Append(_HostName2);        // 서버
+				_str2.Append(";Port = ");
+				_str2.Append(_PORT2);                 // 포트
+				_str2.Append(";Database = ");
+				_str2.Append(_DATABASE2);          // 데이터베이스
+				_str2.Append(";username = ");
+				_str2.Append(_ID2);                     // ID
+				_str2.Append(";password = ");
+				_str2.Append(_PWD2);                 // PWD
+				_str2.Append(";");
+				_str2.Append("Charset=utf8;");
 
-
-				MySqlConnection con = new MySqlConnection(_strArg.ToString());
+				MySqlConnection con = new MySqlConnection(_str.ToString());
+				MySqlConnection con2 = new MySqlConnection(_str2.ToString());
 				con.Open();
-				MySqlConnection con2 = new MySqlConnection(_strArg2.ToString());
 				con2.Open();
-
 
 				// 테이블명의 필드를 가져와서 데이터그리드뷰2에 보여준다
 				MySqlDataReader rdr = DBConnectTest2(con, tableName, _DATABASE);
 				List<Columns> listTable1 = new List<Columns>();
 				List<Columns> listTable2 = new List<Columns>();
 				List<ColumnsAll> listTableAll = new List<ColumnsAll>();
+
 				while (rdr.Read())
 				{
 					Columns listInfo = new Columns() { COLUMN_NAME = rdr["fieldName"].ToString(), DATA_TYPE = rdr["dataType"].ToString(), CHARACTER_MAXIMUM_LENGTH = rdr["length"].ToString(), COLUMN_DEFAULT = rdr["default1"].ToString(), COLUMN_COMMENT = rdr["comment"].ToString(), IS_NULLABLE = rdr["nullable"].ToString(), COLLATION_NAME = rdr["colName"].ToString(), INCREMENT = rdr["EX"].ToString(), ORDINAL_POSITION = rdr["pos"].ToString() };
 					listTable1.Add(listInfo);
 				}
-
 				MySqlDataReader rdr2 = DBConnectTest2(con2, tableName, _DATABASE2);
-
 				while (rdr2.Read())
 				{
 					Columns listInfo = new Columns() { COLUMN_NAME = rdr2["fieldName"].ToString(), DATA_TYPE = rdr2["dataType"].ToString(), CHARACTER_MAXIMUM_LENGTH = rdr2["length"].ToString(), COLUMN_DEFAULT = rdr2["default1"].ToString(), COLUMN_COMMENT = rdr2["comment"].ToString(), IS_NULLABLE = rdr2["nullable"].ToString(), COLLATION_NAME = rdr2["colName"].ToString(), INCREMENT = rdr2["EX"].ToString(), ORDINAL_POSITION = rdr2["pos"].ToString() };
 					listTable2.Add(listInfo);
 				}
-
+				// listTable1 저장
+				// listTable2 저장
+				// listTable1의 개수만큼 listTableAll에 추가했음
+				//
 
 				for (int i = 0; i < listTable1.Count; i++)
 				{
@@ -1097,6 +1089,9 @@ namespace tableCheck
 						ORDINAL_POSITION1 = listTable1[i].ORDINAL_POSITION
 					});
 				}
+				//
+				//listTable2의 개수만큼 listTableAll에 추가해
+				// 그런데 listTable2.columnName이 같으면 columnName2에 넣어
 				for (int i = 0; i < listTable2.Count; i++)
 				{
 					bool found = false;
@@ -1109,6 +1104,7 @@ namespace tableCheck
 							listTableAll[j].CHARACTER_MAXIMUM_LENGTH2 = listTable2[i].CHARACTER_MAXIMUM_LENGTH;
 							listTableAll[j].COLUMN_DEFAULT2 = listTable2[i].COLUMN_DEFAULT;
 							listTableAll[j].COLUMN_COMMENT2 = listTable2[i].COLUMN_COMMENT;
+
 							listTableAll[j].IS_NULLABLE2 = listTable2[i].IS_NULLABLE;
 							listTableAll[j].COLLATION_NAME2 = listTable2[i].COLLATION_NAME;
 							listTableAll[j].INCREMENT2 = listTable2[i].INCREMENT;
@@ -1116,12 +1112,15 @@ namespace tableCheck
 
 							found = true;
 							listTableAll[j].TABLE = "A+B";
+
 							break;
 						}
 					}
+
 					if (found == false)
 					{
-						listTableAll.Add(new ColumnsAll()
+					//listTable2가 다르면 새 컬럼에 넣어
+						listTableAll.Insert(i, new ColumnsAll()
 						{
 							COLUMN_NAME2 = listTable2[i].COLUMN_NAME,
 							DATA_TYPE2 = listTable2[i].DATA_TYPE,
@@ -1132,10 +1131,46 @@ namespace tableCheck
 							COLLATION_NAME2 = listTable2[i].COLLATION_NAME,
 							INCREMENT2 = listTable2[i].INCREMENT,
 							ORDINAL_POSITION2 = listTable2[i].ORDINAL_POSITION
-
 						});
 					}
 				}
+				//listTableAll.Add(new ColumnsAll()
+				//{
+				//	COLUMN_NAME2 = listTable2[i].COLUMN_NAME,
+				//	DATA_TYPE2 = listTable2[i].DATA_TYPE,
+				//	CHARACTER_MAXIMUM_LENGTH2 = listTable2[i].CHARACTER_MAXIMUM_LENGTH,
+				//	COLUMN_DEFAULT2 = listTable2[i].COLUMN_DEFAULT,
+				//	COLUMN_COMMENT2 = listTable2[i].COLUMN_COMMENT,
+				//	IS_NULLABLE2 = listTable2[i].IS_NULLABLE,
+				//	COLLATION_NAME2 = listTable2[i].COLLATION_NAME,
+				//	INCREMENT2 = listTable2[i].INCREMENT,
+				//	ORDINAL_POSITION2 = listTable2[i].ORDINAL_POSITION
+				//});
+
+				//for (int k = 0; k < listTable1.Count; k++)
+				//{
+				//	listTableAll.Add(new ListInfoAll() { db = "A", tableName = listTable1[k].tableName, fieldCount1 = listTable1[k].fieldCount, fieldCount2 = 0, tableCmt = listTable1[k].tableCmt });
+				//}
+				//for (int k = 0; k < listTable2.Count; k++)
+				//{
+				//	bool found = false;
+				//	for (int j = 0; j < listTableAll.Count; j++)
+				//	{
+				//		if (listTable2[k].tableName == listTableAll[j].tableName)
+				//		{
+				//			listTableAll[j].fieldCount2 = listTable2[k].fieldCount;
+				//			found = true;
+				//			listTableAll[j].db = "A+B";
+				//			break;
+				//		}
+				//	}
+				//	//listTableAll.Add(new ListInfoAll() { db = "A", tableName = listTable1[k].tableName, fieldCount1 = listTable1[k].fieldCount, fieldCount2 = 0 });
+				//	if (found == false)
+				//	{
+				//		listTableAll.Add(new ListInfoAll() { db = "B", tableName = listTable2[k].tableName, fieldCount1 = "", fieldCount2 = listTable2[k].fieldCount, tableCmt = listTable2[k].tableCmt });
+				//	}
+				//}
+
 
 
 				dataGridView2.Rows.Clear();
@@ -1152,7 +1187,6 @@ namespace tableCheck
 					dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[k++].Value = listTableAll[i].INCREMENT1;
 					dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[k++].Value = listTableAll[i].ORDINAL_POSITION1;
 
-
 					dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[k++].Value = listTableAll[i].COLUMN_NAME2;
 					dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[k++].Value = listTableAll[i].DATA_TYPE2;
 					dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[k++].Value = listTableAll[i].IS_NULLABLE2;
@@ -1165,12 +1199,6 @@ namespace tableCheck
 				}
 				con.Close();
 				con2.Close();
-				int rowIndex = dataGridView1.CurrentCell.RowIndex;
-				if (rowIndex < 0) return;
-				if (dataGridView1.Rows[rowIndex].Cells[7].Value == "필드수 다름")
-				{
-					//	dataGridView2.Sort(dataGridView2.Columns[15], ListSortDirection.Ascending);
-				}
 			}
 			catch (Exception ex)
 			{
@@ -2060,6 +2088,18 @@ namespace tableCheck
 					}
 
 
+
+
+					//fields = fields + "`" + fieldName + "` " + columnType + " " + nullable + def + columnComment + ",";
+					//string queryCreate = "CREATE TABLE `" + tbl
+					//+ "` (" + fields + "PRIMARY KEY (`" + primarykey + "`) USING BTREE)" + "DEFAULT CHARACTER SET utf8 COLLATE=" + "'utf8_general_ci'" + "ENGINE=InnoDB;";
+					//Create(queryCreate);
+					// db2 이름이 비었있으면 db1셀에 있는 컬럼내용을 db2에 추가해라
+					if (isChanged == true)
+					{
+						Create(alterTable);
+					}
+
 					//위치바꾸기
 					if (dataGridView2.Rows[0].Cells[15].Value == null)
 					{
@@ -2081,14 +2121,12 @@ namespace tableCheck
 					else if (dataGridView2.Rows[i].Cells[7].Value.ToString().Trim() != dataGridView2.Rows[i].Cells[15].Value.ToString().Trim())
 					{
 						isChanged = true;
+						if (dataGridView2.Rows[i - 1].Cells[0].Value == null)
+						{
+							continue;
+						}
 						alterTable = modify + fieldType1 + nullable + def + comment1 + " AFTER " + dataGridView2.Rows[i - 1].Cells[0].Value.ToString();
 					}
-
-					//fields = fields + "`" + fieldName + "` " + columnType + " " + nullable + def + columnComment + ",";
-					//string queryCreate = "CREATE TABLE `" + tbl
-					//+ "` (" + fields + "PRIMARY KEY (`" + primarykey + "`) USING BTREE)" + "DEFAULT CHARACTER SET utf8 COLLATE=" + "'utf8_general_ci'" + "ENGINE=InnoDB;";
-					//Create(queryCreate);
-					// db2 이름이 비었있으면 db1셀에 있는 컬럼내용을 db2에 추가해라
 					if (isChanged == true)
 					{
 						Create(alterTable);
@@ -2309,13 +2347,7 @@ namespace tableCheck
 				int i = 0;
 				dataGridView3.Columns[i++].ReadOnly = false;
 
-				if (conn == null)
-				{
-				}
-				else if (conn.State == ConnectionState.Open)
-				{
-					conn.Close();
-				}
+
 			}
 
 			catch (Exception ex)
@@ -3386,6 +3418,11 @@ namespace tableCheck
 		}
 
 		private void checkBoxStop_CheckedChanged(object sender, EventArgs e)
+		{
+
+		}
+
+		private void panel2_Paint(object sender, PaintEventArgs e)
 		{
 
 		}
