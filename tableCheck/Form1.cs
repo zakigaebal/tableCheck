@@ -978,7 +978,7 @@ namespace tableCheck
 				LogMgr.ExceptionLog(ex);
 			}
 		}
-
+		//연결메소드저장만들기
 
 
 
@@ -1116,7 +1116,6 @@ namespace tableCheck
 							break;
 						}
 					}
-
 					if (found == false)
 					{
 					//listTable2가 다르면 새 컬럼에 넣어
