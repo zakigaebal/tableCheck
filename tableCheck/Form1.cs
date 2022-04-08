@@ -20,29 +20,23 @@ namespace tableCheck
 	/// 상태에 진행중 진행완료
 	/// 진행중 컬럼은 프로그레스바로 보여주기
 	/// </summary>
-
 	public partial class Form1 : Form
 	{
-
 		DataTable dt = new DataTable();
 		MySqlConnection conn;
 		MySqlConnection conn2;
-
 		MySqlConnection con;
 		MySqlConnection con2;
-
 		// 체크박스 추가
 		DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn();
 		//버튼 추가
 		DataGridViewButtonColumn buttonColumn = new DataGridViewButtonColumn();
 		//프로그레스 추가
 		DataGridViewProgressColumn progressColumn = new DataGridViewProgressColumn();
-
 		DataGridViewProgressColumn progressColumn2 = new DataGridViewProgressColumn();
 		DataGridViewProgressColumn progressColumn3 = new DataGridViewProgressColumn();
 		DataGridViewProgressColumn progressColumn4 = new DataGridViewProgressColumn();
 		DataGridViewProgressColumn progressColumn5 = new DataGridViewProgressColumn();
-
 		private string _HostName = "";    //서버연결방식 도메인
 		private string _ServerName = "";  //서버연결방식 아이피
 		private string _CONNECT = "";    //도메인인지 아이피인지 여부
@@ -50,7 +44,6 @@ namespace tableCheck
 		private string _PWD = "";          //패스워드
 		private string _PORT = "";          //포트
 		private string _DATABASE = "";   //데이터베이스명
-
 		private string _HostName2 = "";    //서버연결방식 도메인
 		private string _ServerName2 = "";  //서버연결방식 아이피
 		private string _CONNECT2 = "";    //도메인인지 아이피인지 여부
@@ -58,24 +51,18 @@ namespace tableCheck
 		private string _PWD2 = "";          //패스워드
 		private string _PORT2 = "";          //포트
 		private string _DATABASE2 = "";   //데이터베이스명
-
 		string startupPath = Application.StartupPath + @"\tableCheck.ini";
 		string mc = "tableCheck";
 		List<info> _infoList = new List<info>();
-
-
 		public Form1()
 		{
 			InitializeComponent();
 			FormClosed += Form_Closing;
-
 		}
-
 		private void Form_Closing(object sender, FormClosedEventArgs e)
 		{
 			initCloseMethod();
 		}
-
 		#region ini 입력 메소드
 		[DllImport("kernel32")]
 		private static extern long WritePrivateProfileString(string section, string key, string val, string filePath);
@@ -86,8 +73,6 @@ namespace tableCheck
 		{
 			public int Progress { get; set; }
 		}
-
-
 		private void Form1_Load(object sender, EventArgs e)
 		{
 			//button2_Click(sender, e);
@@ -536,57 +521,73 @@ namespace tableCheck
 					if (tbl == null) return;
 					string queryCreate = "SHOW CREATE VIEW " + tbl;
 					string rdrString = "Create View";
-
 					dgvShowAll(queryCreate, num, rdrString);
-
 					con.Close();
 					con2.Close();
 				}
-
 				con.Close();
 				con2.Close();
-
 
 				//진행중 작업사항 100 채우기 메소드
 				compare();
 
-
-
+				//연결저장
+				connectionSave();
 
 				Cursor.Current = Cursors.Default;
 			}
 			catch (Exception ex)
 			{
+				Cursor.Current = Cursors.Default;
 				LogMgr.ExceptionLog(ex);
 			}
 		}
 
+		private void connectionSave()
+		{
+			//데이터베이스 저장하기
+			string connectionDb1 = "Server = " + textBoxIp1.Text + ";Port = " + textBoxPort1.Text + ";Database = " + textBoxDb1.Text + ";username = " + textBoxUn1.Text + ";password = " + textBoxPw1.Text + ";" + "Charset=utf8;";
+			string connectionDb2 = "Server = " + textBoxIp2.Text + ";Port = " + textBoxPort2.Text + ";Database = " + textBoxDb2.Text + ";username = " + textBoxUn2.Text + ";password = " + textBoxPw2.Text + ";" + "Charset=utf8;";
+			con = new MySqlConnection(connectionDb1);
+			con2 = new MySqlConnection(connectionDb2);
+
+			//con.Open();
+			//con2.Open();
+
+			MySqlCommand sc = new MySqlCommand();
+			sc.Connection = con;
+			sc.CommandText = "Select * from Report_Test where Company = '삼성'";
+			sc.CommandType = CommandType.Text;
+
+			MySqlDataAdapter sda = new MySqlDataAdapter();
+			DataSet ds = new DataSet();
+			sda.SelectCommand = sc;
+			sda.Fill(ds, "SamSung");
+
+			//con.Close();
+			//con2.Close();
+			 
+		}
+
 		private void showTable()
 		{
-
-
-
 			string query1 = "SELECT b.table_name tbl, a.table_comment cmt, COUNT(*) cnt, b.EXTRA ex  FROM information_schema.tables a left JOIN information_schema.columns b ON a.TABLE_NAME=b.table_name WHERE a.table_schema = '" + textBoxDb1.Text + "' AND b.table_schema = '" + textBoxDb1.Text + "'  AND a.table_type='BASE TABLE' group BY b.TABLE_NAME ORDER BY b.TABLE_NAME asc;";
 			string query2 = "SELECT b.table_name tbl, a.table_comment cmt, COUNT(*) cnt, b.EXTRA ex  FROM information_schema.tables a left JOIN information_schema.columns b ON a.TABLE_NAME=b.table_name WHERE a.table_schema = '" + textBoxDb2.Text + "' AND b.table_schema = '" + textBoxDb2.Text + "' AND a.table_type='BASE TABLE'  group BY b.TABLE_NAME ORDER BY b.TABLE_NAME asc;";
 			MySqlDataReader rdr = DBConnect(con, query1);
 			List<ListInfo> listTable1 = new List<ListInfo>();
 			List<ListInfo> listTable2 = new List<ListInfo>();
 			List<ListInfoAll> listTableAll = new List<ListInfoAll>();
-
 			while (rdr.Read())
 			{
 				ListInfo listInfo = new ListInfo() { tableName = rdr["tbl"].ToString(), fieldCount = Convert.ToInt32(rdr["cnt"].ToString()), tableCmt = rdr["cmt"].ToString() };
 				listTable1.Add(listInfo);
 			}
-
 			MySqlDataReader rdr2 = DBConnect(con2, query2);
 			while (rdr2.Read())
 			{
 				ListInfo listInfo = new ListInfo() { tableName = rdr2["tbl"].ToString(), fieldCount = Convert.ToInt32(rdr2["cnt"].ToString()), tableCmt = rdr["cmt"].ToString() };
 				listTable2.Add(listInfo);
 			}
-
-
 			for (int k = 0; k < listTable1.Count; k++)
 			{
 				listTableAll.Add(new ListInfoAll() { db = "A", tableName = listTable1[k].tableName, fieldCount1 = listTable1[k].fieldCount, fieldCount2 = 0, tableCmt = listTable1[k].tableCmt });
@@ -618,7 +619,6 @@ namespace tableCheck
 				if (listTableAll[k].db == "B")
 				{
 					dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[0].Value = false;
-
 				}
 				dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[1].Value = listTableAll[k].db;
 				dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[2].Value = listTableAll[k].tableName;
@@ -626,7 +626,6 @@ namespace tableCheck
 				dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[4].Value = listTableAll[k].fieldCount1;
 				dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[5].Value = listTableAll[k].fieldCount2;
 			}
-
 			int i = 0;
 			dataGridView1.Columns[i++].ReadOnly = false;
 			dataGridView1.Columns[i++].ReadOnly = true;
@@ -636,8 +635,8 @@ namespace tableCheck
 			dataGridView1.Columns[i++].ReadOnly = true;
 			dataGridView1.Columns[i++].ReadOnly = true;
 			dataGridView1.Columns[i++].ReadOnly = true;
-
 		}
+
 
 		class functionInfo
 		{
@@ -645,7 +644,6 @@ namespace tableCheck
 			public string FUNCTION_CREATED;
 			public string FUNCTION_MODIFIED;
 		}
-
 		class functionInfoAll
 		{
 			public string FUNCTION_NAME1;
@@ -657,16 +655,13 @@ namespace tableCheck
 			public string FUNCTION_MODIFIED1;
 			public string FUNCTION_MODIFIED2;
 		}
-
 		class EventInfo
 		{
 			public string EVENT_NAME;
 			public string CREATED;
 			public string LAST_ALTERED;
 			public string EVENTQUERY;
-
 		}
-
 		class EventInfoAll
 		{
 			public string EVENT_NAME1;
@@ -979,6 +974,7 @@ namespace tableCheck
 			}
 		}
 		//연결메소드저장만들기
+			
 
 
 
@@ -1627,7 +1623,7 @@ namespace tableCheck
 				List<Columns> listTable1 = new List<Columns>();
 				List<Columns> listTable2 = new List<Columns>();
 				List<ColumnsAll> listTableAll = new List<ColumnsAll>();
-				Delay(200);
+				Delay(20);
 				while (rdr.Read())
 				{
 					Columns listInfo = new Columns() { CREATETABLE = rdr["Create Table"].ToString() };
@@ -1867,7 +1863,6 @@ namespace tableCheck
 				{
 					continue;
 				}
-
 				string changePosition;
 				for (int k = 1; k < dataGridView2.Rows.Count; k++)
 				{
@@ -2019,11 +2014,11 @@ namespace tableCheck
 					else comment1 = " COMMENT '" + comment1 + "'";
 
 					string modify = "ALTER TABLE " + tbl + " MODIFY COLUMN " + "`" + fieldName1 + "` ";
-
+					string position = "";
 
 					if (dataGridView2.Rows[i].Cells[8].Value == null)
 					{
-						string addTable = "ALTER TABLE " + tbl + " ADD `" + fieldName1 + "` " + fieldType1 + nullable + def;
+						string addTable = "ALTER TABLE " + tbl + " ADD `" + fieldName1 + "` " + fieldType1 + nullable + def + comment1;
 						Create(addTable);
 					}
 
@@ -2099,6 +2094,7 @@ namespace tableCheck
 						Create(alterTable);
 					}
 
+
 					//위치바꾸기
 					if (dataGridView2.Rows[0].Cells[15].Value == null)
 					{
@@ -2107,7 +2103,7 @@ namespace tableCheck
 					if (dataGridView2.Rows[0].Cells[7].Value.ToString().Trim() != dataGridView2.Rows[0].Cells[15].Value.ToString().Trim())
 					{
 						isChanged = true;
-						alterTable = modify + fieldType1 + nullable + def + comment1 + " FIRST";
+						position = modify + fieldType1 + nullable + def + comment1 + " FIRST";
 					}
 					else if (dataGridView2.Rows[i].Cells[7].Value == null)
 					{
@@ -2124,13 +2120,17 @@ namespace tableCheck
 						{
 							continue;
 						}
-						alterTable = modify + fieldType1 + nullable + def + comment1 + " AFTER " + dataGridView2.Rows[i - 1].Cells[0].Value.ToString();
+						position = modify + fieldType1 + nullable + def + comment1 + " AFTER " + dataGridView2.Rows[i - 1].Cells[0].Value.ToString();
 					}
 					if (isChanged == true)
 					{
-						Create(alterTable);
+						Create(position);
 					}
+
 				}
+
+
+
 			}
 			catch (Exception ex)
 			{
@@ -2323,6 +2323,7 @@ namespace tableCheck
 					}
 				}
 				dataGridView3.Rows.Clear();
+
 				for (int k = 0; k < listTableAll.Count; k++)
 				{
 					dataGridView3.Rows.Add(1);
@@ -2370,10 +2371,6 @@ namespace tableCheck
 				con2 = new MySqlConnection(connectionDb2);
 				con.Open();
 				con2.Open();
-
-
-
-
 
 				string showEvent = "SELECT * FROM information_schema.EVENTS  WHERE event_schema='" + textBoxDb1.Text + "'";
 				MySqlDataReader rdrEvent = DBConnect(con, showEvent);
@@ -2823,7 +2820,7 @@ namespace tableCheck
 				List<Columns> listTable1 = new List<Columns>();
 				List<Columns> listTable2 = new List<Columns>();
 				List<ColumnsAll> listTableAll = new List<ColumnsAll>();
-				Delay(200);
+				Delay(20);
 
 				while (rdr.Read())
 				{
@@ -3214,7 +3211,7 @@ namespace tableCheck
 				List<Columns> listTable1 = new List<Columns>();
 				List<Columns> listTable2 = new List<Columns>();
 				List<ColumnsAll> listTableAll = new List<ColumnsAll>();
-				Delay(200);
+				Delay(20);
 
 				while (rdr.Read())
 				{
@@ -3285,7 +3282,7 @@ namespace tableCheck
 				List<Columns> listTable1 = new List<Columns>();
 				List<Columns> listTable2 = new List<Columns>();
 				List<ColumnsAll> listTableAll = new List<ColumnsAll>();
-				Delay(200);
+				Delay(20);
 
 				while (rdr.Read())
 				{
