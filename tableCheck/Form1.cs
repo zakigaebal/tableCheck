@@ -15,6 +15,7 @@ using tableCheck.Models;
 
 namespace tableCheck
 {
+
 	/// <summary>
 	/// db1 db2 port username ip password 맞으면 연결
 	/// 테이블 dawoon과 dawoon2 비교하기
@@ -22,6 +23,7 @@ namespace tableCheck
 	/// 상태에 진행중 진행완료
 	/// 진행중 컬럼은 프로그레스바로 보여주기
 	/// </summary>
+	
 	public partial class Form1 : Form
 	{
 		DataTable dt = new DataTable();
@@ -115,17 +117,21 @@ namespace tableCheck
 			dataGridView2.Columns.Add("column7", "NULL 허용");
 			dataGridView2.Columns.Add("column6", "기본값");
 			dataGridView2.Columns.Add("column7", "코멘트");
-			dataGridView2.Columns.Add("column7", "조합");
-			dataGridView2.Columns.Add("column7", "EXTRA");
-			dataGridView2.Columns.Add("column7", "위치1");
-			dataGridView2.Columns.Add("column0", "이름");
-			dataGridView2.Columns.Add("column1", "유형");
-			dataGridView2.Columns.Add("column7", "NULL 허용");
-			dataGridView2.Columns.Add("column6", "기본값");
-			dataGridView2.Columns.Add("column7", "코멘트");
-			dataGridView2.Columns.Add("column7", "조합");
-			dataGridView2.Columns.Add("column7", "EXTRA");
-			dataGridView2.Columns.Add("column7", "위치2");
+			dataGridView2.Columns.Add("column8", "조합");
+			dataGridView2.Columns.Add("column9", "EXTRA");
+			dataGridView2.Columns.Add("column11", "인덱스1");
+			dataGridView2.Columns.Add("column10", "위치1");
+
+
+			dataGridView2.Columns.Add("column01", "이름");
+			dataGridView2.Columns.Add("column11", "유형");
+			dataGridView2.Columns.Add("column71", "NULL 허용");
+			dataGridView2.Columns.Add("column61", "기본값");
+			dataGridView2.Columns.Add("column71", "코멘트");
+			dataGridView2.Columns.Add("column72", "조합");
+			dataGridView2.Columns.Add("column73", "EXTRA");
+			dataGridView2.Columns.Add("column741", "인덱스2");
+			dataGridView2.Columns.Add("column74", "위치2");
 
 
 			dataGridView3.Columns.Add("proName", "프로시저 이름1");
@@ -411,6 +417,9 @@ namespace tableCheck
 				}
 				Cursor.Current = Cursors.WaitCursor;
 
+				//연결저장
+				connectionSave();
+
 				//연결스트링
 				string connectionDb1 = "Server = " + textBoxIp1.Text + ";Port = " + textBoxPort1.Text + ";Database = " + textBoxDb1.Text + ";username = " + textBoxUn1.Text + ";password=" + textBoxPw1.Text + ";Charset=utf8;";
 				string connectionDb2 = "Server = " + textBoxIp2.Text + ";Port = " + textBoxPort2.Text + ";Database = " + textBoxDb2.Text + ";username = " + textBoxUn2.Text + ";password=" + textBoxPw2.Text + ";Charset=utf8;";
@@ -533,8 +542,7 @@ namespace tableCheck
 				//진행중 작업사항 100 채우기 메소드
 				compare();
 
-				//연결저장
-				connectionSave();
+
 
 				Cursor.Current = Cursors.Default;
 			}
@@ -547,14 +555,16 @@ namespace tableCheck
 
 		private void connectionSave()
 		{
-			DirectoryInfo di = new DirectoryInfo(@"C:\dw\bk");
-
-			if (di.Exists == false)
+			DirectoryInfo dw = new DirectoryInfo(@"C:\dw");
+			if (dw.Exists == false)
 			{
-				di.Create();
+				dw.Create();
 			}
-
-
+			DirectoryInfo backup = new DirectoryInfo(@"C:\dw\backup");
+			if (backup.Exists == false)
+			{
+				backup.Create();
+			}
 			//string command = "C:\\xampp" +"\\mysql\\bin\\mysqldump.exe -u root -pekdnsel dawoon > sa.sql";
 			//Process.Start("cmd.exe", command);
 			//if (!Directory.Exists("C:\\dw\bk"))
@@ -575,7 +585,7 @@ namespace tableCheck
 			string date = DateTime.Now.ToString("yyyyMMdd-HHmmss").ToString();
 			string asd = "21211";
 			process.Start();
-			process.StandardInput.Write(@"C:\xampp\mysql\bin\\mysqldump.exe -u root -pekdnsel dawoon > C:\dw\bk\" + "BK-" + date + ".sql" + Environment.NewLine);
+			process.StandardInput.Write(@"C:\xampp\mysql\bin\\mysqldump.exe -u root -pekdnsel dawoon > C:\dw\backup\" + "BK-" + date + ".sql" + Environment.NewLine);
 			// 명령어를 보낼때는 꼭 마무리를 해줘야 한다. 그래서 마지막에 NewLine가 필요하다
 			process.StandardInput.Close();
 			string result = process.StandardOutput.ReadToEnd();
@@ -831,6 +841,8 @@ namespace tableCheck
 
 			public string SHOWTABLE;
 			public string CREATETABLE;
+
+			public string COLUMN_KEY;
 		}
 
 		class ColumnsAll
@@ -867,6 +879,10 @@ namespace tableCheck
 			public string SHOWTABLE2;
 			public string CREATETABLE1;
 			public string CREATETABLE2;
+
+			public string COLUMN_KEY1;
+			public string COLUMN_KEY2;
+
 		}
 		//
 
@@ -937,7 +953,7 @@ namespace tableCheck
 		//데이터베이스와 테이블인자를 받아서 컬럼테이블에 나타내기
 		private MySqlDataReader DBConnectTest2(MySqlConnection con, string tableName, string database)
 		{
-			string sql2 = "SELECT COLUMN_NAME fieldName, COLUMN_TYPE dataType, CHARACTER_MAXIMUM_LENGTH length, COLUMN_DEFAULT default1, COLUMN_COMMENT comment, IS_NULLABLE nullable, COLLATION_NAME colName, EXTRA EX, ORDINAL_POSITION pos FROM information_schema.columns WHERE table_schema= '" + database + "' and TABLE_NAME = '" + tableName + "' ORDER BY TABLE_NAME asc";
+			string sql2 = "SELECT COLUMN_NAME fieldName, COLUMN_TYPE dataType, CHARACTER_MAXIMUM_LENGTH length, COLUMN_DEFAULT default1, COLUMN_COMMENT comment, IS_NULLABLE nullable, COLLATION_NAME colName, EXTRA EX, ORDINAL_POSITION pos, column_key colKey FROM information_schema.columns WHERE table_schema= '" + database + "' and TABLE_NAME = '" + tableName + "' ORDER BY TABLE_NAME asc";
 			MySqlCommand cmd = new MySqlCommand(sql2, con);
 			MySqlDataReader rdr = cmd.ExecuteReader();
 			return rdr;
@@ -1079,18 +1095,22 @@ namespace tableCheck
 
 				while (rdr.Read())
 				{
-					Columns listInfo = new Columns() { COLUMN_NAME = rdr["fieldName"].ToString(), DATA_TYPE = rdr["dataType"].ToString(), CHARACTER_MAXIMUM_LENGTH = rdr["length"].ToString(), COLUMN_DEFAULT = rdr["default1"].ToString(), COLUMN_COMMENT = rdr["comment"].ToString(), IS_NULLABLE = rdr["nullable"].ToString(), COLLATION_NAME = rdr["colName"].ToString(), INCREMENT = rdr["EX"].ToString(), ORDINAL_POSITION = rdr["pos"].ToString() };
+					Columns listInfo = new Columns() { COLUMN_NAME = rdr["fieldName"].ToString(), DATA_TYPE = rdr["dataType"].ToString(), CHARACTER_MAXIMUM_LENGTH = rdr["length"].ToString(), COLUMN_DEFAULT = rdr["default1"].ToString(), COLUMN_COMMENT = rdr["comment"].ToString(), IS_NULLABLE = rdr["nullable"].ToString(), COLLATION_NAME = rdr["colName"].ToString(), INCREMENT = rdr["EX"].ToString(), ORDINAL_POSITION = rdr["pos"].ToString(), COLUMN_KEY = rdr["colKey"].ToString() };
 					listTable1.Add(listInfo);
 				}
 				MySqlDataReader rdr2 = DBConnectTest2(con2, tableName, _DATABASE2);
 				while (rdr2.Read())
 				{
-					Columns listInfo = new Columns() { COLUMN_NAME = rdr2["fieldName"].ToString(), DATA_TYPE = rdr2["dataType"].ToString(), CHARACTER_MAXIMUM_LENGTH = rdr2["length"].ToString(), COLUMN_DEFAULT = rdr2["default1"].ToString(), COLUMN_COMMENT = rdr2["comment"].ToString(), IS_NULLABLE = rdr2["nullable"].ToString(), COLLATION_NAME = rdr2["colName"].ToString(), INCREMENT = rdr2["EX"].ToString(), ORDINAL_POSITION = rdr2["pos"].ToString() };
+					Columns listInfo = new Columns() { COLUMN_NAME = rdr2["fieldName"].ToString(), DATA_TYPE = rdr2["dataType"].ToString(), CHARACTER_MAXIMUM_LENGTH = rdr2["length"].ToString(), COLUMN_DEFAULT = rdr2["default1"].ToString(), COLUMN_COMMENT = rdr2["comment"].ToString(), IS_NULLABLE = rdr2["nullable"].ToString(), COLLATION_NAME = rdr2["colName"].ToString(), INCREMENT = rdr2["EX"].ToString(), ORDINAL_POSITION = rdr2["pos"].ToString(), COLUMN_KEY = rdr2["colKey"].ToString() };
 					listTable2.Add(listInfo);
 				}
+
+
 				// listTable1 저장
 				// listTable2 저장
 				// listTable1의 개수만큼 listTableAll에 추가했음
+				
+
 				for (int i = 0; i < listTable1.Count; i++)
 				{
 					listTableAll.Add(new ColumnsAll()
@@ -1104,6 +1124,7 @@ namespace tableCheck
 						COLLATION_NAME1 = listTable1[i].COLLATION_NAME,
 
 						INCREMENT1 = listTable1[i].INCREMENT,
+						COLUMN_KEY1 = listTable1[i].COLUMN_KEY,
 						ORDINAL_POSITION1 = listTable1[i].ORDINAL_POSITION
 					});
 				}
@@ -1126,6 +1147,7 @@ namespace tableCheck
 							listTableAll[j].IS_NULLABLE2 = listTable2[i].IS_NULLABLE;
 							listTableAll[j].COLLATION_NAME2 = listTable2[i].COLLATION_NAME;
 							listTableAll[j].INCREMENT2 = listTable2[i].INCREMENT;
+							listTableAll[j].COLUMN_KEY2 = listTable2[i].COLUMN_KEY;
 							listTableAll[j].ORDINAL_POSITION2 = listTable2[i].ORDINAL_POSITION;
 
 							found = true;
@@ -1147,6 +1169,7 @@ namespace tableCheck
 							IS_NULLABLE2 = listTable2[i].IS_NULLABLE,
 							COLLATION_NAME2 = listTable2[i].COLLATION_NAME,
 							INCREMENT2 = listTable2[i].INCREMENT,
+							COLUMN_KEY2 = listTable2[i].COLUMN_KEY,
 							ORDINAL_POSITION2 = listTable2[i].ORDINAL_POSITION
 						});
 					}
@@ -1202,6 +1225,7 @@ namespace tableCheck
 					dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[k++].Value = listTableAll[i].COLUMN_COMMENT1;
 					dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[k++].Value = listTableAll[i].COLLATION_NAME1;
 					dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[k++].Value = listTableAll[i].INCREMENT1;
+					dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[k++].Value = listTableAll[i].COLUMN_KEY1;
 					dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[k++].Value = listTableAll[i].ORDINAL_POSITION1;
 
 					dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[k++].Value = listTableAll[i].COLUMN_NAME2;
@@ -1211,6 +1235,7 @@ namespace tableCheck
 					dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[k++].Value = listTableAll[i].COLUMN_COMMENT2;
 					dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[k++].Value = listTableAll[i].COLLATION_NAME2;
 					dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[k++].Value = listTableAll[i].INCREMENT2;
+					dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[k++].Value = listTableAll[i].COLUMN_KEY2;
 					dataGridView2.Rows[dataGridView2.Rows.Count - 1].Cells[k++].Value = listTableAll[i].ORDINAL_POSITION2;
 
 				}
@@ -1548,6 +1573,11 @@ namespace tableCheck
 					dataGridView7.Rows[rowIndex].Cells[6].Value = 100;
 					dataGridView7.Rows[rowIndex].Cells[7].Value = "확인중";
 					showFunction();
+
+
+
+
+
 				}
 
 				//탭페이지가 뷰인경우
@@ -1890,11 +1920,11 @@ namespace tableCheck
 				string changePosition;
 				for (int k = 1; k < dataGridView2.Rows.Count; k++)
 				{
-					if (dataGridView2.Rows[0].Cells[15].Value == null)
+					if (dataGridView2.Rows[0].Cells[17].Value == null)
 					{
 						continue;
 					}
-					if (dataGridView2.Rows[0].Cells[7].Value.ToString().Trim() != dataGridView2.Rows[0].Cells[15].Value.ToString().Trim())
+					if (dataGridView2.Rows[0].Cells[7].Value.ToString().Trim() != dataGridView2.Rows[0].Cells[17].Value.ToString().Trim())
 					{
 						changePosition = "ALTER TABLE " + tbl + " MODIFY COLUMN `"
 					+ dataGridView2.Rows[0].Cells[0].Value.ToString() + "` `"
@@ -1910,7 +1940,7 @@ namespace tableCheck
 					{
 						continue;
 					}
-					else if (dataGridView2.Rows[k].Cells[7].Value.ToString().Trim() != dataGridView2.Rows[k].Cells[15].Value.ToString().Trim())
+					else if (dataGridView2.Rows[k].Cells[7].Value.ToString().Trim() != dataGridView2.Rows[k].Cells[17].Value.ToString().Trim())
 					{
 						changePosition = "ALTER TABLE " + tbl + " MODIFY COLUMN `"
 				+ dataGridView2.Rows[k].Cells[0].Value.ToString() + "` "
@@ -1929,12 +1959,12 @@ namespace tableCheck
 			{
 				for (int k = 0; k < dataGridView2.Columns.Count / 2; k++)
 				{
-					if (dataGridView2.Rows[i].Cells[8].Value.ToString().ToUpper() == null)
+					if (dataGridView2.Rows[i].Cells[9].Value.ToString().ToUpper() == null)
 					{
 						//add
 						continue;
 					}
-					if (dataGridView2.Rows[i].Cells[k].Value.ToString().ToUpper() != dataGridView2.Rows[i].Cells[k + 8].Value.ToString().ToUpper())
+					if (dataGridView2.Rows[i].Cells[k].Value.ToString().ToUpper() != dataGridView2.Rows[i].Cells[k + 9].Value.ToString().ToUpper())
 					{
 						//modify
 						continue;
@@ -2040,7 +2070,7 @@ namespace tableCheck
 					string modify = "ALTER TABLE " + tbl + " MODIFY COLUMN " + "`" + fieldName1 + "` ";
 					string position = "";
 
-					if (dataGridView2.Rows[i].Cells[8].Value == null)
+					if (dataGridView2.Rows[i].Cells[9].Value == null)
 					{
 						string addTable = "ALTER TABLE " + tbl + " ADD `" + fieldName1 + "` " + fieldType1 + nullable + def + comment1;
 						Create(addTable);
@@ -2051,7 +2081,7 @@ namespace tableCheck
 						continue;
 					}
 					//db1 유형과 db2유형이 다르면 db2유형을 db1유형으로 바꿔라
-					else if (dataGridView2.Rows[i].Cells[1].Value.ToString().Trim() != dataGridView2.Rows[i].Cells[9].Value.ToString().Trim())
+					else if (dataGridView2.Rows[i].Cells[1].Value.ToString().Trim() != dataGridView2.Rows[i].Cells[10].Value.ToString().Trim())
 					{
 						isChanged = true;
 						alterTable = modify + fieldType1 + nullYN + def + comment1;
@@ -2062,7 +2092,7 @@ namespace tableCheck
 
 
 					// db1 널값이 다르면 no인지 yes인지 파악해서 db2의 맞는값으로 바꿔라
-					if (dataGridView2.Rows[i].Cells[2].Value.ToString().Trim() != dataGridView2.Rows[i].Cells[10].Value.ToString().Trim())
+					if (dataGridView2.Rows[i].Cells[2].Value.ToString().Trim() != dataGridView2.Rows[i].Cells[11].Value.ToString().Trim())
 					{
 						isChanged = true;
 						if (dataGridView2.Rows[i].Cells[2].Value.ToString().Trim() == "NO")
@@ -2076,7 +2106,7 @@ namespace tableCheck
 					}
 
 					//db1 기본값과 db2의 기본값이 다르면 null값 유무와 db1셀의 default값을 넣어서 바꿔라
-					if (dataGridView2.Rows[i].Cells[3].Value.ToString().Trim() != dataGridView2.Rows[i].Cells[11].Value.ToString().Trim())
+					if (dataGridView2.Rows[i].Cells[3].Value.ToString().Trim() != dataGridView2.Rows[i].Cells[12].Value.ToString().Trim())
 					{
 						isChanged = true;
 						alterTable = modify + fieldType1 + nullable + def + comment1;
@@ -2084,7 +2114,7 @@ namespace tableCheck
 
 					//CHANGE로 커멘트 변경할려면 컬럼도 동시에 바꿔져야됨 
 					//ALTER TABLE `user` CHANGE `id` `id` INT( 11 ) COMMENT 'user 테이블의 id';
-					if (dataGridView2.Rows[i].Cells[4].Value.ToString().Trim() != dataGridView2.Rows[i].Cells[12].Value.ToString().Trim())
+					if (dataGridView2.Rows[i].Cells[4].Value.ToString().Trim() != dataGridView2.Rows[i].Cells[13].Value.ToString().Trim())
 					{
 						isChanged = true;
 						alterTable = modify + fieldType1 + nullable + def + comment1;
@@ -2092,14 +2122,14 @@ namespace tableCheck
 
 					//collate utf8로 전부 수정
 					//ALTER TABLE 테이블명 MODIFY COLUMN 컬럼 VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci
-					if (dataGridView2.Rows[i].Cells[5].Value.ToString().Trim() != dataGridView2.Rows[i].Cells[13].Value.ToString().Trim())
+					if (dataGridView2.Rows[i].Cells[5].Value.ToString().Trim() != dataGridView2.Rows[i].Cells[14].Value.ToString().Trim())
 					{
 						isChanged = true;
 						alterTable = modify + fieldType1 + nullable + def + comment1 + " CHARACTER SET utf8 COLLATE utf8_general_ci";
 					}
 					//autoincrement alter
 					//ALTER TABLE 적용할테이블명칭 MODIFY 컬럼 INT NOT NULL AUTO_INCREMENT;
-					if (dataGridView2.Rows[i].Cells[6].Value.ToString().Trim() != dataGridView2.Rows[i].Cells[14].Value.ToString().Trim())
+					if (dataGridView2.Rows[i].Cells[6].Value.ToString().Trim() != dataGridView2.Rows[i].Cells[15].Value.ToString().Trim())
 					{
 						isChanged = true;
 						alterTable = modify + fieldType1 + nullable + def + comment1 + " AUTO_INCREMENT";
@@ -2124,7 +2154,7 @@ namespace tableCheck
 					{
 						continue;
 					}
-					if (dataGridView2.Rows[0].Cells[7].Value.ToString().Trim() != dataGridView2.Rows[0].Cells[15].Value.ToString().Trim())
+					if (dataGridView2.Rows[0].Cells[7].Value.ToString().Trim() != dataGridView2.Rows[0].Cells[16].Value.ToString().Trim())
 					{
 						isChanged = true;
 						position = modify + fieldType1 + nullable + def + comment1 + " FIRST";
@@ -2137,7 +2167,7 @@ namespace tableCheck
 					{
 						continue;
 					}
-					else if (dataGridView2.Rows[i].Cells[7].Value.ToString().Trim() != dataGridView2.Rows[i].Cells[15].Value.ToString().Trim())
+					else if (dataGridView2.Rows[i].Cells[7].Value.ToString().Trim() != dataGridView2.Rows[i].Cells[16].Value.ToString().Trim())
 					{
 						isChanged = true;
 						if (dataGridView2.Rows[i - 1].Cells[0].Value == null)
@@ -2859,6 +2889,7 @@ namespace tableCheck
 				}
 
 				string createQuery = listTable1[0].CREATETABLE;
+				//string createQuery = "DELIMETER " + listTable1[0].CREATETABLE+ "";
 				Create(createQuery);
 
 				con.Close();
