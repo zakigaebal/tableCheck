@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -545,28 +547,46 @@ namespace tableCheck
 
 		private void connectionSave()
 		{
-			//데이터베이스 저장하기
-			string connectionDb1 = "Server = " + textBoxIp1.Text + ";Port = " + textBoxPort1.Text + ";Database = " + textBoxDb1.Text + ";username = " + textBoxUn1.Text + ";password = " + textBoxPw1.Text + ";" + "Charset=utf8;";
-			string connectionDb2 = "Server = " + textBoxIp2.Text + ";Port = " + textBoxPort2.Text + ";Database = " + textBoxDb2.Text + ";username = " + textBoxUn2.Text + ";password = " + textBoxPw2.Text + ";" + "Charset=utf8;";
-			con = new MySqlConnection(connectionDb1);
-			con2 = new MySqlConnection(connectionDb2);
+			DirectoryInfo di = new DirectoryInfo(@"C:\dw\bk");
 
-			//con.Open();
-			//con2.Open();
+			if (di.Exists == false)
+			{
+				di.Create();
+			}
 
-			MySqlCommand sc = new MySqlCommand();
-			sc.Connection = con;
-			sc.CommandText = "Select * from Report_Test where Company = '삼성'";
-			sc.CommandType = CommandType.Text;
 
-			MySqlDataAdapter sda = new MySqlDataAdapter();
-			DataSet ds = new DataSet();
-			sda.SelectCommand = sc;
-			sda.Fill(ds, "SamSung");
+			//string command = "C:\\xampp" +"\\mysql\\bin\\mysqldump.exe -u root -pekdnsel dawoon > sa.sql";
+			//Process.Start("cmd.exe", command);
+			//if (!Directory.Exists("C:\\dw\bk"))
+			//{
+			//	System.IO.Directory.CreateDirectory("bk");
+			//}
+			ProcessStartInfo cmd = new ProcessStartInfo();
+			Process process = new Process();
+			cmd.FileName = @"cmd";
+			cmd.WindowStyle = ProcessWindowStyle.Hidden;             // cmd창이 숨겨지도록 하기
+			cmd.CreateNoWindow = true;                               // cmd창을 띄우지 안도록 하기
+			cmd.UseShellExecute = false;
+			cmd.RedirectStandardOutput = true;        // cmd창에서 데이터를 가져오기
+			cmd.RedirectStandardInput = true;          // cmd창으로 데이터 보내기
+			cmd.RedirectStandardError = true;          // cmd창에서 오류 내용 가져오기
+			process.EnableRaisingEvents = false;
+			process.StartInfo = cmd;
+			string date = DateTime.Now.ToString("yyyyMMdd-HHmmss").ToString();
+			string asd = "21211";
+			process.Start();
+			process.StandardInput.Write(@"C:\xampp\mysql\bin\\mysqldump.exe -u root -pekdnsel dawoon > C:\dw\bk\" + "BK-" + date + ".sql" + Environment.NewLine);
+			// 명령어를 보낼때는 꼭 마무리를 해줘야 한다. 그래서 마지막에 NewLine가 필요하다
+			process.StandardInput.Close();
+			string result = process.StandardOutput.ReadToEnd();
+			StringBuilder sb = new StringBuilder();
+			sb.Append("[Result Info]" + DateTime.Now + "\r\n");
+			sb.Append(result);
+			sb.Append("\r\n");
 
-			//con.Close();
-			//con2.Close();
-			 
+			process.WaitForExit();
+			process.Close();
+			//
 		}
 
 		private void showTable()
@@ -1071,8 +1091,6 @@ namespace tableCheck
 				// listTable1 저장
 				// listTable2 저장
 				// listTable1의 개수만큼 listTableAll에 추가했음
-				//
-
 				for (int i = 0; i < listTable1.Count; i++)
 				{
 					listTableAll.Add(new ColumnsAll()
@@ -1169,8 +1187,6 @@ namespace tableCheck
 				//		listTableAll.Add(new ListInfoAll() { db = "B", tableName = listTable2[k].tableName, fieldCount1 = "", fieldCount2 = listTable2[k].fieldCount, tableCmt = listTable2[k].tableCmt });
 				//	}
 				//}
-
-
 
 				dataGridView2.Rows.Clear();
 				dataGridView2.SuspendLayout();
@@ -2435,6 +2451,7 @@ namespace tableCheck
 					}
 				}
 				dataGridView5.Rows.Clear();
+				dataGridView5.SuspendLayout();
 				for (int k = 0; k < listTableAll.Count; k++)
 				{
 					dataGridView5.Rows.Add(1);
@@ -2449,6 +2466,7 @@ namespace tableCheck
 					dataGridView5.Rows[dataGridView5.Rows.Count - 1].Cells[a++].Value = listTableAll[k].LAST_ALTERED2;
 					dataGridView5.Rows[dataGridView5.Rows.Count - 1].Cells[a++].Value = listTableAll[k].EVENTQUERY2;
 				}
+				dataGridView5.ResumeLayout();
 				int i = 0;
 				dataGridView5.Columns[i++].ReadOnly = false;
 				if (conn == null)
@@ -2545,6 +2563,8 @@ namespace tableCheck
 					}
 				}
 				dataGridView7.Rows.Clear();
+
+				dataGridView7.SuspendLayout();
 				for (int k = 0; k < listTableAll.Count; k++)
 				{
 					dataGridView7.Rows.Add(1);
@@ -2559,6 +2579,7 @@ namespace tableCheck
 					dataGridView7.Rows[dataGridView7.Rows.Count - 1].Cells[a++].Value = listTableAll[k].FUNCTION_MODIFIED2;
 					dataGridView7.Rows[dataGridView7.Rows.Count - 1].Cells[a++].Value = listTableAll[k].FUNCTION_QUERY2;
 				}
+				dataGridView7.ResumeLayout();
 
 				int i = 0;
 				dataGridView7.Columns[i++].ReadOnly = false;
@@ -2748,6 +2769,7 @@ namespace tableCheck
 				///중간에 멈출수있는 기능 체크박스
 				///
 				dataGridView9.Rows.Clear();
+				dataGridView9.SuspendLayout();
 				for (int k = 0; k < listTableAll.Count; k++)
 				{
 					dataGridView9.Rows.Add(1);
@@ -2756,7 +2778,7 @@ namespace tableCheck
 					dataGridView9.Rows[dataGridView9.Rows.Count - 1].Cells[2].Value = listTableAll[k].viewName2;
 
 				}
-
+				dataGridView9.ResumeLayout();
 				int i = 0;
 				dataGridView9.Columns[i++].ReadOnly = false;
 				compare();
@@ -3428,6 +3450,13 @@ namespace tableCheck
 
 		private void panel2_Paint(object sender, PaintEventArgs e)
 		{
+
+		}
+
+		private void button2_Click_1(object sender, EventArgs e)
+		{
+			
+
 
 		}
 	}
