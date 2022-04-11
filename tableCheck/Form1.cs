@@ -1132,75 +1132,81 @@ namespace tableCheck
 					listTable2.Add(listInfo);
 				}
 
-
 				// listTable1 저장
 				// listTable2 저장
 				// listTable1의 개수만큼 listTableAll에 추가했음
 
-
-				for (int i = 0; i < listTable2.Count; i++)
+				for (int i = 0; i < listTable1.Count; i++)
 				{
 					listTableAll.Add(new ColumnsAll()
 					{
-						COLUMN_NAME2 = listTable2[i].COLUMN_NAME,
-						DATA_TYPE2 = listTable2[i].DATA_TYPE,
-						CHARACTER_MAXIMUM_LENGTH2 = listTable2[i].CHARACTER_MAXIMUM_LENGTH,
-						COLUMN_DEFAULT2 = listTable2[i].COLUMN_DEFAULT,
-						COLUMN_COMMENT2 = listTable2[i].COLUMN_COMMENT,
-						IS_NULLABLE2 = listTable2[i].IS_NULLABLE,
-						COLLATION_NAME2 = listTable2[i].COLLATION_NAME,
+						COLUMN_NAME1 = listTable1[i].COLUMN_NAME,
+						DATA_TYPE1 = listTable1[i].DATA_TYPE,
+						CHARACTER_MAXIMUM_LENGTH1 = listTable1[i].CHARACTER_MAXIMUM_LENGTH,
+						COLUMN_DEFAULT1 = listTable1[i].COLUMN_DEFAULT,
+						COLUMN_COMMENT1 = listTable1[i].COLUMN_COMMENT,
+						IS_NULLABLE1 = listTable1[i].IS_NULLABLE,
+						COLLATION_NAME1 = listTable1[i].COLLATION_NAME,
 
-						INCREMENT2 = listTable2[i].INCREMENT,
-						COLUMN_KEY2 = listTable2[i].COLUMN_KEY,
-						ORDINAL_POSITION2 = listTable2[i].ORDINAL_POSITION
+						INCREMENT1 = listTable1[i].INCREMENT,
+						ORDINAL_POSITION1 = listTable1[i].ORDINAL_POSITION
 					});
 				}
+
 				//
 				//listTable2의 개수만큼 listTableAll에 추가해
 				// 그런데 listTable2.columnName이 같으면 columnName2에 넣어
-				for (int i = 0; i < listTable1.Count; i++)
+
+				for (int i = 0; i < listTable2.Count; i++)
 				{
 					bool found = false;
 					for (int j = 0; j < listTableAll.Count; j++)
 					{
-						if ((listTable1[i].COLUMN_NAME == listTableAll[j].COLUMN_NAME2))
+
+						if ((listTable2[i].COLUMN_NAME == listTableAll[j].COLUMN_NAME1))
 						{
 
-							listTableAll[j].COLUMN_NAME1 = listTable1[i].COLUMN_NAME;
-							listTableAll[j].DATA_TYPE1 = listTable1[i].DATA_TYPE;
-							listTableAll[j].CHARACTER_MAXIMUM_LENGTH1 = listTable1[i].CHARACTER_MAXIMUM_LENGTH;
-							listTableAll[j].COLUMN_DEFAULT1 = listTable1[i].COLUMN_DEFAULT;
-							listTableAll[j].COLUMN_COMMENT1 = listTable1[i].COLUMN_COMMENT;
-							listTableAll[j].IS_NULLABLE1 = listTable1[i].IS_NULLABLE;
-							listTableAll[j].COLLATION_NAME1 = listTable1[i].COLLATION_NAME;
-							listTableAll[j].INCREMENT1 = listTable1[i].INCREMENT;
-							listTableAll[j].COLUMN_KEY1 = listTable1[i].COLUMN_KEY;
-							listTableAll[j].ORDINAL_POSITION1 = listTable1[i].ORDINAL_POSITION;
+							//if (listTable2[i].COLUMN_NAME == listTableAll[j].ORDINAL_POSITION1)
+							//{
+
+							listTableAll[j].COLUMN_NAME2 = listTable2[i].COLUMN_NAME;
+							listTableAll[j].DATA_TYPE2 = listTable2[i].DATA_TYPE;
+							listTableAll[j].CHARACTER_MAXIMUM_LENGTH2 = listTable2[i].CHARACTER_MAXIMUM_LENGTH;
+							listTableAll[j].COLUMN_DEFAULT2 = listTable2[i].COLUMN_DEFAULT;
+							listTableAll[j].COLUMN_COMMENT2 = listTable2[i].COLUMN_COMMENT;
+
+							listTableAll[j].IS_NULLABLE2 = listTable2[i].IS_NULLABLE;
+							listTableAll[j].COLLATION_NAME2 = listTable2[i].COLLATION_NAME;
+							listTableAll[j].INCREMENT2 = listTable2[i].INCREMENT;
+							listTableAll[j].ORDINAL_POSITION2 = listTable2[i].ORDINAL_POSITION;
 
 							found = true;
 							listTableAll[j].TABLE = "A+B";
-
 							break;
+
 						}
 					}
 					if (found == false)
 					{
 						listTableAll.Insert(i, new ColumnsAll()
 						{
-							COLUMN_NAME1 = listTable1[i].COLUMN_NAME,
-							DATA_TYPE1 = listTable1[i].DATA_TYPE,
-							CHARACTER_MAXIMUM_LENGTH1 = listTable1[i].CHARACTER_MAXIMUM_LENGTH,
-							COLUMN_DEFAULT1 = listTable1[i].COLUMN_DEFAULT,
-							COLUMN_COMMENT1 = listTable1[i].COLUMN_COMMENT,
-							IS_NULLABLE1 = listTable1[i].IS_NULLABLE,
-							COLLATION_NAME1 = listTable1[i].COLLATION_NAME,
-							INCREMENT1 = listTable1[i].INCREMENT,
-							COLUMN_KEY1 = listTable1[i].COLUMN_KEY,
-							ORDINAL_POSITION1 = listTable1[i].ORDINAL_POSITION
+							//COLUMN_NAME1 = "table1없음",
+							//ORDINAL_POSITION1 = "",
+							COLUMN_NAME2 = listTable2[i].COLUMN_NAME,
+							DATA_TYPE2 = listTable2[i].DATA_TYPE,
+							CHARACTER_MAXIMUM_LENGTH2 = listTable2[i].CHARACTER_MAXIMUM_LENGTH,
+							COLUMN_DEFAULT2 = listTable2[i].COLUMN_DEFAULT,
+							COLUMN_COMMENT2 = listTable2[i].COLUMN_COMMENT,
+							IS_NULLABLE2 = listTable2[i].IS_NULLABLE,
+							COLLATION_NAME2 = listTable2[i].COLLATION_NAME,
+							INCREMENT2 = listTable2[i].INCREMENT,
+							ORDINAL_POSITION2 = listTable2[i].ORDINAL_POSITION
 						});
-
 					}
 				}
+
+
+		
 
 				//if (listTable2[i].ORDINAL_POSITION != listTableAll[j].ORDINAL_POSITION1)
 				//{
@@ -1359,8 +1365,7 @@ namespace tableCheck
 				for (int i = 0; i < dataGridView3.Rows.Count; i++)
 				{
 					string tbl = dataGridView3.Rows[i].Cells[0].Value.ToString();
-					if (dataGridView3.Rows[i].Cells[11].Value.ToString() == "없음")
-					{
+					
 						if (dataGridView3.Rows[i].Cells[5].Value == null)
 						{
 							if (tbl == null) return;
@@ -1369,13 +1374,9 @@ namespace tableCheck
 							procedureCreateTable(queryCreate);
 							dataGridView3.Rows[i].Cells[10].Value = 100;
 							dataGridView3.Rows[i].Cells[11].Value = "확인중";
-							string rdrString = "Create Procedure";
+							//string rdrString = "Create Procedure";
 							//dgvShowAll(queryCreate, i, rdrString);
-
-							// + ";allow user variables=true;"
-
 						}
-					}
 					showProceaser();
 				}
 			}
@@ -2045,11 +2046,104 @@ namespace tableCheck
 		{
 			for (int i = 0; i < dataGridView2.Rows.Count; i++)
 			{
+				string fields = "";
+				string primarykey = "";
+
+				//string fieldName = dataGridView2.Rows[i].Cells[0].Value.ToString();
+				//if (fieldName == null) return;
+				//if (i == 0)
+				//{
+				//	primarykey = fieldName;
+				//}
+				int rowIndex = dataGridView1.CurrentCell.RowIndex;
+				if (rowIndex < 0) return;
+				if (dataGridView1.Rows[rowIndex].Cells[0].Value == null)
+				{
+					return;
+				}
+				string tbl = dataGridView1.Rows[rowIndex].Cells[2].Value.ToString();
+				if (tbl == null) return;
+
+				if (dataGridView2.Rows[i].Cells[1].Value == null)
+				{
+					continue;
+				}
+				string columnType = dataGridView2.Rows[i].Cells[1].Value.ToString();
+				if (columnType == null) columnType = "";
+				else if (columnType.ToUpper().Contains("DATETIME"))
+				{
+					columnType = " DATETIME ";
+				}
+
+				string nullYN = dataGridView2.Rows[i].Cells[2].Value.ToString();
+				if (nullYN == null) return;
+				if (nullYN == "NO") nullYN = " NOT NULL";
+				else if (nullYN == "YES") nullYN = " NULL";
+				if (columnType.ToUpper().Contains("DATETIME"))
+				{
+					nullYN = "";
+				}
+
+				string nullable = dataGridView2.Rows[i].Cells[2].Value.ToString();
+				if (nullable == null) return;
+				if (nullable == "NO") nullable = " NOT NULL";
+				else if (nullable == "YES") nullable = " NULL";
+				if (columnType.ToUpper().Contains("DATETIME"))
+				{
+					nullable = "";
+				}
+
+
+				string utf8 = dataGridView2.Rows[i].Cells[6].Value.ToString();
+				if (utf8 == null) utf8 = "";
+				else if (utf8 == "") utf8 = "";
+				else utf8 = " COLLATE '" + utf8 + "'";
+
+				string def = dataGridView2.Rows[i].Cells[3].Value.ToString();
+				if (def == null) def = "";
+				if (columnType.ToUpper().Contains("INT"))
+				{
+					def = " DEFAULT 0 ";
+				}
+				if (columnType.ToUpper().Contains("SMALLINT") || columnType.ToUpper().Contains("DECIMAL"))
+				{
+					def = "0";
+				}
+				if (nullable.ToUpper().Contains(" NOT NULL"))
+				{
+					def = "";
+				}
+
+				else if (columnType.ToUpper().Contains("DATETIME"))
+				{
+					def = " DEFAULT NULL ";
+
+				}
+				else def = " DEFAULT '" + def + "'";
+
+				string alterTable = "";
+				bool isChanged = false;
+
+				string fieldName1 = dataGridView2.Rows[i].Cells[0].Value.ToString();
+				string fieldType1 = dataGridView2.Rows[i].Cells[1].Value.ToString();
+
+				string default1 = dataGridView2.Rows[i].Cells[3].Value.ToString();
+				string comment1 = dataGridView2.Rows[i].Cells[4].Value.ToString();
+				string index1 = dataGridView2.Rows[i].Cells[7].Value.ToString();
+
+				if (comment1 == null) comment1 = "";
+				else comment1 = " COMMENT '" + comment1 + "'";
+
+				string modify = "ALTER TABLE " + tbl + " MODIFY COLUMN " + "`" + fieldName1 + "` ";
+				string position = "";
+
+			
 				for (int k = 0; k < dataGridView2.Columns.Count / 2; k++)
 				{
 					if (dataGridView2.Rows[i].Cells[9].Value.ToString().ToUpper() == null)
 					{
-						//add
+							string addTable = "ALTER TABLE " + tbl + " ADD `" + fieldName1 + "` " + fieldType1 + nullable + def + comment1;
+							Create(addTable);
 						continue;
 					}
 					if (dataGridView2.Rows[i].Cells[k].Value.ToString().ToUpper() != dataGridView2.Rows[i].Cells[k + 9].Value.ToString().ToUpper())
@@ -2071,13 +2165,6 @@ namespace tableCheck
 				{
 					string fields = "";
 					string primarykey = "";
-
-					//string fieldName = dataGridView2.Rows[i].Cells[0].Value.ToString();
-					//if (fieldName == null) return;
-					//if (i == 0)
-					//{
-					//	primarykey = fieldName;
-					//}
 					int rowIndex = dataGridView1.CurrentCell.RowIndex;
 					if (rowIndex < 0) return;
 					if (dataGridView1.Rows[rowIndex].Cells[0].Value == null)
@@ -2152,6 +2239,10 @@ namespace tableCheck
 
 					string default1 = dataGridView2.Rows[i].Cells[3].Value.ToString();
 					string comment1 = dataGridView2.Rows[i].Cells[4].Value.ToString();
+					if (dataGridView2.Rows[i].Cells[7].Value == null)
+					{
+						continue;
+					}
 					string index1 = dataGridView2.Rows[i].Cells[7].Value.ToString();
 
 					if (comment1 == null) comment1 = "";
@@ -2177,6 +2268,10 @@ namespace tableCheck
 						string indexAdd = "ALTER TABLE " + tbl + "ADD INDEX " + index1 + " (" + fieldName1 + ")";
 						Create(indexAdd);
 					}
+
+
+
+
 
 					if (dataGridView2.Rows[i].Cells[9].Value == null)
 					{
@@ -2249,37 +2344,9 @@ namespace tableCheck
 					}
 
 
-					//위치바꾸기
-					if (dataGridView2.Rows[0].Cells[17].Value == null)
-					{
-						continue;
-					}
-					if (dataGridView2.Rows[0].Cells[8].Value.ToString().Trim() != dataGridView2.Rows[0].Cells[17].Value.ToString().Trim())
-					{
-						isChanged = true;
-						position = modify + fieldType1 + nullable + def + comment1 + " FIRST";
-					}
-					else if (dataGridView2.Rows[i].Cells[8].Value == null)
-					{
-						continue;
-					}
-					else if (dataGridView2.Rows[i].Cells[17].Value == null)
-					{
-						continue;
-					}
-					else if (dataGridView2.Rows[i].Cells[8].Value.ToString().Trim() != dataGridView2.Rows[i].Cells[17].Value.ToString().Trim())
-					{
-						isChanged = true;
-						if (dataGridView2.Rows[i - 1].Cells[0].Value == null)
-						{
-							continue;
-						}
-						position = modify + fieldType1 + nullable + def + comment1 + " AFTER " + dataGridView2.Rows[i - 1].Cells[0].Value.ToString();
-					}
-					if (isChanged == true)
-					{
-						Create(position);
-					}
+
+			
+
 				}
 
 			}
@@ -2977,9 +3044,6 @@ namespace tableCheck
 				}
 
 				string createQuery = listTable1[0].CREATETABLE;
-				//string createQuery = "DELIMITER //"+ System.Environment.NewLine + listTable1[0].CREATETABLE +  System.Environment.NewLine +"DELIMITER //";
-				//string createQuery = "DELIMITER //\r\n" + listTable1[0].CREATETABLE + "//";
-				//queryCreater(createQuery);
 
 
 				Create(createQuery);
