@@ -111,7 +111,7 @@
 			this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panel1.Location = new System.Drawing.Point(0, 0);
 			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size(1408, 590);
+			this.panel1.Size = new System.Drawing.Size(1408, 624);
 			this.panel1.TabIndex = 0;
 			// 
 			// panel5
@@ -121,7 +121,7 @@
 			this.panel5.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panel5.Location = new System.Drawing.Point(0, 0);
 			this.panel5.Name = "panel5";
-			this.panel5.Size = new System.Drawing.Size(1408, 590);
+			this.panel5.Size = new System.Drawing.Size(1408, 624);
 			this.panel5.TabIndex = 17;
 			// 
 			// tabControl1
@@ -135,7 +135,7 @@
 			this.tabControl1.Location = new System.Drawing.Point(0, 49);
 			this.tabControl1.Name = "tabControl1";
 			this.tabControl1.SelectedIndex = 0;
-			this.tabControl1.Size = new System.Drawing.Size(1408, 541);
+			this.tabControl1.Size = new System.Drawing.Size(1408, 575);
 			this.tabControl1.TabIndex = 11;
 			// 
 			// tabPage1
@@ -144,7 +144,7 @@
 			this.tabPage1.Location = new System.Drawing.Point(4, 22);
 			this.tabPage1.Name = "tabPage1";
 			this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage1.Size = new System.Drawing.Size(1400, 515);
+			this.tabPage1.Size = new System.Drawing.Size(1400, 549);
 			this.tabPage1.TabIndex = 0;
 			this.tabPage1.Text = "테이블";
 			this.tabPage1.UseVisualStyleBackColor = true;
@@ -157,7 +157,7 @@
 			this.panel7.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panel7.Location = new System.Drawing.Point(3, 3);
 			this.panel7.Name = "panel7";
-			this.panel7.Size = new System.Drawing.Size(1394, 509);
+			this.panel7.Size = new System.Drawing.Size(1394, 543);
 			this.panel7.TabIndex = 0;
 			// 
 			// dataGridView1
@@ -167,7 +167,7 @@
 			this.dataGridView1.Location = new System.Drawing.Point(0, 0);
 			this.dataGridView1.Name = "dataGridView1";
 			this.dataGridView1.RowTemplate.Height = 23;
-			this.dataGridView1.Size = new System.Drawing.Size(1394, 159);
+			this.dataGridView1.Size = new System.Drawing.Size(1394, 247);
 			this.dataGridView1.TabIndex = 4;
 			this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
 			this.dataGridView1.CurrentCellDirtyStateChanged += new System.EventHandler(this.dataGridView1_CurrentCellDirtyStateChanged);
@@ -179,7 +179,7 @@
 			this.splitter3.BackColor = System.Drawing.Color.MistyRose;
 			this.splitter3.Cursor = System.Windows.Forms.Cursors.HSplit;
 			this.splitter3.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.splitter3.Location = new System.Drawing.Point(0, 159);
+			this.splitter3.Location = new System.Drawing.Point(0, 247);
 			this.splitter3.Name = "splitter3";
 			this.splitter3.Size = new System.Drawing.Size(1394, 7);
 			this.splitter3.TabIndex = 0;
@@ -190,11 +190,11 @@
 			this.dataGridView2.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
 			this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.dataGridView2.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.dataGridView2.Location = new System.Drawing.Point(0, 166);
+			this.dataGridView2.Location = new System.Drawing.Point(0, 254);
 			this.dataGridView2.Name = "dataGridView2";
 			this.dataGridView2.ReadOnly = true;
 			this.dataGridView2.RowTemplate.Height = 23;
-			this.dataGridView2.Size = new System.Drawing.Size(1394, 343);
+			this.dataGridView2.Size = new System.Drawing.Size(1394, 289);
 			this.dataGridView2.TabIndex = 15;
 			this.dataGridView2.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridView2_CellFormatting);
 			this.dataGridView2.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dataGridView2_RowPostPaint);
@@ -206,7 +206,7 @@
 			this.tabPage2.Location = new System.Drawing.Point(4, 22);
 			this.tabPage2.Name = "tabPage2";
 			this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage2.Size = new System.Drawing.Size(1400, 515);
+			this.tabPage2.Size = new System.Drawing.Size(1400, 549);
 			this.tabPage2.TabIndex = 1;
 			this.tabPage2.Text = "프로시저";
 			this.tabPage2.UseVisualStyleBackColor = true;
@@ -217,7 +217,7 @@
 			this.panel6.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panel6.Location = new System.Drawing.Point(3, 3);
 			this.panel6.Name = "panel6";
-			this.panel6.Size = new System.Drawing.Size(1394, 509);
+			this.panel6.Size = new System.Drawing.Size(1394, 543);
 			this.panel6.TabIndex = 1;
 			// 
 			// dataGridView3
@@ -227,7 +227,7 @@
 			this.dataGridView3.Location = new System.Drawing.Point(0, 0);
 			this.dataGridView3.Name = "dataGridView3";
 			this.dataGridView3.RowTemplate.Height = 23;
-			this.dataGridView3.Size = new System.Drawing.Size(1394, 509);
+			this.dataGridView3.Size = new System.Drawing.Size(1394, 543);
 			this.dataGridView3.TabIndex = 4;
 			this.dataGridView3.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridView3_CellFormatting);
 			this.dataGridView3.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dataGridView3_RowPostPaint);
@@ -684,7 +684,7 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(1408, 590);
+			this.ClientSize = new System.Drawing.Size(1408, 624);
 			this.Controls.Add(this.panel1);
 			this.Name = "Form1";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

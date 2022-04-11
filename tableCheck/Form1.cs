@@ -13,6 +13,8 @@ using DataGridView_component;
 using MySql.Data.MySqlClient;
 using tableCheck.Models;
 
+
+
 namespace tableCheck
 {
 
@@ -451,9 +453,9 @@ namespace tableCheck
 					string tbl = dataGridView3.Rows[num].Cells[0].Value.ToString();
 					if (tbl == null) return;
 					string queryCreate = "SHOW CREATE PROCEDURE " + tbl;
-					string rdrString = "Create Procedure";
+					string rdrString = "Create Procedure ";
 
-					dgvShowAll(queryCreate, num, rdrString);
+					//dgvShowAll(queryCreate, num, rdrString);
 
 					con.Close();
 					con2.Close();
@@ -953,7 +955,15 @@ namespace tableCheck
 		//데이터베이스와 테이블인자를 받아서 컬럼테이블에 나타내기
 		private MySqlDataReader DBConnectTest2(MySqlConnection con, string tableName, string database)
 		{
-			string sql2 = "SELECT COLUMN_NAME fieldName, COLUMN_TYPE dataType, CHARACTER_MAXIMUM_LENGTH length, COLUMN_DEFAULT default1, COLUMN_COMMENT comment, IS_NULLABLE nullable, COLLATION_NAME colName, EXTRA EX, ORDINAL_POSITION pos, column_key colKey FROM information_schema.columns WHERE table_schema= '" + database + "' and TABLE_NAME = '" + tableName + "' ORDER BY TABLE_NAME asc";
+			//string sql2 = "SELECT COLUMN_NAME fieldName, COLUMN_TYPE dataType, CHARACTER_MAXIMUM_LENGTH length, COLUMN_DEFAULT default1, COLUMN_COMMENT comment, IS_NULLABLE nullable, COLLATION_NAME colName, EXTRA EX, ORDINAL_POSITION pos, column_key colKey FROM information_schema.columns " +
+				//"WHERE table_schema= '" + database + "' and TABLE_NAME = '" + tableName + "' ORDER BY TABLE_NAME asc";
+
+			string sql2 =
+			"SELECT a.COLUMN_NAME fieldName, a.CHARACTER_MAXIMUM_LENGTH length, a.COLUMN_TYPE dataType, a.COLUMN_DEFAULT default1, a.COLUMN_COMMENT comment, a.IS_NULLABLE nullable, a.COLLATION_NAME colName, a.EXTRA EX, b.index_name colKey, a.ORDINAL_POSITION pos " +
+			"FROM information_schema.columns as a left join information_schema.STATISTICS as b " +
+			"ON a.COLUMN_NAME = b.COLUMN_NAME " +
+			"WHERE a.table_schema = '" + database + "' AND a.TABLE_NAME = '"+ tableName + "' GROUP BY a.COLUMN_NAME ORDER BY a.TABLE_NAME ASC;";
+
 			MySqlCommand cmd = new MySqlCommand(sql2, con);
 			MySqlDataReader rdr = cmd.ExecuteReader();
 			return rdr;
@@ -1289,6 +1299,7 @@ namespace tableCheck
 			}
 
 
+
 			//탭페이지가 프로시저인경우
 			if (tabControl1.SelectedTab == tabPage2)
 			{
@@ -1317,6 +1328,8 @@ namespace tableCheck
 				}
 				showProceaser();
 			}
+
+
 
 			//탭페이지가 이벤트인경우
 			if (tabControl1.SelectedTab == tabPage3)
@@ -1399,7 +1412,7 @@ namespace tableCheck
 			buttonConnect_Click(sender, e);
 		}
 
-		private void Create(string queryCreate)
+		private void Create(string create)
 		{
 			try
 			{
@@ -1444,14 +1457,12 @@ namespace tableCheck
 				_strArg2.Append("Charset=utf8;");
 
 
-				//MySqlConnection con = new MySqlConnection(_strArg.ToString());
-				//con.Open();
 				MySqlConnection con2 = new MySqlConnection(_strArg2.ToString());
 				con2.Open();
 
 
 				//데이터베이스2에 생성
-				MySqlDataReader rdr = DBConnect(con2, queryCreate);
+				MySqlDataReader rdr = DBConnect(con2, create);
 				con2.Close();
 			}
 			catch (Exception ex)
@@ -1523,8 +1534,8 @@ namespace tableCheck
 					}
 					string tbl = dataGridView3.Rows[rowIndex].Cells[0].Value.ToString();
 					if (tbl == null) return;
-					string queryCreate = "SHOW CREATE PROCEDURE " + tbl;
-					procedureCreateTable(queryCreate);
+					string procedureQuery = "SHOW CREATE PROCEDURE " + tbl;
+					procedureCreateTable(procedureQuery);
 
 					dataGridView3.Rows[rowIndex].Cells[10].Value = 100;
 					dataGridView3.Rows[rowIndex].Cells[11].Value = "확인중";
@@ -2064,6 +2075,8 @@ namespace tableCheck
 
 					string default1 = dataGridView2.Rows[i].Cells[3].Value.ToString();
 					string comment1 = dataGridView2.Rows[i].Cells[4].Value.ToString();
+					string index1 = dataGridView2.Rows[i].Cells[7].Value.ToString();
+
 					if (comment1 == null) comment1 = "";
 					else comment1 = " COMMENT '" + comment1 + "'";
 
@@ -2074,6 +2087,14 @@ namespace tableCheck
 					{
 						string addTable = "ALTER TABLE " + tbl + " ADD `" + fieldName1 + "` " + fieldType1 + nullable + def + comment1;
 						Create(addTable);
+					}
+					//인덱스가 다르면 db1의 인덱스로 바꿔라
+					if (dataGridView2.Rows[i].Cells[7].Value.ToString().Trim() != dataGridView2.Rows[i].Cells[16].Value.ToString().Trim())
+					{
+						isChanged = true;
+
+						string indexAdd = "ALTER TABLE " + tbl + "ADD INDEX " + index1 + " ("+fieldName1+")";
+						Create(indexAdd);
 					}
 
 					if (dataGridView2.Rows[i].Cells[9].Value == null)
@@ -2134,9 +2155,7 @@ namespace tableCheck
 						isChanged = true;
 						alterTable = modify + fieldType1 + nullable + def + comment1 + " AUTO_INCREMENT";
 					}
-
-
-
+			
 
 					//fields = fields + "`" + fieldName + "` " + columnType + " " + nullable + def + columnComment + ",";
 					//string queryCreate = "CREATE TABLE `" + tbl
@@ -2150,24 +2169,24 @@ namespace tableCheck
 
 
 					//위치바꾸기
-					if (dataGridView2.Rows[0].Cells[15].Value == null)
+					if (dataGridView2.Rows[0].Cells[17].Value == null)
 					{
 						continue;
 					}
-					if (dataGridView2.Rows[0].Cells[7].Value.ToString().Trim() != dataGridView2.Rows[0].Cells[16].Value.ToString().Trim())
+					if (dataGridView2.Rows[0].Cells[8].Value.ToString().Trim() != dataGridView2.Rows[0].Cells[17].Value.ToString().Trim())
 					{
 						isChanged = true;
 						position = modify + fieldType1 + nullable + def + comment1 + " FIRST";
 					}
-					else if (dataGridView2.Rows[i].Cells[7].Value == null)
+					else if (dataGridView2.Rows[i].Cells[8].Value == null)
 					{
 						continue;
 					}
-					else if (dataGridView2.Rows[i].Cells[15].Value == null)
+					else if (dataGridView2.Rows[i].Cells[17].Value == null)
 					{
 						continue;
 					}
-					else if (dataGridView2.Rows[i].Cells[7].Value.ToString().Trim() != dataGridView2.Rows[i].Cells[16].Value.ToString().Trim())
+					else if (dataGridView2.Rows[i].Cells[8].Value.ToString().Trim() != dataGridView2.Rows[i].Cells[17].Value.ToString().Trim())
 					{
 						isChanged = true;
 						if (dataGridView2.Rows[i - 1].Cells[0].Value == null)
@@ -2873,13 +2892,12 @@ namespace tableCheck
 				MySqlConnection con = new MySqlConnection(_strArg.ToString());
 				//	MySqlConnection con2 = new MySqlConnection(_strArg2.ToString());
 				con.Open();
-				//con2.Open();
 
 				MySqlDataReader rdr = DBConnect(con, queryCreate);
-				MySqlDataReader rdr2 = DBConnect(con2, queryCreate);
+				//MySqlDataReader rdr2 = DBConnect(con2, queryCreate);
 				List<Columns> listTable1 = new List<Columns>();
-				List<Columns> listTable2 = new List<Columns>();
-				List<ColumnsAll> listTableAll = new List<ColumnsAll>();
+				//List<Columns> listTable2 = new List<Columns>();
+				//List<ColumnsAll> listTableAll = new List<ColumnsAll>();
 				Delay(20);
 
 				while (rdr.Read())
@@ -2888,12 +2906,11 @@ namespace tableCheck
 					listTable1.Add(listInfo);
 				}
 
-				string createQuery = listTable1[0].CREATETABLE;
-				//string createQuery = "DELIMETER " + listTable1[0].CREATETABLE+ "";
+				// createQuery = listTable1[0].CREATETABLE;
+				string createQuery = "DELIMITER //\n" + listTable1[0].CREATETABLE+ "//\nDELIMITER //";
 				Create(createQuery);
 
 				con.Close();
-				//con2.Close();
 			}
 			catch (Exception e)
 			{
