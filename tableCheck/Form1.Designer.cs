@@ -238,7 +238,7 @@
 			this.tabPage3.Location = new System.Drawing.Point(4, 22);
 			this.tabPage3.Name = "tabPage3";
 			this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage3.Size = new System.Drawing.Size(1400, 515);
+			this.tabPage3.Size = new System.Drawing.Size(1400, 549);
 			this.tabPage3.TabIndex = 2;
 			this.tabPage3.Text = "이벤트";
 			this.tabPage3.UseVisualStyleBackColor = true;
@@ -250,7 +250,7 @@
 			this.panel8.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panel8.Location = new System.Drawing.Point(3, 3);
 			this.panel8.Name = "panel8";
-			this.panel8.Size = new System.Drawing.Size(1394, 509);
+			this.panel8.Size = new System.Drawing.Size(1394, 543);
 			this.panel8.TabIndex = 1;
 			// 
 			// dataGridView5
@@ -260,7 +260,7 @@
 			this.dataGridView5.Location = new System.Drawing.Point(0, 0);
 			this.dataGridView5.Name = "dataGridView5";
 			this.dataGridView5.RowTemplate.Height = 23;
-			this.dataGridView5.Size = new System.Drawing.Size(1394, 502);
+			this.dataGridView5.Size = new System.Drawing.Size(1394, 536);
 			this.dataGridView5.TabIndex = 4;
 			this.dataGridView5.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridView5_CellFormatting);
 			this.dataGridView5.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dataGridView5_RowPostPaint);
@@ -270,7 +270,7 @@
 			this.splitter2.BackColor = System.Drawing.Color.MistyRose;
 			this.splitter2.Cursor = System.Windows.Forms.Cursors.HSplit;
 			this.splitter2.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.splitter2.Location = new System.Drawing.Point(0, 502);
+			this.splitter2.Location = new System.Drawing.Point(0, 536);
 			this.splitter2.Name = "splitter2";
 			this.splitter2.Size = new System.Drawing.Size(1394, 7);
 			this.splitter2.TabIndex = 0;
@@ -282,7 +282,7 @@
 			this.tabPage4.Location = new System.Drawing.Point(4, 22);
 			this.tabPage4.Name = "tabPage4";
 			this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage4.Size = new System.Drawing.Size(1400, 515);
+			this.tabPage4.Size = new System.Drawing.Size(1400, 549);
 			this.tabPage4.TabIndex = 3;
 			this.tabPage4.Text = "함수";
 			this.tabPage4.UseVisualStyleBackColor = true;
@@ -294,7 +294,7 @@
 			this.panel9.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panel9.Location = new System.Drawing.Point(3, 3);
 			this.panel9.Name = "panel9";
-			this.panel9.Size = new System.Drawing.Size(1394, 509);
+			this.panel9.Size = new System.Drawing.Size(1394, 543);
 			this.panel9.TabIndex = 1;
 			// 
 			// dataGridView7
@@ -304,7 +304,7 @@
 			this.dataGridView7.Location = new System.Drawing.Point(0, 0);
 			this.dataGridView7.Name = "dataGridView7";
 			this.dataGridView7.RowTemplate.Height = 23;
-			this.dataGridView7.Size = new System.Drawing.Size(1394, 502);
+			this.dataGridView7.Size = new System.Drawing.Size(1394, 536);
 			this.dataGridView7.TabIndex = 4;
 			this.dataGridView7.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridView7_CellFormatting);
 			this.dataGridView7.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dataGridView7_RowPostPaint);
@@ -314,7 +314,7 @@
 			this.splitter4.BackColor = System.Drawing.Color.MistyRose;
 			this.splitter4.Cursor = System.Windows.Forms.Cursors.HSplit;
 			this.splitter4.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.splitter4.Location = new System.Drawing.Point(0, 502);
+			this.splitter4.Location = new System.Drawing.Point(0, 536);
 			this.splitter4.Name = "splitter4";
 			this.splitter4.Size = new System.Drawing.Size(1394, 7);
 			this.splitter4.TabIndex = 0;
@@ -326,7 +326,7 @@
 			this.tabPage5.Location = new System.Drawing.Point(4, 22);
 			this.tabPage5.Name = "tabPage5";
 			this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage5.Size = new System.Drawing.Size(1400, 515);
+			this.tabPage5.Size = new System.Drawing.Size(1400, 549);
 			this.tabPage5.TabIndex = 4;
 			this.tabPage5.Text = "뷰";
 			this.tabPage5.UseVisualStyleBackColor = true;
@@ -338,7 +338,7 @@
 			this.panel10.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panel10.Location = new System.Drawing.Point(3, 3);
 			this.panel10.Name = "panel10";
-			this.panel10.Size = new System.Drawing.Size(1394, 509);
+			this.panel10.Size = new System.Drawing.Size(1394, 543);
 			this.panel10.TabIndex = 1;
 			// 
 			// dataGridView9
@@ -348,7 +348,7 @@
 			this.dataGridView9.Location = new System.Drawing.Point(0, 0);
 			this.dataGridView9.Name = "dataGridView9";
 			this.dataGridView9.RowTemplate.Height = 23;
-			this.dataGridView9.Size = new System.Drawing.Size(1394, 502);
+			this.dataGridView9.Size = new System.Drawing.Size(1394, 536);
 			this.dataGridView9.TabIndex = 4;
 			this.dataGridView9.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridView9_CellFormatting);
 			this.dataGridView9.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dataGridView9_RowPostPaint);
@@ -358,7 +358,7 @@
 			this.splitter5.BackColor = System.Drawing.Color.MistyRose;
 			this.splitter5.Cursor = System.Windows.Forms.Cursors.HSplit;
 			this.splitter5.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.splitter5.Location = new System.Drawing.Point(0, 502);
+			this.splitter5.Location = new System.Drawing.Point(0, 536);
 			this.splitter5.Name = "splitter5";
 			this.splitter5.Size = new System.Drawing.Size(1394, 7);
 			this.splitter5.TabIndex = 0;
@@ -423,6 +423,7 @@
 			this.btnPositionChange.TabIndex = 6;
 			this.btnPositionChange.Text = "순서";
 			this.btnPositionChange.UseVisualStyleBackColor = true;
+			this.btnPositionChange.Visible = false;
 			this.btnPositionChange.Click += new System.EventHandler(this.btnPositionChange_Click);
 			// 
 			// label2
@@ -442,6 +443,7 @@
 			this.button1.TabIndex = 4;
 			this.button1.Text = "수정";
 			this.button1.UseVisualStyleBackColor = true;
+			this.button1.Visible = false;
 			this.button1.Click += new System.EventHandler(this.button1_Click_1);
 			// 
 			// label1
