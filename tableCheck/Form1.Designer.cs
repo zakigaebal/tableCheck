@@ -89,7 +89,7 @@
 			this.buttonStringStart = new System.Windows.Forms.Button();
 			this.panel4 = new System.Windows.Forms.Panel();
 			this.label11 = new System.Windows.Forms.Label();
-			this.textBox2 = new System.Windows.Forms.TextBox();
+			this.textBoxIgnore = new System.Windows.Forms.TextBox();
 			this.panel11 = new System.Windows.Forms.Panel();
 			this.button5 = new System.Windows.Forms.Button();
 			this.button6 = new System.Windows.Forms.Button();
@@ -764,7 +764,7 @@
 			// 
 			this.panel4.Controls.Add(this.button3);
 			this.panel4.Controls.Add(this.button4);
-			this.panel4.Controls.Add(this.textBox2);
+			this.panel4.Controls.Add(this.textBoxIgnore);
 			this.panel4.Controls.Add(this.label11);
 			this.panel4.Dock = System.Windows.Forms.DockStyle.Top;
 			this.panel4.Location = new System.Drawing.Point(0, 0);
@@ -782,13 +782,15 @@
 			this.label11.TabIndex = 6;
 			this.label11.Text = "무시할 테이블명";
 			// 
-			// textBox2
+			// textBoxIgnore
 			// 
-			this.textBox2.Location = new System.Drawing.Point(215, 3);
-			this.textBox2.Multiline = true;
-			this.textBox2.Name = "textBox2";
-			this.textBox2.Size = new System.Drawing.Size(1174, 21);
-			this.textBox2.TabIndex = 7;
+			this.textBoxIgnore.Location = new System.Drawing.Point(215, 3);
+			this.textBoxIgnore.Multiline = true;
+			this.textBoxIgnore.Name = "textBoxIgnore";
+			this.textBoxIgnore.Size = new System.Drawing.Size(1174, 21);
+			this.textBoxIgnore.TabIndex = 7;
+			this.textBoxIgnore.Text = "account_book,account_info";
+			this.textBoxIgnore.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
 			// 
 			// panel11
 			// 
@@ -1030,7 +1032,7 @@
 		private System.Windows.Forms.TextBox textBoxString;
 		private System.Windows.Forms.Button buttonStringStart;
 		private System.Windows.Forms.Panel panel4;
-		private System.Windows.Forms.TextBox textBox2;
+		private System.Windows.Forms.TextBox textBoxIgnore;
 		private System.Windows.Forms.Label label11;
 		private System.Windows.Forms.Panel panel11;
 		private System.Windows.Forms.Button button5;

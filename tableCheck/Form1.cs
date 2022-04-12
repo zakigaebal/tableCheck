@@ -81,7 +81,6 @@ namespace tableCheck
 			//button2_Click(sender, e);
 			dt.Columns.Add("체크", typeof(bool)); // 선택 체크박스 용
 			iniload();
-			GenerateData();
 			checkBoxColumn.HeaderText = "체크";
 			checkBoxColumn.Name = "check";
 			buttonColumn.HeaderText = "Button";
@@ -322,6 +321,9 @@ namespace tableCheck
 				StringBuilder username2 = new StringBuilder();
 				StringBuilder password2 = new StringBuilder();
 
+				StringBuilder textBoxIgnoreString = new StringBuilder();
+
+
 				// ini파일에서 데이터를 불러옴
 				// GetPrivateProfileString("카테고리", "Key값", "기본값", "저장할 변수", "불러올 경로");
 				GetPrivateProfileString(mc, "textBoxDb1", "", db1, 3200, startupPath);
@@ -336,6 +338,8 @@ namespace tableCheck
 				GetPrivateProfileString(mc, "textBoxUn2", "", username2, 3200, startupPath);
 				GetPrivateProfileString(mc, "textBoxPw2", "", password2, 3200, startupPath);
 
+				GetPrivateProfileString(mc, "textBoxIgnore", "", textBoxIgnoreString, 3200, startupPath);
+
 				// 텍스트박스에 ini파일에서 가져온 데이터를 넣는다
 				textBoxDb1.Text = db1.ToString();
 				textBoxIp1.Text = ip1.ToString();
@@ -348,6 +352,8 @@ namespace tableCheck
 				textBoxPort2.Text = port2.ToString();
 				textBoxUn2.Text = username2.ToString();
 				textBoxPw2.Text = password2.ToString();
+
+				textBoxIgnore.Text = textBoxIgnoreString.ToString();
 			}
 			catch (Exception ex)
 			{
@@ -355,7 +361,6 @@ namespace tableCheck
 				LogMgr.ExceptionLog(ex);
 			}
 		}
-
 
 
 		private void initCloseMethod()
@@ -374,6 +379,8 @@ namespace tableCheck
 				WritePrivateProfileString(mc, "textBoxPort2", textBoxPort2.Text, startupPath);
 				WritePrivateProfileString(mc, "textBoxUn2", textBoxUn2.Text, startupPath);
 				WritePrivateProfileString(mc, "textBoxPw2", textBoxPw2.Text, startupPath);
+
+				WritePrivateProfileString(mc, "textBoxIgnore", textBoxIgnore.Text, startupPath);
 			}
 			catch (Exception ex)
 			{
@@ -381,23 +388,6 @@ namespace tableCheck
 			}
 		}
 
-
-
-		void GenerateData()
-		{
-			try
-			{
-				Random ran = new Random();
-				for (int i = 0; i < 10; i++)
-				{
-					//users.Add(new info { check = false, tableName = i.ToString(), fieldNumber = i, Progress = i, status = "" });
-				}
-			}
-			catch (Exception ex)
-			{
-				LogMgr.ExceptionLog(ex);
-			}
-		}
 
 
 		private void buttonConnect_Click(object sender, EventArgs e)
@@ -435,8 +425,6 @@ namespace tableCheck
 					return;
 				}
 				Cursor.Current = Cursors.WaitCursor;
-
-
 
 
 				//연결저장
@@ -567,7 +555,6 @@ namespace tableCheck
 				compare();
 
 
-
 				Cursor.Current = Cursors.Default;
 			}
 			catch (Exception ex)
@@ -681,6 +668,27 @@ namespace tableCheck
 				dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[3].Value = listTableAll[k].tableCmt;
 				dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[4].Value = listTableAll[k].fieldCount1;
 				dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[5].Value = listTableAll[k].fieldCount2;
+
+
+				string text = listTableAll[k].tableName;
+				string[] ignoreSplit = textBoxIgnore.Text.Split(',');
+
+				for (int l = 0; l < ignoreSplit.Length; l++)
+				{
+					if (ignoreSplit[l].ToString().Trim().Length == 0)
+					{
+						continue;
+					}
+					if (listTableAll[k].tableName.Contains(ignoreSplit[l].ToString().Trim()))
+					{
+						dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[0].Value = false;
+					}
+				}
+
+				//if (listTableAll[k].tableName == textBoxIgnore.Text)
+				//{
+				//	dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[0].Value = false;
+				//}
 			}
 			int i = 0;
 			dataGridView1.Columns[i++].ReadOnly = false;
@@ -1213,7 +1221,7 @@ namespace tableCheck
 							if (listTable2[k - 1].COLUMN_NAME == listTableAll[l].COLUMN_NAME1)
 							{
 
-								listTableAll.Insert(l+1, new ColumnsAll()
+								listTableAll.Insert(l + 1, new ColumnsAll()
 								{
 									COLUMN_NAME2 = listTable2[k].COLUMN_NAME,
 									DATA_TYPE2 = listTable2[k].DATA_TYPE,
@@ -1229,7 +1237,7 @@ namespace tableCheck
 							}
 						}
 					}
-				}				
+				}
 
 				dataGridView2.Rows.Clear();
 				dataGridView2.SuspendLayout();
@@ -1277,13 +1285,14 @@ namespace tableCheck
 			if (tabControl1.SelectedTab == tabPage1)
 			{
 				//체크박스 벨류가 false라면
-				if (dataGridView1.Rows[0].Cells[0].Value.ToString().Contains("False").ToString() == "False")
+
+				///데이터그리드뷰1에 로우줄을 다가지고온다
+				///상태가 다름이면 해당 쇼테이블 을 가지고 온다
+				///테이블의 생성문을 만들어서
+				///함수에 넣는다
+				for (int i = 0; i < dataGridView1.Rows.Count; i++)
 				{
-					///데이터그리드뷰1에 로우줄을 다가지고온다
-					///상태가 다름이면 해당 쇼테이블 을 가지고 온다
-					///테이블의 생성문을 만들어서
-					///함수에 넣는다
-					for (int i = 0; i < dataGridView1.Rows.Count; i++)
+					if (dataGridView1.Rows[i].Cells[0].Value.ToString().Contains("False").ToString() == "False")
 					{
 						string tbl = dataGridView1.Rows[i].Cells[2].Value.ToString();
 						if (dataGridView1.Rows[i].Cells[7].Value.ToString() == "없음")
@@ -1324,14 +1333,10 @@ namespace tableCheck
 						procedureCreateTable(queryCreate);
 						dataGridView3.Rows[i].Cells[10].Value = 100;
 						dataGridView3.Rows[i].Cells[11].Value = "확인중";
-						//string rdrString = "Create Procedure";
-						//dgvShowAll(queryCreate, i, rdrString);
 					}
-					showProceaser();
 				}
+				showProceaser();
 			}
-
-
 
 			//탭페이지가 이벤트인경우
 			if (tabControl1.SelectedTab == tabPage3)
@@ -2019,10 +2024,10 @@ namespace tableCheck
 				string position = "";
 
 				//위치바꾸기
-			
+
 				if (dataGridView2.Rows[0].Cells[8].Value.ToString().Trim() != dataGridView2.Rows[0].Cells[17].Value.ToString().Trim())
 				{
-					position = "ALTER TABLE " + tbl + " MODIFY COLUMN " + dataGridView2.Rows[0].Cells[0].Value.ToString() + " " + dataGridView2.Rows[0].Cells[1].Value.ToString()  + " FIRST";
+					position = "ALTER TABLE " + tbl + " MODIFY COLUMN " + dataGridView2.Rows[0].Cells[0].Value.ToString() + " " + dataGridView2.Rows[0].Cells[1].Value.ToString() + " FIRST";
 					Create(position);
 				}
 				else if (dataGridView2.Rows[i].Cells[8].Value == null)
@@ -2252,7 +2257,7 @@ namespace tableCheck
 						string addTable = "ALTER TABLE " + tbl + " ADD `" + fieldName1 + "` " + fieldType1 + nullable + def + comment1;
 						Create(addTable);
 					}
-			
+
 
 
 					if (dataGridView2.Rows[i].Cells[16].Value == null)
@@ -3676,7 +3681,7 @@ namespace tableCheck
 
 		private void textBox4_TextChanged(object sender, EventArgs e)
 		{
-					}
+		}
 
 		private void panel11_Paint(object sender, PaintEventArgs e)
 		{
@@ -3718,7 +3723,68 @@ namespace tableCheck
 			}
 		}
 
+		void ignoreString()
+		{
+			con.Open();
+			con2.Open();
+			string query1 = "SELECT b.table_name tbl, a.table_comment cmt, COUNT(*) cnt, b.EXTRA ex  FROM information_schema.tables a left JOIN information_schema.columns b ON a.TABLE_NAME=b.table_name WHERE a.table_schema = '" + textBoxDb1.Text + "' AND b.table_schema = '" + textBoxDb1.Text + "'  AND a.table_type='BASE TABLE' group BY b.TABLE_NAME ORDER BY b.TABLE_NAME asc;";
+			string query2 = "SELECT b.table_name tbl, a.table_comment cmt, COUNT(*) cnt, b.EXTRA ex  FROM information_schema.tables a left JOIN information_schema.columns b ON a.TABLE_NAME=b.table_name WHERE a.table_schema = '" + textBoxDb2.Text + "' AND b.table_schema = '" + textBoxDb2.Text + "' AND a.table_type='BASE TABLE'  group BY b.TABLE_NAME ORDER BY b.TABLE_NAME asc;";
+			MySqlDataReader rdr = DBConnect(con, query1);
+			List<ListInfo> listTable1 = new List<ListInfo>();
+			List<ListInfo> listTable2 = new List<ListInfo>();
+			List<ListInfoAll> listTableAll = new List<ListInfoAll>();
+			while (rdr.Read())
+			{
+				ListInfo listInfo = new ListInfo() { tableName = rdr["tbl"].ToString() };
+				listTable1.Add(listInfo);
+			}
+			MySqlDataReader rdr2 = DBConnect(con2, query2);
+			while (rdr2.Read())
+			{
+				ListInfo listInfo = new ListInfo() { tableName = rdr2["tbl"].ToString() };
+				listTable2.Add(listInfo);
+			}
+			for (int k = 0; k < listTable1.Count; k++)
+			{
+				listTableAll.Add(new ListInfoAll() { db = "A", tableName = listTable1[k].tableName });
+			}
+			for (int k = 0; k < listTable2.Count; k++)
+			{
+				bool found = false;
+				for (int j = 0; j < listTableAll.Count; j++)
+				{
+					if (listTable2[k].tableName == listTableAll[j].tableName)
+					{
+						found = true;
+						listTableAll[j].db = "A+B";
+						break;
+					}
+				}
+				if (found == false)
+				{
+					listTableAll.Add(new ListInfoAll() { db = "B", tableName = listTable2[k].tableName });
+				}
+			}
+
+			for (int k = 0; k < listTableAll.Count; k++)
+			{
+				dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[0].Value = true;
+				if (listTableAll[k].tableName == textBoxString.Text)
+				{
+					dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[0].Value = false;
+				}
+			}
+			con.Close();
+			con2.Close();
+		}
+
+
 		private void textBoxString_TextChanged(object sender, EventArgs e)
+		{
+
+		}
+
+		private void textBox2_TextChanged(object sender, EventArgs e)
 		{
 
 		}
