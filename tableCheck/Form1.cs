@@ -151,9 +151,12 @@ namespace tableCheck
 			progressColumn2.HeaderText = "진행중";
 			progressColumn2.Name = "progress2";
 			dataGridView3.Columns.Add("completed", "상태");
-			dataGridView3.Columns[10].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-			dataGridView3.AllowUserToAddRows = false;
-
+			//dataGridView3.Columns[0].Width = 25000;
+			//dataGridView3.Columns[4].Width = 150;
+			//dataGridView3.Columns[5].Width = 150;
+			//dataGridView3.Columns[9].Width = 150;
+			//dataGridView3.Columns[10].Width = 50;
+			//dataGridView3.AllowUserToAddRows = false;
 
 
 
@@ -171,7 +174,7 @@ namespace tableCheck
 			progressColumn3.HeaderText = "진행중";
 			progressColumn3.Name = "progress3";
 			dataGridView5.Columns.Add("completed", "상태");
-			dataGridView5.Columns[6].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+			dataGridView5.Columns[8].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
 
 			dataGridView5.AllowUserToAddRows = false;
 
@@ -189,7 +192,7 @@ namespace tableCheck
 			progressColumn4.HeaderText = "진행중";
 			progressColumn4.Name = "progress4";
 			dataGridView7.Columns.Add("completed", "상태");
-			dataGridView7.Columns[6].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+			dataGridView7.Columns[8].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
 
 			dataGridView7.AllowUserToAddRows = false;
 
@@ -208,10 +211,8 @@ namespace tableCheck
 
 			dataGridView9.AllowUserToAddRows = false;
 
-			dataGridView3.Columns[0].Width = 150;
-			dataGridView3.Columns[4].Width = 150;
-			dataGridView3.Columns[5].Width = 150;
-			dataGridView3.Columns[9].Width = 150;
+		
+
 
 			dataGridView2.AllowUserToAddRows = false;
 			dataGridView3.AllowUserToAddRows = false;
@@ -221,17 +222,21 @@ namespace tableCheck
 			dataGridView2.Columns[i++].Width = 60;
 			dataGridView2.Columns[i++].Width = 60;
 
-			dataGridView3.Columns[0].Width = 100;
+			dataGridView3.Columns[0].Width = 150;
+			dataGridView3.Columns[4].Width = 150;
+			dataGridView3.Columns[5].Width = 150;
+			dataGridView3.Columns[9].Width = 150;
+			dataGridView3.Columns[10].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
 
 			dataGridView5.Columns[0].Width = 100;
-			dataGridView5.Columns[3].Width = 300;
-			dataGridView5.Columns[0].Width = 100;
-			dataGridView5.Columns[7].Width = 300;
+			dataGridView5.Columns[3].Width = 200;
+			dataGridView5.Columns[6].Width = 150;
+			dataGridView5.Columns[7].Width = 200;
 
 			dataGridView7.Columns[0].Width = 100;
-			dataGridView7.Columns[3].Width = 300;
-			dataGridView7.Columns[0].Width = 100;
-			dataGridView7.Columns[7].Width = 300;
+			dataGridView7.Columns[3].Width = 200;
+			dataGridView7.Columns[6].Width = 150;
+			dataGridView7.Columns[7].Width = 200;
 
 			dataGridView9.Columns[0].Width = 100;
 			dataGridView9.Columns[1].Width = 300;
