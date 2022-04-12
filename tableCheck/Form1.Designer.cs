@@ -83,6 +83,27 @@
 			this.textBoxDb1 = new System.Windows.Forms.TextBox();
 			this.label4 = new System.Windows.Forms.Label();
 			this.textBoxPw2 = new System.Windows.Forms.TextBox();
+			this.tabPage6 = new System.Windows.Forms.TabPage();
+			this.panel3 = new System.Windows.Forms.Panel();
+			this.textBoxString = new System.Windows.Forms.TextBox();
+			this.buttonStringStart = new System.Windows.Forms.Button();
+			this.panel4 = new System.Windows.Forms.Panel();
+			this.label11 = new System.Windows.Forms.Label();
+			this.textBox2 = new System.Windows.Forms.TextBox();
+			this.panel11 = new System.Windows.Forms.Panel();
+			this.button5 = new System.Windows.Forms.Button();
+			this.button6 = new System.Windows.Forms.Button();
+			this.panel12 = new System.Windows.Forms.Panel();
+			this.panel13 = new System.Windows.Forms.Panel();
+			this.panel14 = new System.Windows.Forms.Panel();
+			this.button3 = new System.Windows.Forms.Button();
+			this.button4 = new System.Windows.Forms.Button();
+			this.button7 = new System.Windows.Forms.Button();
+			this.button8 = new System.Windows.Forms.Button();
+			this.button9 = new System.Windows.Forms.Button();
+			this.button10 = new System.Windows.Forms.Button();
+			this.button11 = new System.Windows.Forms.Button();
+			this.button12 = new System.Windows.Forms.Button();
 			this.panel1.SuspendLayout();
 			this.panel5.SuspendLayout();
 			this.tabControl1.SuspendLayout();
@@ -103,6 +124,13 @@
 			this.panel10.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView9)).BeginInit();
 			this.panel2.SuspendLayout();
+			this.tabPage6.SuspendLayout();
+			this.panel3.SuspendLayout();
+			this.panel4.SuspendLayout();
+			this.panel11.SuspendLayout();
+			this.panel12.SuspendLayout();
+			this.panel13.SuspendLayout();
+			this.panel14.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// panel1
@@ -131,6 +159,7 @@
 			this.tabControl1.Controls.Add(this.tabPage3);
 			this.tabControl1.Controls.Add(this.tabPage4);
 			this.tabControl1.Controls.Add(this.tabPage5);
+			this.tabControl1.Controls.Add(this.tabPage6);
 			this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tabControl1.Location = new System.Drawing.Point(0, 49);
 			this.tabControl1.Name = "tabControl1";
@@ -152,6 +181,7 @@
 			// panel7
 			// 
 			this.panel7.Controls.Add(this.dataGridView1);
+			this.panel7.Controls.Add(this.panel4);
 			this.panel7.Controls.Add(this.splitter3);
 			this.panel7.Controls.Add(this.dataGridView2);
 			this.panel7.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -164,12 +194,13 @@
 			// 
 			this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.dataGridView1.Location = new System.Drawing.Point(0, 0);
+			this.dataGridView1.Location = new System.Drawing.Point(0, 27);
 			this.dataGridView1.Name = "dataGridView1";
 			this.dataGridView1.RowTemplate.Height = 23;
-			this.dataGridView1.Size = new System.Drawing.Size(1394, 247);
+			this.dataGridView1.Size = new System.Drawing.Size(1394, 220);
 			this.dataGridView1.TabIndex = 4;
 			this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
+			this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
 			this.dataGridView1.CurrentCellDirtyStateChanged += new System.EventHandler(this.dataGridView1_CurrentCellDirtyStateChanged);
 			this.dataGridView1.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dataGridView1_RowPostPaint);
 			this.dataGridView1.SelectionChanged += new System.EventHandler(this.dataGridView1_SelectionChanged);
@@ -214,6 +245,7 @@
 			// panel6
 			// 
 			this.panel6.Controls.Add(this.dataGridView3);
+			this.panel6.Controls.Add(this.panel11);
 			this.panel6.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panel6.Location = new System.Drawing.Point(3, 3);
 			this.panel6.Name = "panel6";
@@ -224,11 +256,12 @@
 			// 
 			this.dataGridView3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.dataGridView3.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.dataGridView3.Location = new System.Drawing.Point(0, 0);
+			this.dataGridView3.Location = new System.Drawing.Point(0, 22);
 			this.dataGridView3.Name = "dataGridView3";
 			this.dataGridView3.RowTemplate.Height = 23;
-			this.dataGridView3.Size = new System.Drawing.Size(1394, 543);
+			this.dataGridView3.Size = new System.Drawing.Size(1394, 521);
 			this.dataGridView3.TabIndex = 4;
+			this.dataGridView3.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView3_CellContentClick);
 			this.dataGridView3.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridView3_CellFormatting);
 			this.dataGridView3.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dataGridView3_RowPostPaint);
 			// 
@@ -246,6 +279,7 @@
 			// panel8
 			// 
 			this.panel8.Controls.Add(this.dataGridView5);
+			this.panel8.Controls.Add(this.panel12);
 			this.panel8.Controls.Add(this.splitter2);
 			this.panel8.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panel8.Location = new System.Drawing.Point(3, 3);
@@ -257,10 +291,10 @@
 			// 
 			this.dataGridView5.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.dataGridView5.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.dataGridView5.Location = new System.Drawing.Point(0, 0);
+			this.dataGridView5.Location = new System.Drawing.Point(0, 24);
 			this.dataGridView5.Name = "dataGridView5";
 			this.dataGridView5.RowTemplate.Height = 23;
-			this.dataGridView5.Size = new System.Drawing.Size(1394, 536);
+			this.dataGridView5.Size = new System.Drawing.Size(1394, 512);
 			this.dataGridView5.TabIndex = 4;
 			this.dataGridView5.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridView5_CellFormatting);
 			this.dataGridView5.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dataGridView5_RowPostPaint);
@@ -290,6 +324,7 @@
 			// panel9
 			// 
 			this.panel9.Controls.Add(this.dataGridView7);
+			this.panel9.Controls.Add(this.panel13);
 			this.panel9.Controls.Add(this.splitter4);
 			this.panel9.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panel9.Location = new System.Drawing.Point(3, 3);
@@ -301,10 +336,10 @@
 			// 
 			this.dataGridView7.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.dataGridView7.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.dataGridView7.Location = new System.Drawing.Point(0, 0);
+			this.dataGridView7.Location = new System.Drawing.Point(0, 26);
 			this.dataGridView7.Name = "dataGridView7";
 			this.dataGridView7.RowTemplate.Height = 23;
-			this.dataGridView7.Size = new System.Drawing.Size(1394, 536);
+			this.dataGridView7.Size = new System.Drawing.Size(1394, 510);
 			this.dataGridView7.TabIndex = 4;
 			this.dataGridView7.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridView7_CellFormatting);
 			this.dataGridView7.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dataGridView7_RowPostPaint);
@@ -334,6 +369,7 @@
 			// panel10
 			// 
 			this.panel10.Controls.Add(this.dataGridView9);
+			this.panel10.Controls.Add(this.panel14);
 			this.panel10.Controls.Add(this.splitter5);
 			this.panel10.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panel10.Location = new System.Drawing.Point(3, 3);
@@ -345,10 +381,10 @@
 			// 
 			this.dataGridView9.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.dataGridView9.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.dataGridView9.Location = new System.Drawing.Point(0, 0);
+			this.dataGridView9.Location = new System.Drawing.Point(0, 24);
 			this.dataGridView9.Name = "dataGridView9";
 			this.dataGridView9.RowTemplate.Height = 23;
-			this.dataGridView9.Size = new System.Drawing.Size(1394, 536);
+			this.dataGridView9.Size = new System.Drawing.Size(1394, 512);
 			this.dataGridView9.TabIndex = 4;
 			this.dataGridView9.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridView9_CellFormatting);
 			this.dataGridView9.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dataGridView9_RowPostPaint);
@@ -682,6 +718,212 @@
 			this.textBoxPw2.Size = new System.Drawing.Size(70, 21);
 			this.textBoxPw2.TabIndex = 9;
 			// 
+			// tabPage6
+			// 
+			this.tabPage6.Controls.Add(this.textBoxString);
+			this.tabPage6.Controls.Add(this.panel3);
+			this.tabPage6.Location = new System.Drawing.Point(4, 22);
+			this.tabPage6.Name = "tabPage6";
+			this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPage6.Size = new System.Drawing.Size(1400, 549);
+			this.tabPage6.TabIndex = 5;
+			this.tabPage6.Text = "문장실행";
+			this.tabPage6.UseVisualStyleBackColor = true;
+			this.tabPage6.Click += new System.EventHandler(this.tabPage6_Click);
+			// 
+			// panel3
+			// 
+			this.panel3.Controls.Add(this.buttonStringStart);
+			this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
+			this.panel3.Location = new System.Drawing.Point(3, 3);
+			this.panel3.Name = "panel3";
+			this.panel3.Size = new System.Drawing.Size(1394, 39);
+			this.panel3.TabIndex = 0;
+			// 
+			// textBoxString
+			// 
+			this.textBoxString.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.textBoxString.Location = new System.Drawing.Point(3, 42);
+			this.textBoxString.Multiline = true;
+			this.textBoxString.Name = "textBoxString";
+			this.textBoxString.Size = new System.Drawing.Size(1394, 504);
+			this.textBoxString.TabIndex = 1;
+			this.textBoxString.TextChanged += new System.EventHandler(this.textBoxString_TextChanged);
+			// 
+			// buttonStringStart
+			// 
+			this.buttonStringStart.Location = new System.Drawing.Point(1, 2);
+			this.buttonStringStart.Name = "buttonStringStart";
+			this.buttonStringStart.Size = new System.Drawing.Size(91, 35);
+			this.buttonStringStart.TabIndex = 0;
+			this.buttonStringStart.Text = "실행";
+			this.buttonStringStart.UseVisualStyleBackColor = true;
+			this.buttonStringStart.Click += new System.EventHandler(this.buttonStringStart_Click);
+			// 
+			// panel4
+			// 
+			this.panel4.Controls.Add(this.button3);
+			this.panel4.Controls.Add(this.button4);
+			this.panel4.Controls.Add(this.textBox2);
+			this.panel4.Controls.Add(this.label11);
+			this.panel4.Dock = System.Windows.Forms.DockStyle.Top;
+			this.panel4.Location = new System.Drawing.Point(0, 0);
+			this.panel4.Name = "panel4";
+			this.panel4.Size = new System.Drawing.Size(1394, 27);
+			this.panel4.TabIndex = 16;
+			this.panel4.Paint += new System.Windows.Forms.PaintEventHandler(this.panel4_Paint);
+			// 
+			// label11
+			// 
+			this.label11.AutoSize = true;
+			this.label11.Location = new System.Drawing.Point(116, 6);
+			this.label11.Name = "label11";
+			this.label11.Size = new System.Drawing.Size(93, 12);
+			this.label11.TabIndex = 6;
+			this.label11.Text = "무시할 테이블명";
+			// 
+			// textBox2
+			// 
+			this.textBox2.Location = new System.Drawing.Point(215, 3);
+			this.textBox2.Multiline = true;
+			this.textBox2.Name = "textBox2";
+			this.textBox2.Size = new System.Drawing.Size(1174, 21);
+			this.textBox2.TabIndex = 7;
+			// 
+			// panel11
+			// 
+			this.panel11.Controls.Add(this.button5);
+			this.panel11.Controls.Add(this.button6);
+			this.panel11.Dock = System.Windows.Forms.DockStyle.Top;
+			this.panel11.Location = new System.Drawing.Point(0, 0);
+			this.panel11.Name = "panel11";
+			this.panel11.Size = new System.Drawing.Size(1394, 22);
+			this.panel11.TabIndex = 17;
+			this.panel11.Paint += new System.Windows.Forms.PaintEventHandler(this.panel11_Paint);
+			// 
+			// button5
+			// 
+			this.button5.Location = new System.Drawing.Point(-1, -1);
+			this.button5.Name = "button5";
+			this.button5.Size = new System.Drawing.Size(43, 23);
+			this.button5.TabIndex = 5;
+			this.button5.Text = "실행";
+			this.button5.UseVisualStyleBackColor = true;
+			// 
+			// button6
+			// 
+			this.button6.Location = new System.Drawing.Point(41, -1);
+			this.button6.Name = "button6";
+			this.button6.Size = new System.Drawing.Size(60, 23);
+			this.button6.TabIndex = 4;
+			this.button6.Text = "1개 실행";
+			this.button6.UseVisualStyleBackColor = true;
+			this.button6.Click += new System.EventHandler(this.button6_Click);
+			// 
+			// panel12
+			// 
+			this.panel12.Controls.Add(this.button7);
+			this.panel12.Controls.Add(this.button8);
+			this.panel12.Dock = System.Windows.Forms.DockStyle.Top;
+			this.panel12.Location = new System.Drawing.Point(0, 0);
+			this.panel12.Name = "panel12";
+			this.panel12.Size = new System.Drawing.Size(1394, 24);
+			this.panel12.TabIndex = 17;
+			// 
+			// panel13
+			// 
+			this.panel13.Controls.Add(this.button9);
+			this.panel13.Controls.Add(this.button10);
+			this.panel13.Dock = System.Windows.Forms.DockStyle.Top;
+			this.panel13.Location = new System.Drawing.Point(0, 0);
+			this.panel13.Name = "panel13";
+			this.panel13.Size = new System.Drawing.Size(1394, 26);
+			this.panel13.TabIndex = 17;
+			// 
+			// panel14
+			// 
+			this.panel14.Controls.Add(this.button11);
+			this.panel14.Controls.Add(this.button12);
+			this.panel14.Dock = System.Windows.Forms.DockStyle.Top;
+			this.panel14.Location = new System.Drawing.Point(0, 0);
+			this.panel14.Name = "panel14";
+			this.panel14.Size = new System.Drawing.Size(1394, 24);
+			this.panel14.TabIndex = 17;
+			// 
+			// button3
+			// 
+			this.button3.Location = new System.Drawing.Point(1, 1);
+			this.button3.Name = "button3";
+			this.button3.Size = new System.Drawing.Size(43, 23);
+			this.button3.TabIndex = 9;
+			this.button3.Text = "실행";
+			this.button3.UseVisualStyleBackColor = true;
+			this.button3.Click += new System.EventHandler(this.button3_Click_1);
+			// 
+			// button4
+			// 
+			this.button4.Location = new System.Drawing.Point(43, 1);
+			this.button4.Name = "button4";
+			this.button4.Size = new System.Drawing.Size(60, 23);
+			this.button4.TabIndex = 8;
+			this.button4.Text = "1개 실행";
+			this.button4.UseVisualStyleBackColor = true;
+			this.button4.Click += new System.EventHandler(this.button4_Click_2);
+			// 
+			// button7
+			// 
+			this.button7.Location = new System.Drawing.Point(0, 0);
+			this.button7.Name = "button7";
+			this.button7.Size = new System.Drawing.Size(43, 23);
+			this.button7.TabIndex = 7;
+			this.button7.Text = "실행";
+			this.button7.UseVisualStyleBackColor = true;
+			// 
+			// button8
+			// 
+			this.button8.Location = new System.Drawing.Point(42, 0);
+			this.button8.Name = "button8";
+			this.button8.Size = new System.Drawing.Size(60, 23);
+			this.button8.TabIndex = 6;
+			this.button8.Text = "1개 실행";
+			this.button8.UseVisualStyleBackColor = true;
+			// 
+			// button9
+			// 
+			this.button9.Location = new System.Drawing.Point(0, 1);
+			this.button9.Name = "button9";
+			this.button9.Size = new System.Drawing.Size(43, 23);
+			this.button9.TabIndex = 9;
+			this.button9.Text = "실행";
+			this.button9.UseVisualStyleBackColor = true;
+			// 
+			// button10
+			// 
+			this.button10.Location = new System.Drawing.Point(42, 1);
+			this.button10.Name = "button10";
+			this.button10.Size = new System.Drawing.Size(60, 23);
+			this.button10.TabIndex = 8;
+			this.button10.Text = "1개 실행";
+			this.button10.UseVisualStyleBackColor = true;
+			// 
+			// button11
+			// 
+			this.button11.Location = new System.Drawing.Point(0, 0);
+			this.button11.Name = "button11";
+			this.button11.Size = new System.Drawing.Size(43, 23);
+			this.button11.TabIndex = 11;
+			this.button11.Text = "실행";
+			this.button11.UseVisualStyleBackColor = true;
+			// 
+			// button12
+			// 
+			this.button12.Location = new System.Drawing.Point(42, 0);
+			this.button12.Name = "button12";
+			this.button12.Size = new System.Drawing.Size(60, 23);
+			this.button12.TabIndex = 10;
+			this.button12.Text = "1개 실행";
+			this.button12.UseVisualStyleBackColor = true;
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
@@ -713,6 +955,15 @@
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView9)).EndInit();
 			this.panel2.ResumeLayout(false);
 			this.panel2.PerformLayout();
+			this.tabPage6.ResumeLayout(false);
+			this.tabPage6.PerformLayout();
+			this.panel3.ResumeLayout(false);
+			this.panel4.ResumeLayout(false);
+			this.panel4.PerformLayout();
+			this.panel11.ResumeLayout(false);
+			this.panel12.ResumeLayout(false);
+			this.panel13.ResumeLayout(false);
+			this.panel14.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -774,6 +1025,27 @@
 		private System.Windows.Forms.Button btnPositionChange;
 		private System.Windows.Forms.DataGridView dataGridView3;
 		private System.Windows.Forms.CheckBox checkBoxStop;
+		private System.Windows.Forms.TabPage tabPage6;
+		private System.Windows.Forms.Panel panel3;
+		private System.Windows.Forms.TextBox textBoxString;
+		private System.Windows.Forms.Button buttonStringStart;
+		private System.Windows.Forms.Panel panel4;
+		private System.Windows.Forms.TextBox textBox2;
+		private System.Windows.Forms.Label label11;
+		private System.Windows.Forms.Panel panel11;
+		private System.Windows.Forms.Button button5;
+		private System.Windows.Forms.Button button6;
+		private System.Windows.Forms.Panel panel12;
+		private System.Windows.Forms.Panel panel13;
+		private System.Windows.Forms.Panel panel14;
+		private System.Windows.Forms.Button button3;
+		private System.Windows.Forms.Button button4;
+		private System.Windows.Forms.Button button7;
+		private System.Windows.Forms.Button button8;
+		private System.Windows.Forms.Button button9;
+		private System.Windows.Forms.Button button10;
+		private System.Windows.Forms.Button button11;
+		private System.Windows.Forms.Button button12;
 	}
 }
 

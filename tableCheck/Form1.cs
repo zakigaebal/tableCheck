@@ -1229,100 +1229,7 @@ namespace tableCheck
 							}
 						}
 					}
-				}
-
-				//	// 없으면 i번째에 삽입하기
-				//	listTableAll.Insert(i, new ColumnsAll()
-				//	{
-				//		COLUMN_NAME2 = listTable2[i].COLUMN_NAME,
-				//		DATA_TYPE2 = listTable2[i].DATA_TYPE,
-				//		CHARACTER_MAXIMUM_LENGTH2 = listTable2[i].CHARACTER_MAXIMUM_LENGTH,
-				//		COLUMN_DEFAULT2 = listTable2[i].COLUMN_DEFAULT,
-				//		COLUMN_COMMENT2 = listTable2[i].COLUMN_COMMENT,
-				//		IS_NULLABLE2 = listTable2[i].IS_NULLABLE,
-				//		COLLATION_NAME2 = listTable2[i].COLLATION_NAME,
-				//		INCREMENT2 = listTable2[i].INCREMENT,
-				//		ORDINAL_POSITION2 = listTable2[i].ORDINAL_POSITION
-				//	});
-				//}
-
-
-
-
-
-
-				//if (listTable2[i].ORDINAL_POSITION != listTableAll[j].ORDINAL_POSITION1)
-				//{
-				//	listTableAll.Insert(i, new ColumnsAll()
-				//	{
-				//		COLUMN_NAME1 = listTable2[i].COLUMN_NAME,
-				//		DATA_TYPE1 = listTable2[i].DATA_TYPE,
-				//		CHARACTER_MAXIMUM_LENGTH1 = listTable2[i].CHARACTER_MAXIMUM_LENGTH,
-				//		COLUMN_DEFAULT1 = listTable2[i].COLUMN_DEFAULT,
-				//		COLUMN_COMMENT1 = listTable2[i].COLUMN_COMMENT,
-				//		IS_NULLABLE1 = listTable2[i].IS_NULLABLE,
-				//		COLLATION_NAME1 = listTable2[i].COLLATION_NAME,
-				//		INCREMENT1 = listTable2[i].INCREMENT,
-				//		COLUMN_KEY1 = listTable2[i].COLUMN_KEY,
-				//		ORDINAL_POSITION1 = listTable2[i].ORDINAL_POSITION
-				//	});
-				//}
-				//else
-				//else
-
-				//if (listTable2[i].ORDINAL_POSITION != listTableAll[i].ORDINAL_POSITION1)
-				//{
-				//	listTableAll.Add(new ColumnsAll()
-				//	{
-				//		COLUMN_NAME2 = listTable2[i].COLUMN_NAME,
-				//		DATA_TYPE2 = listTable2[i].DATA_TYPE,
-				//		CHARACTER_MAXIMUM_LENGTH2 = listTable2[i].CHARACTER_MAXIMUM_LENGTH,
-				//		COLUMN_DEFAULT2 = listTable2[i].COLUMN_DEFAULT,
-				//		COLUMN_COMMENT2 = listTable2[i].COLUMN_COMMENT,
-				//		IS_NULLABLE2 = listTable2[i].IS_NULLABLE,
-				//		COLLATION_NAME2 = listTable2[i].COLLATION_NAME,
-				//		INCREMENT2 = listTable2[i].INCREMENT,
-				//		COLUMN_KEY2 = listTable2[i].COLUMN_KEY,
-				//		ORDINAL_POSITION2 = listTable2[i].ORDINAL_POSITION
-				//	});
-				//}
-				//listTableAll.Add(new ColumnsAll()
-				//{
-				//	COLUMN_NAME2 = listTable2[i].COLUMN_NAME,
-				//	DATA_TYPE2 = listTable2[i].DATA_TYPE,
-				//	CHARACTER_MAXIMUM_LENGTH2 = listTable2[i].CHARACTER_MAXIMUM_LENGTH,
-				//	COLUMN_DEFAULT2 = listTable2[i].COLUMN_DEFAULT,
-				//	COLUMN_COMMENT2 = listTable2[i].COLUMN_COMMENT,
-				//	IS_NULLABLE2 = listTable2[i].IS_NULLABLE,
-				//	COLLATION_NAME2 = listTable2[i].COLLATION_NAME,
-				//	INCREMENT2 = listTable2[i].INCREMENT,
-				//  COLUMN_KEY2 = listTable2[i].COLUMN_KEY,
-				//	ORDINAL_POSITION2 = listTable2[i].ORDINAL_POSITION
-				//});
-
-				//for (int k = 0; k < listTable1.Count; k++)
-				//{
-				//	listTableAll.Add(new ListInfoAll() { db = "A", tableName = listTable1[k].tableName, fieldCount1 = listTable1[k].fieldCount, fieldCount2 = 0, tableCmt = listTable1[k].tableCmt });
-				//}
-				//for (int k = 0; k < listTable2.Count; k++)
-				//{
-				//	bool found = false;
-				//	for (int j = 0; j < listTableAll.Count; j++)
-				//	{
-				//		if (listTable2[k].tableName == listTableAll[j].tableName)
-				//		{
-				//			listTableAll[j].fieldCount2 = listTable2[k].fieldCount;
-				//			found = true;
-				//			listTableAll[j].db = "A+B";
-				//			break;
-				//		}
-				//	}
-				//	//listTableAll.Add(new ListInfoAll() { db = "A", tableName = listTable1[k].tableName, fieldCount1 = listTable1[k].fieldCount, fieldCount2 = 0 });
-				//	if (found == false)
-				//	{
-				//		listTableAll.Add(new ListInfoAll() { db = "B", tableName = listTable2[k].tableName, fieldCount1 = "", fieldCount2 = listTable2[k].fieldCount, tableCmt = listTable2[k].tableCmt });
-				//	}
-				//}
+				}				
 
 				dataGridView2.Rows.Clear();
 				dataGridView2.SuspendLayout();
@@ -2366,8 +2273,6 @@ namespace tableCheck
 
 
 
-
-
 					if (dataGridView2.Rows[i].Cells[9].Value == null)
 					{
 						continue;
@@ -3150,9 +3055,7 @@ namespace tableCheck
 					Columns listInfo = new Columns() { CREATETABLE = rdr["Create Procedure"].ToString() };
 					listTable1.Add(listInfo);
 				}
-
 				string createQuery = listTable1[0].CREATETABLE;
-
 
 				Create(createQuery);
 				con.Close();
@@ -3742,6 +3645,80 @@ namespace tableCheck
 		}
 
 		private void panel2_Paint(object sender, PaintEventArgs e)
+		{
+
+		}
+
+		private void tabPage6_Click(object sender, EventArgs e)
+		{
+
+		}
+
+		private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+		{
+
+		}
+
+		private void panel4_Paint(object sender, PaintEventArgs e)
+		{
+
+		}
+
+		private void button4_Click_1(object sender, EventArgs e)
+		{
+
+		}
+
+		private void label13_Click(object sender, EventArgs e)
+		{
+
+		}
+
+		private void textBox4_TextChanged(object sender, EventArgs e)
+		{
+					}
+
+		private void panel11_Paint(object sender, PaintEventArgs e)
+		{
+
+		}
+
+		private void button6_Click(object sender, EventArgs e)
+		{
+
+		}
+
+		private void dataGridView3_CellContentClick(object sender, DataGridViewCellEventArgs e)
+		{
+
+		}
+
+		private void button3_Click_1(object sender, EventArgs e)
+		{
+
+		}
+
+		private void button4_Click_2(object sender, EventArgs e)
+		{
+
+		}
+
+		private void buttonStringStart_Click(object sender, EventArgs e)
+		{
+			//스트링스타트
+			try
+			{
+				string str = textBoxString.Text;
+				queryCreater(str);
+			}
+			catch (Exception ex)
+			{
+				LogMgr.ExceptionLog(ex);
+				MessageBox.Show(ex.ToString());
+			}
+		}
+
+		private void textBoxString_TextChanged(object sender, EventArgs e)
 		{
 
 		}
