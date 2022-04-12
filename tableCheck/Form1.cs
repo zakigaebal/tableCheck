@@ -1013,6 +1013,10 @@ namespace tableCheck
 		{
 			dataGridView1.Rows.Clear();
 			dataGridView2.Rows.Clear();
+			dataGridView3.Rows.Clear();
+			dataGridView5.Rows.Clear();
+			dataGridView7.Rows.Clear();
+			dataGridView9.Rows.Clear();
 		}
 
 		private void CheckBox_All_CheckedChanged(object sender, EventArgs e)

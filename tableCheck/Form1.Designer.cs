@@ -668,7 +668,7 @@
 			// 
 			// btnPositionChange
 			// 
-			this.btnPositionChange.Location = new System.Drawing.Point(1361, 22);
+			this.btnPositionChange.Location = new System.Drawing.Point(1362, 25);
 			this.btnPositionChange.Name = "btnPositionChange";
 			this.btnPositionChange.Size = new System.Drawing.Size(41, 25);
 			this.btnPositionChange.TabIndex = 6;
@@ -688,7 +688,7 @@
 			// 
 			// button1
 			// 
-			this.button1.Location = new System.Drawing.Point(1308, 22);
+			this.button1.Location = new System.Drawing.Point(1314, 25);
 			this.button1.Name = "button1";
 			this.button1.Size = new System.Drawing.Size(47, 23);
 			this.button1.TabIndex = 4;
@@ -740,12 +740,13 @@
 			// 
 			// buttonDelete
 			// 
-			this.buttonDelete.Location = new System.Drawing.Point(701, 2);
+			this.buttonDelete.Location = new System.Drawing.Point(1267, 26);
 			this.buttonDelete.Name = "buttonDelete";
 			this.buttonDelete.Size = new System.Drawing.Size(46, 23);
 			this.buttonDelete.TabIndex = 5;
 			this.buttonDelete.Text = "삭제";
 			this.buttonDelete.UseVisualStyleBackColor = true;
+			this.buttonDelete.Visible = false;
 			this.buttonDelete.Click += new System.EventHandler(this.buttonDelete_Click);
 			// 
 			// textBoxPort1
@@ -815,7 +816,7 @@
 			// 
 			// buttonStart
 			// 
-			this.buttonStart.Location = new System.Drawing.Point(1227, 23);
+			this.buttonStart.Location = new System.Drawing.Point(1247, 0);
 			this.buttonStart.Name = "buttonStart";
 			this.buttonStart.Size = new System.Drawing.Size(75, 23);
 			this.buttonStart.TabIndex = 3;
@@ -854,7 +855,7 @@
 			// 
 			// buttonOnes
 			// 
-			this.buttonOnes.Location = new System.Drawing.Point(1146, 22);
+			this.buttonOnes.Location = new System.Drawing.Point(1327, 0);
 			this.buttonOnes.Name = "buttonOnes";
 			this.buttonOnes.Size = new System.Drawing.Size(75, 23);
 			this.buttonOnes.TabIndex = 2;
