@@ -34,23 +34,44 @@
 			this.tabPage1 = new System.Windows.Forms.TabPage();
 			this.panel7 = new System.Windows.Forms.Panel();
 			this.dataGridView1 = new System.Windows.Forms.DataGridView();
+			this.panel4 = new System.Windows.Forms.Panel();
+			this.buttonTableAll = new System.Windows.Forms.Button();
+			this.buttonTableOne = new System.Windows.Forms.Button();
+			this.textBoxIgnore = new System.Windows.Forms.TextBox();
+			this.label11 = new System.Windows.Forms.Label();
 			this.splitter3 = new System.Windows.Forms.Splitter();
 			this.dataGridView2 = new System.Windows.Forms.DataGridView();
 			this.tabPage2 = new System.Windows.Forms.TabPage();
 			this.panel6 = new System.Windows.Forms.Panel();
 			this.dataGridView3 = new System.Windows.Forms.DataGridView();
+			this.panel11 = new System.Windows.Forms.Panel();
+			this.buttonProcedureAll = new System.Windows.Forms.Button();
+			this.buttonProcedureOne = new System.Windows.Forms.Button();
 			this.tabPage3 = new System.Windows.Forms.TabPage();
 			this.panel8 = new System.Windows.Forms.Panel();
 			this.dataGridView5 = new System.Windows.Forms.DataGridView();
+			this.panel12 = new System.Windows.Forms.Panel();
+			this.buttonEventAll = new System.Windows.Forms.Button();
+			this.buttonEventOne = new System.Windows.Forms.Button();
 			this.splitter2 = new System.Windows.Forms.Splitter();
 			this.tabPage4 = new System.Windows.Forms.TabPage();
 			this.panel9 = new System.Windows.Forms.Panel();
 			this.dataGridView7 = new System.Windows.Forms.DataGridView();
+			this.panel13 = new System.Windows.Forms.Panel();
+			this.buttonFunctionAll = new System.Windows.Forms.Button();
+			this.buttonFunctionOne = new System.Windows.Forms.Button();
 			this.splitter4 = new System.Windows.Forms.Splitter();
 			this.tabPage5 = new System.Windows.Forms.TabPage();
 			this.panel10 = new System.Windows.Forms.Panel();
 			this.dataGridView9 = new System.Windows.Forms.DataGridView();
+			this.panel14 = new System.Windows.Forms.Panel();
+			this.buttonViewAll = new System.Windows.Forms.Button();
+			this.buttonViewOne = new System.Windows.Forms.Button();
 			this.splitter5 = new System.Windows.Forms.Splitter();
+			this.tabPage6 = new System.Windows.Forms.TabPage();
+			this.textBoxString = new System.Windows.Forms.TextBox();
+			this.panel3 = new System.Windows.Forms.Panel();
+			this.buttonStringStart = new System.Windows.Forms.Button();
 			this.panel2 = new System.Windows.Forms.Panel();
 			this.checkBoxStop = new System.Windows.Forms.CheckBox();
 			this.btnPositionChange = new System.Windows.Forms.Button();
@@ -83,54 +104,33 @@
 			this.textBoxDb1 = new System.Windows.Forms.TextBox();
 			this.label4 = new System.Windows.Forms.Label();
 			this.textBoxPw2 = new System.Windows.Forms.TextBox();
-			this.tabPage6 = new System.Windows.Forms.TabPage();
-			this.panel3 = new System.Windows.Forms.Panel();
-			this.textBoxString = new System.Windows.Forms.TextBox();
-			this.buttonStringStart = new System.Windows.Forms.Button();
-			this.panel4 = new System.Windows.Forms.Panel();
-			this.label11 = new System.Windows.Forms.Label();
-			this.textBoxIgnore = new System.Windows.Forms.TextBox();
-			this.panel11 = new System.Windows.Forms.Panel();
-			this.button5 = new System.Windows.Forms.Button();
-			this.button6 = new System.Windows.Forms.Button();
-			this.panel12 = new System.Windows.Forms.Panel();
-			this.panel13 = new System.Windows.Forms.Panel();
-			this.panel14 = new System.Windows.Forms.Panel();
-			this.button3 = new System.Windows.Forms.Button();
-			this.button4 = new System.Windows.Forms.Button();
-			this.button7 = new System.Windows.Forms.Button();
-			this.button8 = new System.Windows.Forms.Button();
-			this.button9 = new System.Windows.Forms.Button();
-			this.button10 = new System.Windows.Forms.Button();
-			this.button11 = new System.Windows.Forms.Button();
-			this.button12 = new System.Windows.Forms.Button();
 			this.panel1.SuspendLayout();
 			this.panel5.SuspendLayout();
 			this.tabControl1.SuspendLayout();
 			this.tabPage1.SuspendLayout();
 			this.panel7.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+			this.panel4.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
 			this.tabPage2.SuspendLayout();
 			this.panel6.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).BeginInit();
+			this.panel11.SuspendLayout();
 			this.tabPage3.SuspendLayout();
 			this.panel8.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView5)).BeginInit();
+			this.panel12.SuspendLayout();
 			this.tabPage4.SuspendLayout();
 			this.panel9.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView7)).BeginInit();
+			this.panel13.SuspendLayout();
 			this.tabPage5.SuspendLayout();
 			this.panel10.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView9)).BeginInit();
-			this.panel2.SuspendLayout();
+			this.panel14.SuspendLayout();
 			this.tabPage6.SuspendLayout();
 			this.panel3.SuspendLayout();
-			this.panel4.SuspendLayout();
-			this.panel11.SuspendLayout();
-			this.panel12.SuspendLayout();
-			this.panel13.SuspendLayout();
-			this.panel14.SuspendLayout();
+			this.panel2.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// panel1
@@ -205,6 +205,58 @@
 			this.dataGridView1.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dataGridView1_RowPostPaint);
 			this.dataGridView1.SelectionChanged += new System.EventHandler(this.dataGridView1_SelectionChanged);
 			// 
+			// panel4
+			// 
+			this.panel4.Controls.Add(this.buttonTableAll);
+			this.panel4.Controls.Add(this.buttonTableOne);
+			this.panel4.Controls.Add(this.textBoxIgnore);
+			this.panel4.Controls.Add(this.label11);
+			this.panel4.Dock = System.Windows.Forms.DockStyle.Top;
+			this.panel4.Location = new System.Drawing.Point(0, 0);
+			this.panel4.Name = "panel4";
+			this.panel4.Size = new System.Drawing.Size(1394, 27);
+			this.panel4.TabIndex = 16;
+			this.panel4.Paint += new System.Windows.Forms.PaintEventHandler(this.panel4_Paint);
+			// 
+			// buttonTableAll
+			// 
+			this.buttonTableAll.Location = new System.Drawing.Point(1, 1);
+			this.buttonTableAll.Name = "buttonTableAll";
+			this.buttonTableAll.Size = new System.Drawing.Size(43, 23);
+			this.buttonTableAll.TabIndex = 9;
+			this.buttonTableAll.Text = "실행";
+			this.buttonTableAll.UseVisualStyleBackColor = true;
+			this.buttonTableAll.Click += new System.EventHandler(this.buttonTableAll_Click);
+			// 
+			// buttonTableOne
+			// 
+			this.buttonTableOne.Location = new System.Drawing.Point(43, 1);
+			this.buttonTableOne.Name = "buttonTableOne";
+			this.buttonTableOne.Size = new System.Drawing.Size(60, 23);
+			this.buttonTableOne.TabIndex = 8;
+			this.buttonTableOne.Text = "1개 실행";
+			this.buttonTableOne.UseVisualStyleBackColor = true;
+			this.buttonTableOne.Click += new System.EventHandler(this.buttonTableOne_Click);
+			// 
+			// textBoxIgnore
+			// 
+			this.textBoxIgnore.Location = new System.Drawing.Point(215, 3);
+			this.textBoxIgnore.Multiline = true;
+			this.textBoxIgnore.Name = "textBoxIgnore";
+			this.textBoxIgnore.Size = new System.Drawing.Size(1174, 21);
+			this.textBoxIgnore.TabIndex = 7;
+			this.textBoxIgnore.Text = "account_book,account_info";
+			this.textBoxIgnore.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
+			// 
+			// label11
+			// 
+			this.label11.AutoSize = true;
+			this.label11.Location = new System.Drawing.Point(116, 6);
+			this.label11.Name = "label11";
+			this.label11.Size = new System.Drawing.Size(93, 12);
+			this.label11.TabIndex = 6;
+			this.label11.Text = "무시할 테이블명";
+			// 
 			// splitter3
 			// 
 			this.splitter3.BackColor = System.Drawing.Color.MistyRose;
@@ -265,6 +317,37 @@
 			this.dataGridView3.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridView3_CellFormatting);
 			this.dataGridView3.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dataGridView3_RowPostPaint);
 			// 
+			// panel11
+			// 
+			this.panel11.Controls.Add(this.buttonProcedureAll);
+			this.panel11.Controls.Add(this.buttonProcedureOne);
+			this.panel11.Dock = System.Windows.Forms.DockStyle.Top;
+			this.panel11.Location = new System.Drawing.Point(0, 0);
+			this.panel11.Name = "panel11";
+			this.panel11.Size = new System.Drawing.Size(1394, 22);
+			this.panel11.TabIndex = 17;
+			this.panel11.Paint += new System.Windows.Forms.PaintEventHandler(this.panel11_Paint);
+			// 
+			// buttonProcedureAll
+			// 
+			this.buttonProcedureAll.Location = new System.Drawing.Point(-1, -1);
+			this.buttonProcedureAll.Name = "buttonProcedureAll";
+			this.buttonProcedureAll.Size = new System.Drawing.Size(43, 23);
+			this.buttonProcedureAll.TabIndex = 5;
+			this.buttonProcedureAll.Text = "실행";
+			this.buttonProcedureAll.UseVisualStyleBackColor = true;
+			this.buttonProcedureAll.Click += new System.EventHandler(this.buttonProcedureAll_Click);
+			// 
+			// buttonProcedureOne
+			// 
+			this.buttonProcedureOne.Location = new System.Drawing.Point(41, -1);
+			this.buttonProcedureOne.Name = "buttonProcedureOne";
+			this.buttonProcedureOne.Size = new System.Drawing.Size(60, 23);
+			this.buttonProcedureOne.TabIndex = 4;
+			this.buttonProcedureOne.Text = "1개 실행";
+			this.buttonProcedureOne.UseVisualStyleBackColor = true;
+			this.buttonProcedureOne.Click += new System.EventHandler(this.buttonProcedureOne_Click);
+			// 
 			// tabPage3
 			// 
 			this.tabPage3.Controls.Add(this.panel8);
@@ -298,6 +381,36 @@
 			this.dataGridView5.TabIndex = 4;
 			this.dataGridView5.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridView5_CellFormatting);
 			this.dataGridView5.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dataGridView5_RowPostPaint);
+			// 
+			// panel12
+			// 
+			this.panel12.Controls.Add(this.buttonEventAll);
+			this.panel12.Controls.Add(this.buttonEventOne);
+			this.panel12.Dock = System.Windows.Forms.DockStyle.Top;
+			this.panel12.Location = new System.Drawing.Point(0, 0);
+			this.panel12.Name = "panel12";
+			this.panel12.Size = new System.Drawing.Size(1394, 24);
+			this.panel12.TabIndex = 17;
+			// 
+			// buttonEventAll
+			// 
+			this.buttonEventAll.Location = new System.Drawing.Point(0, 0);
+			this.buttonEventAll.Name = "buttonEventAll";
+			this.buttonEventAll.Size = new System.Drawing.Size(43, 23);
+			this.buttonEventAll.TabIndex = 7;
+			this.buttonEventAll.Text = "실행";
+			this.buttonEventAll.UseVisualStyleBackColor = true;
+			this.buttonEventAll.Click += new System.EventHandler(this.buttonEventAll_Click);
+			// 
+			// buttonEventOne
+			// 
+			this.buttonEventOne.Location = new System.Drawing.Point(42, 0);
+			this.buttonEventOne.Name = "buttonEventOne";
+			this.buttonEventOne.Size = new System.Drawing.Size(60, 23);
+			this.buttonEventOne.TabIndex = 6;
+			this.buttonEventOne.Text = "1개 실행";
+			this.buttonEventOne.UseVisualStyleBackColor = true;
+			this.buttonEventOne.Click += new System.EventHandler(this.buttonEventOne_Click);
 			// 
 			// splitter2
 			// 
@@ -344,6 +457,36 @@
 			this.dataGridView7.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridView7_CellFormatting);
 			this.dataGridView7.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dataGridView7_RowPostPaint);
 			// 
+			// panel13
+			// 
+			this.panel13.Controls.Add(this.buttonFunctionAll);
+			this.panel13.Controls.Add(this.buttonFunctionOne);
+			this.panel13.Dock = System.Windows.Forms.DockStyle.Top;
+			this.panel13.Location = new System.Drawing.Point(0, 0);
+			this.panel13.Name = "panel13";
+			this.panel13.Size = new System.Drawing.Size(1394, 26);
+			this.panel13.TabIndex = 17;
+			// 
+			// buttonFunctionAll
+			// 
+			this.buttonFunctionAll.Location = new System.Drawing.Point(0, 1);
+			this.buttonFunctionAll.Name = "buttonFunctionAll";
+			this.buttonFunctionAll.Size = new System.Drawing.Size(43, 23);
+			this.buttonFunctionAll.TabIndex = 9;
+			this.buttonFunctionAll.Text = "실행";
+			this.buttonFunctionAll.UseVisualStyleBackColor = true;
+			this.buttonFunctionAll.Click += new System.EventHandler(this.buttonFunctionAll_Click);
+			// 
+			// buttonFunctionOne
+			// 
+			this.buttonFunctionOne.Location = new System.Drawing.Point(42, 1);
+			this.buttonFunctionOne.Name = "buttonFunctionOne";
+			this.buttonFunctionOne.Size = new System.Drawing.Size(60, 23);
+			this.buttonFunctionOne.TabIndex = 8;
+			this.buttonFunctionOne.Text = "1개 실행";
+			this.buttonFunctionOne.UseVisualStyleBackColor = true;
+			this.buttonFunctionOne.Click += new System.EventHandler(this.buttonFunctionOne_Click);
+			// 
 			// splitter4
 			// 
 			this.splitter4.BackColor = System.Drawing.Color.MistyRose;
@@ -389,6 +532,36 @@
 			this.dataGridView9.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridView9_CellFormatting);
 			this.dataGridView9.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dataGridView9_RowPostPaint);
 			// 
+			// panel14
+			// 
+			this.panel14.Controls.Add(this.buttonViewAll);
+			this.panel14.Controls.Add(this.buttonViewOne);
+			this.panel14.Dock = System.Windows.Forms.DockStyle.Top;
+			this.panel14.Location = new System.Drawing.Point(0, 0);
+			this.panel14.Name = "panel14";
+			this.panel14.Size = new System.Drawing.Size(1394, 24);
+			this.panel14.TabIndex = 17;
+			// 
+			// buttonViewAll
+			// 
+			this.buttonViewAll.Location = new System.Drawing.Point(0, 0);
+			this.buttonViewAll.Name = "buttonViewAll";
+			this.buttonViewAll.Size = new System.Drawing.Size(43, 23);
+			this.buttonViewAll.TabIndex = 11;
+			this.buttonViewAll.Text = "실행";
+			this.buttonViewAll.UseVisualStyleBackColor = true;
+			this.buttonViewAll.Click += new System.EventHandler(this.buttonViewAll_Click);
+			// 
+			// buttonViewOne
+			// 
+			this.buttonViewOne.Location = new System.Drawing.Point(42, 0);
+			this.buttonViewOne.Name = "buttonViewOne";
+			this.buttonViewOne.Size = new System.Drawing.Size(60, 23);
+			this.buttonViewOne.TabIndex = 10;
+			this.buttonViewOne.Text = "1개 실행";
+			this.buttonViewOne.UseVisualStyleBackColor = true;
+			this.buttonViewOne.Click += new System.EventHandler(this.buttonViewOne_Click);
+			// 
 			// splitter5
 			// 
 			this.splitter5.BackColor = System.Drawing.Color.MistyRose;
@@ -399,6 +572,48 @@
 			this.splitter5.Size = new System.Drawing.Size(1394, 7);
 			this.splitter5.TabIndex = 0;
 			this.splitter5.TabStop = false;
+			// 
+			// tabPage6
+			// 
+			this.tabPage6.Controls.Add(this.textBoxString);
+			this.tabPage6.Controls.Add(this.panel3);
+			this.tabPage6.Location = new System.Drawing.Point(4, 22);
+			this.tabPage6.Name = "tabPage6";
+			this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPage6.Size = new System.Drawing.Size(1400, 549);
+			this.tabPage6.TabIndex = 5;
+			this.tabPage6.Text = "문장실행";
+			this.tabPage6.UseVisualStyleBackColor = true;
+			this.tabPage6.Click += new System.EventHandler(this.tabPage6_Click);
+			// 
+			// textBoxString
+			// 
+			this.textBoxString.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.textBoxString.Location = new System.Drawing.Point(3, 42);
+			this.textBoxString.Multiline = true;
+			this.textBoxString.Name = "textBoxString";
+			this.textBoxString.Size = new System.Drawing.Size(1394, 504);
+			this.textBoxString.TabIndex = 1;
+			this.textBoxString.TextChanged += new System.EventHandler(this.textBoxString_TextChanged);
+			// 
+			// panel3
+			// 
+			this.panel3.Controls.Add(this.buttonStringStart);
+			this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
+			this.panel3.Location = new System.Drawing.Point(3, 3);
+			this.panel3.Name = "panel3";
+			this.panel3.Size = new System.Drawing.Size(1394, 39);
+			this.panel3.TabIndex = 0;
+			// 
+			// buttonStringStart
+			// 
+			this.buttonStringStart.Location = new System.Drawing.Point(1, 2);
+			this.buttonStringStart.Name = "buttonStringStart";
+			this.buttonStringStart.Size = new System.Drawing.Size(91, 35);
+			this.buttonStringStart.TabIndex = 0;
+			this.buttonStringStart.Text = "실행";
+			this.buttonStringStart.UseVisualStyleBackColor = true;
+			this.buttonStringStart.Click += new System.EventHandler(this.buttonStringStart_Click);
 			// 
 			// panel2
 			// 
@@ -525,9 +740,9 @@
 			// 
 			// buttonDelete
 			// 
-			this.buttonDelete.Location = new System.Drawing.Point(849, 1);
+			this.buttonDelete.Location = new System.Drawing.Point(701, 2);
 			this.buttonDelete.Name = "buttonDelete";
-			this.buttonDelete.Size = new System.Drawing.Size(46, 25);
+			this.buttonDelete.Size = new System.Drawing.Size(46, 23);
 			this.buttonDelete.TabIndex = 5;
 			this.buttonDelete.Text = "삭제";
 			this.buttonDelete.UseVisualStyleBackColor = true;
@@ -600,12 +815,13 @@
 			// 
 			// buttonStart
 			// 
-			this.buttonStart.Location = new System.Drawing.Point(775, 2);
+			this.buttonStart.Location = new System.Drawing.Point(1227, 23);
 			this.buttonStart.Name = "buttonStart";
 			this.buttonStart.Size = new System.Drawing.Size(75, 23);
 			this.buttonStart.TabIndex = 3;
 			this.buttonStart.Text = "실행";
 			this.buttonStart.UseVisualStyleBackColor = true;
+			this.buttonStart.Visible = false;
 			this.buttonStart.Click += new System.EventHandler(this.buttonStart_Click);
 			// 
 			// buttonConnect
@@ -638,12 +854,13 @@
 			// 
 			// buttonOnes
 			// 
-			this.buttonOnes.Location = new System.Drawing.Point(700, 2);
+			this.buttonOnes.Location = new System.Drawing.Point(1146, 22);
 			this.buttonOnes.Name = "buttonOnes";
 			this.buttonOnes.Size = new System.Drawing.Size(75, 23);
 			this.buttonOnes.TabIndex = 2;
 			this.buttonOnes.Text = "1개 실행";
 			this.buttonOnes.UseVisualStyleBackColor = true;
+			this.buttonOnes.Visible = false;
 			this.buttonOnes.Click += new System.EventHandler(this.buttonOnes_Click);
 			// 
 			// textBoxIp1
@@ -718,214 +935,6 @@
 			this.textBoxPw2.Size = new System.Drawing.Size(70, 21);
 			this.textBoxPw2.TabIndex = 9;
 			// 
-			// tabPage6
-			// 
-			this.tabPage6.Controls.Add(this.textBoxString);
-			this.tabPage6.Controls.Add(this.panel3);
-			this.tabPage6.Location = new System.Drawing.Point(4, 22);
-			this.tabPage6.Name = "tabPage6";
-			this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage6.Size = new System.Drawing.Size(1400, 549);
-			this.tabPage6.TabIndex = 5;
-			this.tabPage6.Text = "문장실행";
-			this.tabPage6.UseVisualStyleBackColor = true;
-			this.tabPage6.Click += new System.EventHandler(this.tabPage6_Click);
-			// 
-			// panel3
-			// 
-			this.panel3.Controls.Add(this.buttonStringStart);
-			this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
-			this.panel3.Location = new System.Drawing.Point(3, 3);
-			this.panel3.Name = "panel3";
-			this.panel3.Size = new System.Drawing.Size(1394, 39);
-			this.panel3.TabIndex = 0;
-			// 
-			// textBoxString
-			// 
-			this.textBoxString.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.textBoxString.Location = new System.Drawing.Point(3, 42);
-			this.textBoxString.Multiline = true;
-			this.textBoxString.Name = "textBoxString";
-			this.textBoxString.Size = new System.Drawing.Size(1394, 504);
-			this.textBoxString.TabIndex = 1;
-			this.textBoxString.TextChanged += new System.EventHandler(this.textBoxString_TextChanged);
-			// 
-			// buttonStringStart
-			// 
-			this.buttonStringStart.Location = new System.Drawing.Point(1, 2);
-			this.buttonStringStart.Name = "buttonStringStart";
-			this.buttonStringStart.Size = new System.Drawing.Size(91, 35);
-			this.buttonStringStart.TabIndex = 0;
-			this.buttonStringStart.Text = "실행";
-			this.buttonStringStart.UseVisualStyleBackColor = true;
-			this.buttonStringStart.Click += new System.EventHandler(this.buttonStringStart_Click);
-			// 
-			// panel4
-			// 
-			this.panel4.Controls.Add(this.button3);
-			this.panel4.Controls.Add(this.button4);
-			this.panel4.Controls.Add(this.textBoxIgnore);
-			this.panel4.Controls.Add(this.label11);
-			this.panel4.Dock = System.Windows.Forms.DockStyle.Top;
-			this.panel4.Location = new System.Drawing.Point(0, 0);
-			this.panel4.Name = "panel4";
-			this.panel4.Size = new System.Drawing.Size(1394, 27);
-			this.panel4.TabIndex = 16;
-			this.panel4.Paint += new System.Windows.Forms.PaintEventHandler(this.panel4_Paint);
-			// 
-			// label11
-			// 
-			this.label11.AutoSize = true;
-			this.label11.Location = new System.Drawing.Point(116, 6);
-			this.label11.Name = "label11";
-			this.label11.Size = new System.Drawing.Size(93, 12);
-			this.label11.TabIndex = 6;
-			this.label11.Text = "무시할 테이블명";
-			// 
-			// textBoxIgnore
-			// 
-			this.textBoxIgnore.Location = new System.Drawing.Point(215, 3);
-			this.textBoxIgnore.Multiline = true;
-			this.textBoxIgnore.Name = "textBoxIgnore";
-			this.textBoxIgnore.Size = new System.Drawing.Size(1174, 21);
-			this.textBoxIgnore.TabIndex = 7;
-			this.textBoxIgnore.Text = "account_book,account_info";
-			this.textBoxIgnore.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
-			// 
-			// panel11
-			// 
-			this.panel11.Controls.Add(this.button5);
-			this.panel11.Controls.Add(this.button6);
-			this.panel11.Dock = System.Windows.Forms.DockStyle.Top;
-			this.panel11.Location = new System.Drawing.Point(0, 0);
-			this.panel11.Name = "panel11";
-			this.panel11.Size = new System.Drawing.Size(1394, 22);
-			this.panel11.TabIndex = 17;
-			this.panel11.Paint += new System.Windows.Forms.PaintEventHandler(this.panel11_Paint);
-			// 
-			// button5
-			// 
-			this.button5.Location = new System.Drawing.Point(-1, -1);
-			this.button5.Name = "button5";
-			this.button5.Size = new System.Drawing.Size(43, 23);
-			this.button5.TabIndex = 5;
-			this.button5.Text = "실행";
-			this.button5.UseVisualStyleBackColor = true;
-			// 
-			// button6
-			// 
-			this.button6.Location = new System.Drawing.Point(41, -1);
-			this.button6.Name = "button6";
-			this.button6.Size = new System.Drawing.Size(60, 23);
-			this.button6.TabIndex = 4;
-			this.button6.Text = "1개 실행";
-			this.button6.UseVisualStyleBackColor = true;
-			this.button6.Click += new System.EventHandler(this.button6_Click);
-			// 
-			// panel12
-			// 
-			this.panel12.Controls.Add(this.button7);
-			this.panel12.Controls.Add(this.button8);
-			this.panel12.Dock = System.Windows.Forms.DockStyle.Top;
-			this.panel12.Location = new System.Drawing.Point(0, 0);
-			this.panel12.Name = "panel12";
-			this.panel12.Size = new System.Drawing.Size(1394, 24);
-			this.panel12.TabIndex = 17;
-			// 
-			// panel13
-			// 
-			this.panel13.Controls.Add(this.button9);
-			this.panel13.Controls.Add(this.button10);
-			this.panel13.Dock = System.Windows.Forms.DockStyle.Top;
-			this.panel13.Location = new System.Drawing.Point(0, 0);
-			this.panel13.Name = "panel13";
-			this.panel13.Size = new System.Drawing.Size(1394, 26);
-			this.panel13.TabIndex = 17;
-			// 
-			// panel14
-			// 
-			this.panel14.Controls.Add(this.button11);
-			this.panel14.Controls.Add(this.button12);
-			this.panel14.Dock = System.Windows.Forms.DockStyle.Top;
-			this.panel14.Location = new System.Drawing.Point(0, 0);
-			this.panel14.Name = "panel14";
-			this.panel14.Size = new System.Drawing.Size(1394, 24);
-			this.panel14.TabIndex = 17;
-			// 
-			// button3
-			// 
-			this.button3.Location = new System.Drawing.Point(1, 1);
-			this.button3.Name = "button3";
-			this.button3.Size = new System.Drawing.Size(43, 23);
-			this.button3.TabIndex = 9;
-			this.button3.Text = "실행";
-			this.button3.UseVisualStyleBackColor = true;
-			this.button3.Click += new System.EventHandler(this.button3_Click_1);
-			// 
-			// button4
-			// 
-			this.button4.Location = new System.Drawing.Point(43, 1);
-			this.button4.Name = "button4";
-			this.button4.Size = new System.Drawing.Size(60, 23);
-			this.button4.TabIndex = 8;
-			this.button4.Text = "1개 실행";
-			this.button4.UseVisualStyleBackColor = true;
-			this.button4.Click += new System.EventHandler(this.button4_Click_2);
-			// 
-			// button7
-			// 
-			this.button7.Location = new System.Drawing.Point(0, 0);
-			this.button7.Name = "button7";
-			this.button7.Size = new System.Drawing.Size(43, 23);
-			this.button7.TabIndex = 7;
-			this.button7.Text = "실행";
-			this.button7.UseVisualStyleBackColor = true;
-			// 
-			// button8
-			// 
-			this.button8.Location = new System.Drawing.Point(42, 0);
-			this.button8.Name = "button8";
-			this.button8.Size = new System.Drawing.Size(60, 23);
-			this.button8.TabIndex = 6;
-			this.button8.Text = "1개 실행";
-			this.button8.UseVisualStyleBackColor = true;
-			// 
-			// button9
-			// 
-			this.button9.Location = new System.Drawing.Point(0, 1);
-			this.button9.Name = "button9";
-			this.button9.Size = new System.Drawing.Size(43, 23);
-			this.button9.TabIndex = 9;
-			this.button9.Text = "실행";
-			this.button9.UseVisualStyleBackColor = true;
-			// 
-			// button10
-			// 
-			this.button10.Location = new System.Drawing.Point(42, 1);
-			this.button10.Name = "button10";
-			this.button10.Size = new System.Drawing.Size(60, 23);
-			this.button10.TabIndex = 8;
-			this.button10.Text = "1개 실행";
-			this.button10.UseVisualStyleBackColor = true;
-			// 
-			// button11
-			// 
-			this.button11.Location = new System.Drawing.Point(0, 0);
-			this.button11.Name = "button11";
-			this.button11.Size = new System.Drawing.Size(43, 23);
-			this.button11.TabIndex = 11;
-			this.button11.Text = "실행";
-			this.button11.UseVisualStyleBackColor = true;
-			// 
-			// button12
-			// 
-			this.button12.Location = new System.Drawing.Point(42, 0);
-			this.button12.Name = "button12";
-			this.button12.Size = new System.Drawing.Size(60, 23);
-			this.button12.TabIndex = 10;
-			this.button12.Text = "1개 실행";
-			this.button12.UseVisualStyleBackColor = true;
-			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
@@ -942,30 +951,30 @@
 			this.tabPage1.ResumeLayout(false);
 			this.panel7.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+			this.panel4.ResumeLayout(false);
+			this.panel4.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
 			this.tabPage2.ResumeLayout(false);
 			this.panel6.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).EndInit();
+			this.panel11.ResumeLayout(false);
 			this.tabPage3.ResumeLayout(false);
 			this.panel8.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView5)).EndInit();
+			this.panel12.ResumeLayout(false);
 			this.tabPage4.ResumeLayout(false);
 			this.panel9.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView7)).EndInit();
+			this.panel13.ResumeLayout(false);
 			this.tabPage5.ResumeLayout(false);
 			this.panel10.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView9)).EndInit();
-			this.panel2.ResumeLayout(false);
-			this.panel2.PerformLayout();
+			this.panel14.ResumeLayout(false);
 			this.tabPage6.ResumeLayout(false);
 			this.tabPage6.PerformLayout();
 			this.panel3.ResumeLayout(false);
-			this.panel4.ResumeLayout(false);
-			this.panel4.PerformLayout();
-			this.panel11.ResumeLayout(false);
-			this.panel12.ResumeLayout(false);
-			this.panel13.ResumeLayout(false);
-			this.panel14.ResumeLayout(false);
+			this.panel2.ResumeLayout(false);
+			this.panel2.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
@@ -1035,19 +1044,19 @@
 		private System.Windows.Forms.TextBox textBoxIgnore;
 		private System.Windows.Forms.Label label11;
 		private System.Windows.Forms.Panel panel11;
-		private System.Windows.Forms.Button button5;
-		private System.Windows.Forms.Button button6;
+		private System.Windows.Forms.Button buttonProcedureAll;
+		private System.Windows.Forms.Button buttonProcedureOne;
 		private System.Windows.Forms.Panel panel12;
 		private System.Windows.Forms.Panel panel13;
 		private System.Windows.Forms.Panel panel14;
-		private System.Windows.Forms.Button button3;
-		private System.Windows.Forms.Button button4;
-		private System.Windows.Forms.Button button7;
-		private System.Windows.Forms.Button button8;
-		private System.Windows.Forms.Button button9;
-		private System.Windows.Forms.Button button10;
-		private System.Windows.Forms.Button button11;
-		private System.Windows.Forms.Button button12;
+		private System.Windows.Forms.Button buttonTableAll;
+		private System.Windows.Forms.Button buttonTableOne;
+		private System.Windows.Forms.Button buttonEventAll;
+		private System.Windows.Forms.Button buttonEventOne;
+		private System.Windows.Forms.Button buttonFunctionAll;
+		private System.Windows.Forms.Button buttonFunctionOne;
+		private System.Windows.Forms.Button buttonViewAll;
+		private System.Windows.Forms.Button buttonViewOne;
 	}
 }
 

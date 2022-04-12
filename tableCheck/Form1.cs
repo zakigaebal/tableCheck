@@ -434,126 +434,131 @@ namespace tableCheck
 				string connectionDb1 = "Server = " + textBoxIp1.Text + ";Port = " + textBoxPort1.Text + ";Database = " + textBoxDb1.Text + ";username = " + textBoxUn1.Text + ";password=" + textBoxPw1.Text + ";Charset=utf8;";
 				string connectionDb2 = "Server = " + textBoxIp2.Text + ";Port = " + textBoxPort2.Text + ";Database = " + textBoxDb2.Text + ";username = " + textBoxUn2.Text + ";password=" + textBoxPw2.Text + ";Charset=utf8;";
 
-				con = new MySqlConnection(connectionDb1);
-				con2 = new MySqlConnection(connectionDb2);
-				con.Open();
-				con2.Open();
 
-				//테이블 보여주기 메소드
-				showTable();
-
-				//프로시저 보여주기메소드
-				showProceaser();
-
-				//프로시저 생성쿼리메소드
-				for (int num = 0; num < dataGridView3.Rows.Count; num++)
+				if (tabControl1.SelectedTab == tabPage1)
 				{
-					//멈추기 기능
-					if (checkBoxStop.Checked)
-					{
-						break;
-					}
-					con = new MySqlConnection(connectionDb1);
-					con.Open();
-					con2 = new MySqlConnection(connectionDb2);
-					con2.Open();
-
-					string tbl = dataGridView3.Rows[num].Cells[0].Value.ToString();
-					if (tbl == null) return;
-					string queryCreate = "SHOW CREATE PROCEDURE " + tbl;
-					string rdrString = "Create Procedure";
-
-					dgvShowAll(queryCreate, num, rdrString);
-
-					con.Close();
-					con2.Close();
+					//테이블 보여주기 메소드
+					showTable();
 				}
 
-				//이벤트 보여주기 메소드
-				showEvents();
-
-				//이벤트 생성쿼리메소드
-				for (int num = 0; num < dataGridView5.Rows.Count; num++)
+				if (tabControl1.SelectedTab == tabPage2)
 				{
-					//멈추기 기능
-					if (checkBoxStop.Checked)
+					//프로시저 보여주기메소드
+					showProceaser();
+
+					//프로시저 생성쿼리메소드
+					for (int num = 0; num < dataGridView3.Rows.Count; num++)
 					{
-						break;
+						//멈추기 기능
+						if (checkBoxStop.Checked)
+						{
+							break;
+						}
+						con = new MySqlConnection(connectionDb1);
+						con.Open();
+						con2 = new MySqlConnection(connectionDb2);
+						con2.Open();
+
+						string tbl = dataGridView3.Rows[num].Cells[0].Value.ToString();
+						if (tbl == null) return;
+						string queryCreate = "SHOW CREATE PROCEDURE " + tbl;
+						string rdrString = "Create Procedure";
+
+						dgvShowAll(queryCreate, num, rdrString);
+
+						con.Close();
+						con2.Close();
 					}
-					con = new MySqlConnection(connectionDb1);
-					con.Open();
-					con2 = new MySqlConnection(connectionDb2);
-					con2.Open();
-
-					string tbl = dataGridView5.Rows[num].Cells[0].Value.ToString();
-					if (tbl == null) return;
-					string queryCreate = "SHOW CREATE EVENT " + tbl;
-					string rdrString = "Create Event";
-
-					dgvShowAll(queryCreate, num, rdrString);
-
-					con.Close();
-					con2.Close();
 				}
 
-
-
-				//함수 보여주기메소드
-				showFunction();
-				// 함수 생성쿼리메소드
-				for (int num = 0; num < dataGridView7.Rows.Count; num++)
+				if (tabControl1.SelectedTab == tabPage3)
 				{
-					//멈추기 기능
-					if (checkBoxStop.Checked)
+					//이벤트 보여주기 메소드
+					showEvents();
+
+					//이벤트 생성쿼리메소드
+					for (int num = 0; num < dataGridView5.Rows.Count; num++)
 					{
-						break;
+						//멈추기 기능
+						if (checkBoxStop.Checked)
+						{
+							break;
+						}
+						con = new MySqlConnection(connectionDb1);
+						con.Open();
+						con2 = new MySqlConnection(connectionDb2);
+						con2.Open();
+
+						string tbl = dataGridView5.Rows[num].Cells[0].Value.ToString();
+						if (tbl == null) return;
+						string queryCreate = "SHOW CREATE EVENT " + tbl;
+						string rdrString = "Create Event";
+
+						dgvShowAll(queryCreate, num, rdrString);
+
+						con.Close();
+						con2.Close();
 					}
-					con = new MySqlConnection(connectionDb1);
-					con.Open();
-					con2 = new MySqlConnection(connectionDb2);
-					con2.Open();
-
-					string tbl = dataGridView7.Rows[num].Cells[0].Value.ToString();
-					if (tbl == null) return;
-					string queryCreate = "SHOW CREATE FUNCTION " + tbl;
-					string rdrString = "Create Function";
-
-					dgvShowAll(queryCreate, num, rdrString);
-
-					con.Close();
-					con2.Close();
 				}
 
-
-				//뷰 보여주기메소드
-				showView();
-				// 뷰 생성쿼리메소드
-				for (int num = 0; num < dataGridView9.Rows.Count; num++)
+				if (tabControl1.SelectedTab == tabPage4)
 				{
-					//멈추기 기능
-					if (checkBoxStop.Checked)
+					//함수 보여주기메소드
+					showFunction();
+					// 함수 생성쿼리메소드
+					for (int num = 0; num < dataGridView7.Rows.Count; num++)
 					{
-						break;
+						//멈추기 기능
+						if (checkBoxStop.Checked)
+						{
+							break;
+						}
+						con = new MySqlConnection(connectionDb1);
+						con.Open();
+						con2 = new MySqlConnection(connectionDb2);
+						con2.Open();
+
+						string tbl = dataGridView7.Rows[num].Cells[0].Value.ToString();
+						if (tbl == null) return;
+						string queryCreate = "SHOW CREATE FUNCTION " + tbl;
+						string rdrString = "Create Function";
+
+						dgvShowAll(queryCreate, num, rdrString);
+
+						con.Close();
+						con2.Close();
 					}
-					con = new MySqlConnection(connectionDb1);
-					con.Open();
-					con2 = new MySqlConnection(connectionDb2);
-					con2.Open();
-
-					string tbl = dataGridView9.Rows[num].Cells[0].Value.ToString();
-					if (tbl == null) return;
-					string queryCreate = "SHOW CREATE VIEW " + tbl;
-					string rdrString = "Create View";
-					dgvShowAll(queryCreate, num, rdrString);
-					con.Close();
-					con2.Close();
 				}
-				con.Close();
-				con2.Close();
 
-				//진행중 작업사항 100 채우기 메소드
-				compare();
+				if (tabControl1.SelectedTab == tabPage5)
+				{
+					//뷰 보여주기메소드
+					showView();
+					// 뷰 생성쿼리메소드
+					for (int num = 0; num < dataGridView9.Rows.Count; num++)
+					{
+						//멈추기 기능
+						if (checkBoxStop.Checked)
+						{
+							break;
+						}
+						con = new MySqlConnection(connectionDb1);
+						con.Open();
+						con2 = new MySqlConnection(connectionDb2);
+						con2.Open();
 
+						string tbl = dataGridView9.Rows[num].Cells[0].Value.ToString();
+						if (tbl == null) return;
+						string queryCreate = "SHOW CREATE VIEW " + tbl;
+						string rdrString = "Create View";
+						dgvShowAll(queryCreate, num, rdrString);
+						con.Close();
+						con2.Close();
+					}
+				}
+					//진행중 작업사항 100 채우기 메소드
+					compare();
+				
 
 				Cursor.Current = Cursors.Default;
 			}
@@ -576,12 +581,6 @@ namespace tableCheck
 			{
 				backup.Create();
 			}
-			//string command = "C:\\xampp" +"\\mysql\\bin\\mysqldump.exe -u root -pekdnsel dawoon > sa.sql";
-			//Process.Start("cmd.exe", command);
-			//if (!Directory.Exists("C:\\dw\bk"))
-			//{
-			//	System.IO.Directory.CreateDirectory("bk");
-			//}
 			ProcessStartInfo cmd = new ProcessStartInfo();
 			Process process = new Process();
 			cmd.FileName = @"cmd";
@@ -612,6 +611,13 @@ namespace tableCheck
 
 		private void showTable()
 		{
+			string connectionDb1 = "Server = " + textBoxIp1.Text + ";Port = " + textBoxPort1.Text + ";Database = " + textBoxDb1.Text + ";username = " + textBoxUn1.Text + ";password=" + textBoxPw1.Text + ";Charset=utf8;";
+			string connectionDb2 = "Server = " + textBoxIp2.Text + ";Port = " + textBoxPort2.Text + ";Database = " + textBoxDb2.Text + ";username = " + textBoxUn2.Text + ";password=" + textBoxPw2.Text + ";Charset=utf8;";
+			con = new MySqlConnection(connectionDb1);
+			con2 = new MySqlConnection(connectionDb2);
+			con.Open();
+			con2.Open();
+
 			string query1 = "SELECT b.table_name tbl, a.table_comment cmt, COUNT(*) cnt, b.EXTRA ex  FROM information_schema.tables a left JOIN information_schema.columns b ON a.TABLE_NAME=b.table_name WHERE a.table_schema = '" + textBoxDb1.Text + "' AND b.table_schema = '" + textBoxDb1.Text + "'  AND a.table_type='BASE TABLE' group BY b.TABLE_NAME ORDER BY b.TABLE_NAME asc;";
 			string query2 = "SELECT b.table_name tbl, a.table_comment cmt, COUNT(*) cnt, b.EXTRA ex  FROM information_schema.tables a left JOIN information_schema.columns b ON a.TABLE_NAME=b.table_name WHERE a.table_schema = '" + textBoxDb2.Text + "' AND b.table_schema = '" + textBoxDb2.Text + "' AND a.table_type='BASE TABLE'  group BY b.TABLE_NAME ORDER BY b.TABLE_NAME asc;";
 			MySqlDataReader rdr = DBConnect(con, query1);
@@ -701,6 +707,8 @@ namespace tableCheck
 			dataGridView1.Columns[i++].ReadOnly = true;
 			dataGridView1.ResumeLayout();
 
+			con.Close();
+			con2.Close();
 		}
 
 
@@ -1535,11 +1543,11 @@ namespace tableCheck
 			}
 		}
 
-		private void buttonOnes_Click(object sender, EventArgs e)
+		void oneStart()
 		{
 			try
 			{
-
+				//탭페이지가 테이블인 경우
 				if (tabControl1.SelectedTab == tabPage1)
 				{
 					int rowIndex = dataGridView1.CurrentCell.RowIndex;
@@ -1551,9 +1559,15 @@ namespace tableCheck
 					string tbl = dataGridView1.Rows[rowIndex].Cells[2].Value.ToString();
 					if (tbl == null) return;
 					string queryCreate = "SHOW CREATE TABLE " + tbl;
-					ShowCreateTable(queryCreate);
-					alterChange();
-					buttonConnect_Click(sender, e);
+					if (dataGridView1.Rows[rowIndex].Cells[7].Value.ToString() == "없음")
+					{
+						ShowCreateTable(queryCreate);
+					}
+					else 
+					{
+						alterChange();
+					}
+					//buttonConnect_Click(sender, e);
 				}
 				//탭페이지가 프로시저인 경우
 				if (tabControl1.SelectedTab == tabPage2)
@@ -1616,13 +1630,7 @@ namespace tableCheck
 					dataGridView7.Rows[rowIndex].Cells[6].Value = 100;
 					dataGridView7.Rows[rowIndex].Cells[7].Value = "확인중";
 					showFunction();
-
-
-
-
-
 				}
-
 				//탭페이지가 뷰인경우
 				if (tabControl1.SelectedTab == tabPage5)
 				{
@@ -1647,6 +1655,14 @@ namespace tableCheck
 			{
 				LogMgr.ExceptionLog(ex);
 			}
+		}
+
+
+		private void buttonOnes_Click(object sender, EventArgs e)
+		{
+			oneStart();
+			buttonConnect_Click(sender, e);
+
 		}
 
 		private static DateTime Delay(int MS)
@@ -3669,20 +3685,6 @@ namespace tableCheck
 
 		}
 
-		private void button4_Click_1(object sender, EventArgs e)
-		{
-
-		}
-
-		private void label13_Click(object sender, EventArgs e)
-		{
-
-		}
-
-		private void textBox4_TextChanged(object sender, EventArgs e)
-		{
-		}
-
 		private void panel11_Paint(object sender, PaintEventArgs e)
 		{
 
@@ -3694,11 +3696,6 @@ namespace tableCheck
 		}
 
 		private void dataGridView3_CellContentClick(object sender, DataGridViewCellEventArgs e)
-		{
-
-		}
-
-		private void button3_Click_1(object sender, EventArgs e)
 		{
 
 		}
@@ -3787,6 +3784,66 @@ namespace tableCheck
 		private void textBox2_TextChanged(object sender, EventArgs e)
 		{
 
+		}
+
+		private void buttonTableAll_Click(object sender, EventArgs e)
+		{
+			allStrart();
+			buttonConnect_Click(sender, e);
+		}
+
+		private void buttonTableOne_Click(object sender, EventArgs e)
+		{
+			oneStart();
+			buttonConnect_Click(sender, e);
+		}
+
+		private void buttonProcedureAll_Click(object sender, EventArgs e)
+		{
+			allStrart();
+			buttonConnect_Click(sender, e);
+		}
+
+		private void buttonProcedureOne_Click(object sender, EventArgs e)
+		{
+			oneStart();
+			buttonConnect_Click(sender, e);
+		}
+
+		private void buttonEventAll_Click(object sender, EventArgs e)
+		{
+			allStrart();
+			buttonConnect_Click(sender, e);
+		}
+
+		private void buttonEventOne_Click(object sender, EventArgs e)
+		{
+			oneStart();
+			buttonConnect_Click(sender, e);
+		}
+
+		private void buttonFunctionAll_Click(object sender, EventArgs e)
+		{
+			allStrart();
+			buttonConnect_Click(sender, e);
+		}
+
+		private void buttonFunctionOne_Click(object sender, EventArgs e)
+		{
+			oneStart();
+			buttonConnect_Click(sender, e);
+		}
+
+		private void buttonViewAll_Click(object sender, EventArgs e)
+		{
+			allStrart();
+			buttonConnect_Click(sender, e);
+		}
+
+		private void buttonViewOne_Click(object sender, EventArgs e)
+		{
+			oneStart();
+			buttonConnect_Click(sender, e);
 		}
 	}
 	//Put this class at the end of the main class or you will have problems.
